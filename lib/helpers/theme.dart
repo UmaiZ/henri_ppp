@@ -9,13 +9,8 @@ final themedata = ThemeData(
         tertiary: Colors.white,
         onTertiaryContainer: Color(0xffDDDDDD)),
     textTheme: const TextTheme(
-        headlineSmall: TextStyle(
-            color: Colors.white, fontSize: 18, fontWeight: FontWeight.w600),
-        headlineMedium: TextStyle(
-            color: Colors.white, fontSize: 20, fontWeight: FontWeight.w600),
-        headlineLarge: TextStyle(
-            color: Colors.white, fontSize: 21, fontWeight: FontWeight.w600),
-        bodyMedium: TextStyle(
-            fontSize: 14, fontWeight: FontWeight.w900, color: Colors.white),
-        bodySmall: TextStyle(
-            fontSize: 12, fontWeight: FontWeight.w900, color: Colors.white)));
+        headlineSmall: TextStyle(color: Colors.white, fontSize: 18),
+        headlineMedium: TextStyle(color: Colors.white, fontSize: 20),
+        headlineLarge: TextStyle(color: Colors.white, fontSize: 21),
+        bodyMedium: TextStyle(fontSize: 14, color: Colors.white),
+        bodySmall: TextStyle(fontSize: 12, color: Colors.white)));

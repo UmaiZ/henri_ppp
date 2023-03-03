@@ -13,7 +13,13 @@ class ForgotPage extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Color(0xff041d5a),
-      body: SizedBox(
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/bg.jpg"),
+            fit: BoxFit.cover,
+          ),
+        ),
         width: double.infinity,
         child: Column(
           children: [
