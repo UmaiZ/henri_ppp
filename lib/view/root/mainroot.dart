@@ -7,6 +7,8 @@ import 'package:henri_ppp/view/notifications/notification.dart';
 import 'package:henri_ppp/view/post/createpost.dart';
 import 'package:henri_ppp/view/profile/profile.dart';
 
+int pageindex = 0;
+
 class MainRoot extends StatefulWidget {
   const MainRoot({super.key});
 
@@ -15,8 +17,6 @@ class MainRoot extends StatefulWidget {
 }
 
 class _MainRootState extends State<MainRoot> {
-  int _page = 0;
-
   var screens = [
     HomeScreen(),
     CreatePostScreen(),
@@ -26,46 +26,100 @@ class _MainRootState extends State<MainRoot> {
   GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
+
     return Scaffold(
-      bottomNavigationBar: CurvedNavigationBar(
-        key: _bottomNavigationKey,
-        index: 0,
-        height: 60.0,
-        items: <Widget>[
-          Icon(
-            Icons.home_outlined,
-            size: 30,
-            color: Colors.white,
+      bottomNavigationBar: buildMyNavBar(context),
+      body: screens[pageindex],
+    );
+  }
+
+  buildMyNavBar(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
+
+    return Container(
+      height: size.height * 0.085,
+      color: Theme.of(context).colorScheme.secondary,
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          Positioned(
+            bottom: pageindex == 0 ? size.height * 0.0375 : 5,
+            left: size.width * 0.05,
+            child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    pageindex = 0;
+                  });
+                },
+                child: bottomitems(0, Icons.home_outlined)),
           ),
-          Icon(
-            Icons.add_outlined,
-            size: 30,
-            color: Colors.white,
+          Positioned(
+            bottom: pageindex == 1 ? size.height * 0.0375 : 5,
+            left: size.width * 0.29,
+            child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    pageindex = 1;
+                  });
+                },
+                child: bottomitems(1, Icons.add_outlined)),
           ),
-          Icon(
-            Icons.notifications_outlined,
-            size: 30,
-            color: Colors.white,
+          Positioned(
+            bottom: pageindex == 2 ? size.height * 0.0375 : 5,
+            right: size.width * 0.29,
+            child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    pageindex = 2;
+                  });
+                },
+                child: bottomitems(2, Icons.notifications_outlined)),
           ),
-          Icon(
-            Icons.person_outline,
-            size: 30,
-            color: Colors.white,
+          Positioned(
+            bottom: pageindex == 3 ? size.height * 0.0375 : 5,
+            right: size.width * 0.05,
+            child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    pageindex = 3;
+                  });
+                },
+                child: bottomitems(3, Icons.person_outline)),
           ),
         ],
-        color: Theme.of(context).colorScheme.secondary,
-        buttonBackgroundColor: Theme.of(context).colorScheme.primary,
-        backgroundColor: Theme.of(context).colorScheme.secondary,
-        animationCurve: Curves.easeInOut,
-        animationDuration: Duration(milliseconds: 600),
-        onTap: (index) {
-          setState(() {
-            _page = index;
-          });
-        },
-        letIndexChange: (index) => true,
       ),
-      body: screens[_page],
+    );
+  }
+
+  Widget bottomitems(index, icon) {
+    final Size size = MediaQuery.of(context).size;
+    return Container(
+      width: 76,
+      height: 76,
+      decoration: BoxDecoration(
+          boxShadow: [
+            index == pageindex
+                ? BoxShadow(
+                    color:
+                        Theme.of(context).colorScheme.primary.withOpacity(0.3),
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: Offset(0, 3),
+                  )
+                : BoxShadow(),
+          ],
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+          color: index == pageindex
+              ? Theme.of(context).colorScheme.primary
+              : Theme.of(context).colorScheme.secondary),
+      child: Center(
+        child: Icon(
+          icon,
+          color: Colors.white,
+          size: 40,
+        ),
+      ),
     );
   }
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:henri_ppp/view/profile/editprofile.dart';
+import 'package:henri_ppp/view/profile/friendlist.dart';
 import 'package:henri_ppp/view/root/drawer.dart';
 import 'package:henri_ppp/widgets/button.dart';
 
@@ -98,10 +100,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               Text(
                 'Los Angeles , California',
-                style: Theme.of(context)
-                    .textTheme
-                    .headlineMedium!
-                    .merge(TextStyle(color: Colors.grey)),
+                style:
+                    Theme.of(context).textTheme.headlineMedium!.merge(TextStyle(
+                          color: Colors.grey,
+                        )),
+              ),
+              SizedBox(
+                height: size.height * 0.01,
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => FriendList()));
+                },
+                child: Text(
+                  '245 Friends',
+                  style: Theme.of(context).textTheme.headlineMedium!.merge(
+                      TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold)),
+                ),
               ),
               SizedBox(
                 height: size.height * 0.01,
@@ -118,7 +135,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => EditProfile()));
+                    },
                     child: btnGlobal(
                       width: 0.375,
                       height: 0.05,

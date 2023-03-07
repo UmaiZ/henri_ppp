@@ -1,6 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:henri_ppp/view/extra/setting.dart';
+import 'package:henri_ppp/view/messages/messagelist.dart';
+import 'package:henri_ppp/view/profile/friendlist.dart';
+import 'package:henri_ppp/view/root/mainroot.dart';
 
 class DrawerScreen extends StatefulWidget {
   @override
@@ -74,7 +78,12 @@ class _DrawerScreenState extends State<DrawerScreen> {
                     ),
                     SizedBox(height: res_height * 0.04),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pop(context);
+                        setState(() {
+                          pageindex = 0;
+                        });
+                      },
                       child: Container(
                           width: res_width * 0.7,
                           height: res_height * 0.065,
@@ -102,7 +111,10 @@ class _DrawerScreenState extends State<DrawerScreen> {
                       height: 5,
                     ),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => MessageList()));
+                      },
                       child: Container(
                           width: res_width * 0.7,
                           height: res_height * 0.065,
@@ -130,7 +142,12 @@ class _DrawerScreenState extends State<DrawerScreen> {
                       height: 5,
                     ),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pop(context);
+                        setState(() {
+                          pageindex = 3;
+                        });
+                      },
                       child: Container(
                           width: res_width * 0.7,
                           height: res_height * 0.065,
@@ -157,34 +174,45 @@ class _DrawerScreenState extends State<DrawerScreen> {
                     SizedBox(
                       height: 5,
                     ),
-                    Container(
-                        width: res_width * 0.7,
-                        height: res_height * 0.065,
-                        decoration: BoxDecoration(
-                            color: Theme.of(context).colorScheme.primary,
-                            borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(10),
-                                bottomRight: Radius.circular(10))),
-                        child: Container(
-                            width: res_width * 0.4,
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 20),
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  "My Friends",
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                      fontSize: 19, color: Colors.white),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => FriendList()));
+                      },
+                      child: Container(
+                          width: res_width * 0.7,
+                          height: res_height * 0.065,
+                          decoration: BoxDecoration(
+                              color: Theme.of(context).colorScheme.primary,
+                              borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(10),
+                                  bottomRight: Radius.circular(10))),
+                          child: Container(
+                              width: res_width * 0.4,
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 20),
+                                child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    "My Friends",
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(
+                                        fontSize: 19, color: Colors.white),
+                                  ),
                                 ),
-                              ),
-                            ))),
+                              ))),
+                    ),
                     SizedBox(
                       height: 5,
                     ),
 
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pop(context);
+                        setState(() {
+                          pageindex = 2;
+                        });
+                      },
                       child: Container(
                           width: res_width * 0.7,
                           height: res_height * 0.065,
@@ -222,7 +250,10 @@ class _DrawerScreenState extends State<DrawerScreen> {
                                   topRight: Radius.circular(10),
                                   bottomRight: Radius.circular(10))),
                           child: GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => SettingScreens()));
+                            },
                             child: Container(
                                 width: res_width * 0.4,
                                 child: Padding(
