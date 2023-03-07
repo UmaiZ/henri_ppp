@@ -29,11 +29,11 @@ class LoginPage extends StatelessWidget {
             child: Column(
               children: [
                 SizedBox(
-                  height: size.height * 0.2,
+                  height: size.height * 0.175,
                 ),
                 SizedBox(child: Image.asset('assets/images/logo.png')),
                 SizedBox(
-                  height: size.height * 0.1,
+                  height: size.height * 0.075,
                 ),
                 const txtfieldGlobal(
                   width: 0.9,

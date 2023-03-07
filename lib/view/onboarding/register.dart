@@ -26,7 +26,11 @@ class RegisterPage extends StatelessWidget {
           child: Column(
             children: [
               SizedBox(
-                height: size.height * 0.4,
+                height: size.height * 0.175,
+              ),
+              SizedBox(child: Image.asset('assets/images/logo.png')),
+              SizedBox(
+                height: size.height * 0.075,
               ),
               const txtfieldGlobal(
                 width: 0.9,

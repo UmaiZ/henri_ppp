@@ -24,7 +24,18 @@ class ForgotPage extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(
-              height: size.height * 0.4,
+              height: size.height * 0.175,
+            ),
+            SizedBox(child: Image.asset('assets/images/logo.png')),
+            SizedBox(
+              height: size.height * 0.075,
+            ),
+            Text(
+              "Forgot password",
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+            SizedBox(
+              height: size.height * 0.02,
             ),
             const txtfieldGlobal(
               width: 0.9,

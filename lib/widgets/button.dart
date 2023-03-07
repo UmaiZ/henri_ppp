@@ -30,8 +30,9 @@ class btnGlobal extends StatelessWidget {
         ),
         child: Center(
             child: Text(
-          text,
-          style: Theme.of(context).textTheme.bodyMedium,
+          text.toString().toUpperCase(),
+          style: Theme.of(context).textTheme.bodyLarge!.merge(
+              TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
         )));
   }
 }

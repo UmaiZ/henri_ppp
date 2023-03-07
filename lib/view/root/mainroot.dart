@@ -4,6 +4,8 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:henri_ppp/view/homeview/home.dart';
 import 'package:henri_ppp/view/notifications/notification.dart';
+import 'package:henri_ppp/view/post/createpost.dart';
+import 'package:henri_ppp/view/profile/profile.dart';
 
 class MainRoot extends StatefulWidget {
   const MainRoot({super.key});
@@ -17,9 +19,9 @@ class _MainRootState extends State<MainRoot> {
 
   var screens = [
     HomeScreen(),
-    Container(),
+    CreatePostScreen(),
     NotificationScreen(),
-    Container(),
+    ProfileScreen(),
   ];
   GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
   @override

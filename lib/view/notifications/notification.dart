@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:henri_ppp/view/root/drawer.dart';
 
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({super.key});
@@ -15,6 +16,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
     final Size size = MediaQuery.of(context).size;
     final GlobalKey<ScaffoldState> _key = GlobalKey();
     return Scaffold(
+      key: _key,
+      drawer: DrawerScreen(),
       backgroundColor: Theme.of(context).colorScheme.primary,
       appBar: AppBar(
         leading: GestureDetector(
