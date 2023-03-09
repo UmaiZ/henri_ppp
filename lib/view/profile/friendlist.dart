@@ -139,7 +139,7 @@ class _FriendListState extends State<FriendList> {
     final Size size = MediaQuery.of(context).size;
 
     return Container(
-      width: size.width * 0.2,
+      width: size.width * 0.225,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(10)),
         gradient: LinearGradient(

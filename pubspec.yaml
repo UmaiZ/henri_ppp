@@ -37,6 +37,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   curved_navigation_bar: ^1.0.3
   flutter_rating_bar: ^4.0.1
+  camera: ^0.10.3+2
+  video_player: ^2.5.3
 
 dev_dependencies:
   flutter_test:
@@ -64,7 +66,7 @@ flutter:
 
   assets:
     - assets/images/
-
+    - assets/fonts/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -78,11 +80,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
+  fonts:
+    - family: Ckhans
+      fonts:
+        - asset: assets/fonts/ckhans-fonts.otf
   #         style: italic
   #   - family: Trajan Pro
   #     fonts:

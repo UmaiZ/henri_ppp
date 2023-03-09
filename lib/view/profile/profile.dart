@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:henri_ppp/view/post/createstory.dart';
 import 'package:henri_ppp/view/profile/editprofile.dart';
 import 'package:henri_ppp/view/profile/friendlist.dart';
 import 'package:henri_ppp/view/root/drawer.dart';
@@ -90,7 +91,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     '(Review 4.5)',
                     style: Theme.of(context)
                         .textTheme
-                        .headlineMedium!
+                        .headlineSmall!
                         .merge(TextStyle(color: Colors.grey)),
                   ),
                 ],
@@ -115,19 +116,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 },
                 child: Text(
                   '245 Friends',
-                  style: Theme.of(context).textTheme.headlineMedium!.merge(
+                  style: Theme.of(context).textTheme.headlineSmall!.merge(
                       TextStyle(
                           color: Colors.white, fontWeight: FontWeight.bold)),
                 ),
               ),
               SizedBox(
-                height: size.height * 0.01,
+                height: size.height * 0.0125,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => CameraAppTest()));
+                    },
                     child: btnGlobal(
                       width: 0.375,
                       height: 0.05,
@@ -305,6 +309,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       width: size.width * 0.95,
                       child: GridView.builder(
                         shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
                         itemCount: 7,
                         itemBuilder: (context, index) => SizedBox(
                             width: size.width * 0.3,

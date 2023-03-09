@@ -1,7 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:henri_ppp/view/extra/privacy.dart';
 import 'package:henri_ppp/view/extra/setting.dart';
+import 'package:henri_ppp/view/extra/terms.dart';
+import 'package:henri_ppp/view/live/livelist.dart';
 import 'package:henri_ppp/view/messages/messagelist.dart';
 import 'package:henri_ppp/view/profile/friendlist.dart';
 import 'package:henri_ppp/view/root/mainroot.dart';
@@ -47,7 +50,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: res_height * 0.04),
+                    SizedBox(height: res_height * 0.035),
                     Padding(
                       padding: const EdgeInsets.only(left: 10),
                       child: Row(
@@ -76,7 +79,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                         ],
                       ),
                     ),
-                    SizedBox(height: res_height * 0.04),
+                    SizedBox(height: res_height * 0.035),
                     GestureDetector(
                       onTap: () {
                         Navigator.pop(context);
@@ -205,6 +208,37 @@ class _DrawerScreenState extends State<DrawerScreen> {
                     SizedBox(
                       height: 5,
                     ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => LiveList()));
+                      },
+                      child: Container(
+                          width: res_width * 0.7,
+                          height: res_height * 0.065,
+                          decoration: BoxDecoration(
+                              color: Theme.of(context).colorScheme.primary,
+                              borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(10),
+                                  bottomRight: Radius.circular(10))),
+                          child: Container(
+                              width: res_width * 0.4,
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 20),
+                                child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    "Live Streams",
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(
+                                        fontSize: 19, color: Colors.white),
+                                  ),
+                                ),
+                              ))),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
 
                     GestureDetector(
                       onTap: () {
@@ -274,7 +308,10 @@ class _DrawerScreenState extends State<DrawerScreen> {
                       height: 5,
                     ),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => TermsScreen()));
+                      },
                       child: Container(
                           width: res_width * 0.7,
                           height: res_height * 0.065,
@@ -302,7 +339,10 @@ class _DrawerScreenState extends State<DrawerScreen> {
                       height: 5,
                     ),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => PrivacyScreen()));
+                      },
                       child: Container(
                           width: res_width * 0.7,
                           height: res_height * 0.065,

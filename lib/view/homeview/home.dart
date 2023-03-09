@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:henri_ppp/view/live/golive.dart';
 import 'package:henri_ppp/view/root/drawer.dart';
+
+import '../post/createstory.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -32,11 +35,34 @@ class HomeScreen extends StatelessWidget {
         ),
         centerTitle: true,
         actions: [
-          Image.asset(
-            'assets/images/posticon.png',
-            color: Colors.white,
-            width: 30,
-          )
+          GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => goLiveScreen()));
+              },
+              child: Image.asset(
+                'assets/images/live.png',
+                color: Colors.white,
+                width: 20,
+                height: 20,
+              )),
+          const SizedBox(
+            width: 10,
+          ),
+          GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => CameraAppTest()));
+              },
+              child: Image.asset(
+                'assets/images/story.png',
+                color: Colors.white,
+                width: 20,
+                height: 20,
+              )),
+          const SizedBox(
+            width: 10,
+          ),
         ],
       ),
       body: SizedBox(
@@ -67,7 +93,7 @@ class HomeScreen extends StatelessWidget {
                                   'assets/images/imageplaceholder.png'),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
                           Text(
@@ -116,17 +142,23 @@ class HomeScreen extends StatelessWidget {
           return i == 0
               ? Row(
                   children: [
-                    Container(
-                      width: size.width * 0.2,
-                      height: size.width * 0.2,
-                      child: CircleAvatar(
-                        radius: 100,
-                        backgroundColor:
-                            Theme.of(context).colorScheme.secondary,
-                        child: Icon(
-                          Icons.add,
-                          color: Colors.grey,
-                          size: 30,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => CameraAppTest()));
+                      },
+                      child: Container(
+                        width: size.width * 0.2,
+                        height: size.width * 0.2,
+                        child: CircleAvatar(
+                          radius: 100,
+                          backgroundColor:
+                              Theme.of(context).colorScheme.secondary,
+                          child: Icon(
+                            Icons.add,
+                            color: Colors.grey,
+                            size: 30,
+                          ),
                         ),
                       ),
                     ),
@@ -198,7 +230,7 @@ class HomeScreen extends StatelessWidget {
                         .merge(TextStyle(color: Colors.grey)),
                   ),
                   Text(
-                    'Sponsorship',
+                    '  Sponsorship',
                     style: Theme.of(context).textTheme.bodySmall!.merge(
                         TextStyle(
                             color: Colors.grey, fontWeight: FontWeight.w200)),

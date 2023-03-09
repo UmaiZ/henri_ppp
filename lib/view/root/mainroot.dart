@@ -38,7 +38,7 @@ class _MainRootState extends State<MainRoot> {
     final Size size = MediaQuery.of(context).size;
 
     return Container(
-      height: size.height * 0.085,
+      height: size.height * 0.11,
       color: Theme.of(context).colorScheme.secondary,
       child: Stack(
         clipBehavior: Clip.none,
@@ -55,7 +55,7 @@ class _MainRootState extends State<MainRoot> {
                 child: bottomitems(0, Icons.home_outlined)),
           ),
           Positioned(
-            bottom: pageindex == 1 ? size.height * 0.0375 : 5,
+            bottom: pageindex == 1 ? size.height * 0.037 : 5,
             left: size.width * 0.29,
             child: GestureDetector(
                 onTap: () {
@@ -66,7 +66,7 @@ class _MainRootState extends State<MainRoot> {
                 child: bottomitems(1, Icons.add_outlined)),
           ),
           Positioned(
-            bottom: pageindex == 2 ? size.height * 0.0375 : 5,
+            bottom: pageindex == 2 ? size.height * 0.037 : 5,
             right: size.width * 0.29,
             child: GestureDetector(
                 onTap: () {
@@ -109,7 +109,8 @@ class _MainRootState extends State<MainRoot> {
                   )
                 : BoxShadow(),
           ],
-          borderRadius: BorderRadius.all(Radius.circular(20)),
+          borderRadius:
+              BorderRadius.all(Radius.circular(index == pageindex ? 20 : 0)),
           color: index == pageindex
               ? Theme.of(context).colorScheme.primary
               : Theme.of(context).colorScheme.secondary),
@@ -117,7 +118,7 @@ class _MainRootState extends State<MainRoot> {
         child: Icon(
           icon,
           color: Colors.white,
-          size: 40,
+          size: 30,
         ),
       ),
     );
