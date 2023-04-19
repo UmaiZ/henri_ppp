@@ -29,10 +29,14 @@ class HomeScreen extends StatelessWidget {
             size: 30,
           ),
         ),
-        title: Text(
-          'HOME',
-          style: Theme.of(context).textTheme.headlineMedium,
+        title: Image.asset(
+          'assets/images/logoline.png',
+          height: size.height * 0.0375,
         ),
+        // title: Text(
+        //   'HOME',
+        //   style: Theme.of(context).textTheme.headlineMedium,
+        // ),
         centerTitle: true,
         actions: [
           GestureDetector(
@@ -97,7 +101,7 @@ class HomeScreen extends StatelessWidget {
                             width: 10,
                           ),
                           Text(
-                            "What's in your mind write something",
+                            "Show how you are training",
                             style: Theme.of(context)
                                 .textTheme
                                 .bodySmall!

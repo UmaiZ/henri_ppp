@@ -135,7 +135,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     child: btnGlobal(
                       width: 0.375,
                       height: 0.05,
-                      text: "Add Story",
+                      text: "Add Highlight",
                     ),
                   ),
                   GestureDetector(
@@ -166,7 +166,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               tabindex = 0;
                             });
                           },
-                          child: TabButtons('About', 0)),
+                          child: TabButtons('Bio', 0)),
                       SizedBox(
                         width: size.width * 0.0175,
                       ),
@@ -176,7 +176,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               tabindex = 1;
                             });
                           },
-                          child: TabButtons('Photos', 1)),
+                          child: TabButtons('Highlights', 1)),
                       SizedBox(
                         width: size.width * 0.0175,
                       ),
@@ -186,27 +186,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               tabindex = 2;
                             });
                           },
-                          child: TabButtons('Reviews', 2)),
-                      SizedBox(
-                        width: size.width * 0.0175,
-                      ),
-                      GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              tabindex = 3;
-                            });
-                          },
-                          child: TabButtons('Detail', 3)),
-                      SizedBox(
-                        width: size.width * 0.0175,
-                      ),
-                      GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              tabindex = 4;
-                            });
-                          },
-                          child: TabButtons('Videos', 4))
+                          child: TabButtons('Rankings', 2)),
+                      // SizedBox(
+                      //   width: size.width * 0.0175,
+                      // ),
+                      // GestureDetector(
+                      //     onTap: () {
+                      //       setState(() {
+                      //         tabindex = 3;
+                      //       });
+                      //     },
+                      //     child: TabButtons('Detail', 3)),
+                      // SizedBox(
+                      //   width: size.width * 0.0175,
+                      // ),
+                      // GestureDetector(
+                      //     onTap: () {
+                      //       setState(() {
+                      //         tabindex = 4;
+                      //       });
+                      //     },
+                      //     child: TabButtons('Videos', 4))
                     ],
                   ),
                 ),
@@ -215,30 +215,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 height: size.height * 0.02,
               ),
               tabindex == 0
-                  ? SizedBox(
-                      width: size.width * 0.95,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'BIO',
-                            style: Theme.of(context).textTheme.headlineMedium,
-                          ),
-                          SizedBox(
-                            height: size.height * 0.02,
-                          ),
-                          Text(
-                            'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis',
-                            style: Theme.of(context).textTheme.bodyMedium,
-                          ),
-                          SizedBox(
-                            height: size.height * 0.02,
-                          ),
-                        ],
-                      ),
-                    )
-                  : Container(),
-              tabindex == 3
                   ? SizedBox(
                       width: size.width * 0.95,
                       child: Column(
@@ -304,7 +280,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     )
                   : Container(),
-              tabindex == 0 || tabindex == 1 || tabindex == 4
+              tabindex == 1
                   ? SizedBox(
                       width: size.width * 0.95,
                       child: GridView.builder(

@@ -197,7 +197,38 @@ class _DrawerScreenState extends State<DrawerScreen> {
                                 child: Align(
                                   alignment: Alignment.centerLeft,
                                   child: Text(
-                                    "My Friends",
+                                    "Fans List",
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(
+                                        fontSize: 19, color: Colors.white),
+                                  ),
+                                ),
+                              ))),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => FriendList()));
+                      },
+                      child: Container(
+                          width: res_width * 0.7,
+                          height: res_height * 0.065,
+                          decoration: BoxDecoration(
+                              color: Theme.of(context).colorScheme.primary,
+                              borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(10),
+                                  bottomRight: Radius.circular(10))),
+                          child: Container(
+                              width: res_width * 0.4,
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 20),
+                                child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    "Teammates",
                                     textAlign: TextAlign.left,
                                     style: TextStyle(
                                         fontSize: 19, color: Colors.white),
