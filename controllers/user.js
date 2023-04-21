@@ -3,7 +3,6 @@ var bcrypt = require("bcryptjs");
 const { Users } = require("../model/user");
 
 const registerUser = async (req, res) => {
-
     const usercheck = await Users.find({
         userEmail: req.body.userEmail,
     }).lean();
@@ -97,7 +96,58 @@ const loginUser = async (req, res) => {
     }
 };
 
+const updateUser = async (req, res) => {
+    if (req.body.userNameChanged) {
+        const usercheck = await Users.find({
+            userName: req.body.userName,
+        });
+        if (usercheck.length != 0) {
+            return res
+                .status(200)
+                .json({ message: "user name already exist", success: false });
+        }
+
+    }
+
+    try {
+        const updateUser = await Users.findByIdAndUpdate(
+            req.user.user_id,
+            {
+                userEmail: req.body.userEmail,
+                userName: req.body.userName,
+                userCity: req.body.userCity,
+                userAddress: req.body.userAddress,
+                userCountry: req.body.userCountry,
+                userNumber: req.body.userNumber,
+                userSchool: req.body.userSchool,
+                userTeam: req.body.userTeam,
+                userCoaches: req.body.userCoaches,
+                userBio: req.body.userBio,
+                userSports: req.body.userSports,
+            },
+            {
+                new: true,
+            }
+        );
+        res.status(200).json({
+            success: true,
+            data: updateUser,
+            message: "User saved successfully",
+        });
+    } catch (err) {
+        if (err.name === "ValidationError") {
+            console.error(Object.values(err.errors).map((val) => val.message));
+            return res.status(400).json({
+                success: false,
+                message: Object.values(err.errors).map((val) => val.message)[0],
+            });
+        }
+        return res.status(400).json({ success: false, message: err });
+    }
+};
+
 module.exports = {
     registerUser,
-    loginUser
+    loginUser,
+    updateUser
 };

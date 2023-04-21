@@ -22,9 +22,14 @@ const newsFeedSchema = new mongoose.Schema(
     ],
     like: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "likeNewsFeed",
-      },
+        'detail': {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "likeNewsFeed",
+        },
+        'rating': {
+          type: Number,
+        },
+      }
     ],
     comment: [
       {

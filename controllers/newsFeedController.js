@@ -11,49 +11,38 @@ require("dotenv/config");
 const uploadOptions = multer({
   storage: multer.memoryStorage(),
   limits: {
-    fileSize: 5 * 1024 * 1024, // no larger than 5mb, you can change as needed.
+    fileSize: 5 * 1024 * 1024,
   },
 });
 
 const addNewsFeed = async (req, res) => {
   try {
-    uploadOptions("images")(req, res, (err) => {
-      if (err) {
-        return res.status(400).json({
-          success: false,
-          message: "Image size should be less than 5MB",
-        });
-      }
-    });
+
     const { title, description } = req.body;
     const { files } = req;
     const { user_id } = req.user;
     const images = [];
-    if (title == undefined || description == undefined || title == "" || description == "" || title == null || description == null) {
-      return res.status(400).json({
-        success: false,
-        message: "Title and Description are required",
-      });
-    }
-    if (files.length == 0) {
-      return res.status(400).json({
-        success: false,
-        message: "Image is required",
-      });
-    }
+    // if (title == undefined || description == undefined || title == "" || description == "" || title == null || description == null) {
+    //   return res.status(400).json({
+    //     success: false,
+    //     message: "Title and Description are required",
+    //   });
+    // }
 
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
-      const fileName = file.originalname;
-      const fileContent = file.buffer;
-      const fileLocation = await uploadFileWithFolder(
-        fileName,
-        "newsFeed",
-        fileContent
-      );
-      images.push(fileLocation);
-    }
+    if (req.body.media) {
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const fileName = file.originalname;
+        const fileContent = file.buffer;
+        const fileLocation = await uploadFileWithFolder(
+          fileName,
+          "newsFeed",
+          fileContent
+        );
+        images.push(fileLocation);
+      }
 
+    }
     const newsFeed = await newsFeedModel.create({
       title: title,
       description: description,
@@ -80,9 +69,10 @@ const updateNewsFeed = async (req, res) => {
   try {
     const { newsFeedId } = req.params;
     const { title, description } = req.body;
-    const { files } = req;
+    const { files } = req.files;
     const { user_id } = req.user;
     const images = [];
+    console.log(files)
 
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
