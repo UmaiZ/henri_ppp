@@ -1,12 +1,23 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:henri_ppp/helpers/imagepicker/imagepicker.dart';
+import 'package:henri_ppp/providers/create_post_provider.dart';
 import 'package:henri_ppp/views/root/view/drawer.dart';
+import 'package:provider/provider.dart';
 
-class CreatePostScreen extends StatelessWidget {
+class CreatePostScreen extends StatefulWidget {
   const CreatePostScreen({super.key});
 
   @override
+  State<CreatePostScreen> createState() => _CreatePostScreenState();
+}
+
+class _CreatePostScreenState extends State<CreatePostScreen> {
+  @override
   Widget build(BuildContext context) {
+    final postcontroller = Provider.of<createPostProvider>(context);
+
     final Size size = MediaQuery.of(context).size;
     final GlobalKey<ScaffoldState> key = GlobalKey();
     return Scaffold(
@@ -72,6 +83,44 @@ class CreatePostScreen extends StatelessWidget {
                 height: size.height * 0.025,
               ),
               SizedBox(
+                height:
+                    postcontroller.images.length > 0 ? size.height * 0.1 : 0,
+                width: size.width * 0.9,
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: postcontroller.images.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: EdgeInsets.only(left: index == 0 ? 0 : 13),
+                        child: Stack(
+                          children: [
+                            Image.file(
+                              File(postcontroller.images[index]!.path),
+                              width: size.width * 0.3,
+                              height: size.width * 0.3,
+                              fit: BoxFit.contain,
+                            ),
+                            Positioned(
+                                right: 0,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    postcontroller.deleteImage(index);
+                                  },
+                                  child: const Icon(
+                                    Icons.cancel_outlined,
+                                    color: Colors.white,
+                                  ),
+                                ))
+                          ],
+                        ),
+                      );
+                    }),
+              ),
+              SizedBox(
+                height:
+                    postcontroller.images.length > 0 ? size.height * 0.025 : 0,
+              ),
+              SizedBox(
                 width: size.width * 0.9,
                 child: TextField(
                   keyboardType: TextInputType.multiline,
@@ -109,7 +158,7 @@ class CreatePostScreen extends StatelessWidget {
                           onTap: () async {
                             var images = await ImagePickerHelper()
                                 .galleryImageMultiple();
-                            print(images);
+                            postcontroller.addImages(images);
                           },
                           child: const Icon(
                             Icons.camera_alt_outlined,

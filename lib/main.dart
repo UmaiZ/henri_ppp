@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:henri_ppp/providers/create_post_provider.dart';
 import 'package:henri_ppp/providers/user_provider.dart';
 import 'package:henri_ppp/views/onboarding/view/login.dart';
 import 'package:henri_ppp/helpers/theme.dart';
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Henri PPP',
         theme: themedata,
-        home: Splash(),
+        home: const Splash(),
       ),
     );
   }
@@ -44,7 +45,7 @@ class _SplashState extends State<Splash> {
         const Duration(seconds: 2),
         () => Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => LoginPage()),
+              MaterialPageRoute(builder: (context) => const LoginPage()),
             ));
   }
 
@@ -52,7 +53,7 @@ class _SplashState extends State<Splash> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage("assets/images/blankScreen.png"),
             fit: BoxFit.cover,
@@ -78,4 +79,6 @@ class _SplashState extends State<Splash> {
 
 List<SingleChildWidget> providers = [
   ChangeNotifierProvider<UserProvider>(create: (_) => UserProvider()),
+  ChangeNotifierProvider<createPostProvider>(
+      create: (_) => createPostProvider()),
 ];
