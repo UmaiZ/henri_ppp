@@ -1,16 +1,19 @@
 import 'dart:convert';
 
+import 'package:henri_ppp/providers/user_provider.dart';
 import 'package:http/http.dart' as http;
 
 class NetworkHelper {
+  String baseUrl = "http://localhost:3000";
+
   getApi(String url) async {
     // final query = params?.entries.map((e) => '${e.key}=${e.value}').join('&');
 
     final response = await http.get(
       // Uri.parse('$url?$query'),
-      Uri.parse('$url'),
+      Uri.parse('$baseUrl/$url'),
       headers: {
-        // 'x-access-token': token,
+        'x-access-token': token,
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       },
@@ -32,10 +35,10 @@ class NetworkHelper {
 
     final response = await http.post(
         // Uri.parse('$url?$query'),
-        Uri.parse('$url'),
+        Uri.parse('$baseUrl/$url'),
         headers: {
           // ...?headers,
-          // 'x-access-token': token,
+          'x-access-token': token,
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         },

@@ -6,7 +6,16 @@ class txtfieldGlobal extends StatelessWidget {
   final width;
   final hinttext;
   final suffixicon;
-  const txtfieldGlobal({super.key, this.width, this.hinttext, this.suffixicon});
+  final validator;
+  final textController;
+  const txtfieldGlobal({
+    super.key,
+    this.width,
+    this.hinttext,
+    this.suffixicon,
+    this.validator,
+    this.textController,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -14,30 +23,34 @@ class txtfieldGlobal extends StatelessWidget {
 
     return SizedBox(
       width: size.width * width,
-      child: TextField(
+      child: TextFormField(
+        autocorrect: false,
+        enableSuggestions: false,
+        controller: textController,
+        validator: validator,
         style: Theme.of(context).textTheme.bodyMedium,
-        decoration: new InputDecoration(
-          focusedBorder: OutlineInputBorder(
+        decoration: InputDecoration(
+          focusedBorder: const OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(10)),
             borderSide: BorderSide(width: 1, color: Colors.white),
           ),
-          disabledBorder: OutlineInputBorder(
+          disabledBorder: const OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(10)),
             borderSide: BorderSide(width: 1, color: Colors.white),
           ),
-          enabledBorder: OutlineInputBorder(
+          enabledBorder: const OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(10)),
             borderSide: BorderSide(width: 1, color: Colors.white),
           ),
-          border: OutlineInputBorder(
+          border: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(10)),
               borderSide: BorderSide(
                 width: 1,
               )),
-          errorBorder: OutlineInputBorder(
+          errorBorder: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(10)),
               borderSide: BorderSide(width: 1, color: Colors.white)),
-          focusedErrorBorder: OutlineInputBorder(
+          focusedErrorBorder: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(10)),
               borderSide: BorderSide(width: 1, color: Colors.white)),
           hintText: hinttext,

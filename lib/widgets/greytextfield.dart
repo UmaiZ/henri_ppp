@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 class greyGlobalTextField extends StatelessWidget {
   final width;
   final hinttext;
-  const greyGlobalTextField({super.key, this.width, this.hinttext});
+  final controller;
+  const greyGlobalTextField(
+      {super.key, this.width, this.hinttext, this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -14,10 +14,11 @@ class greyGlobalTextField extends StatelessWidget {
     return SizedBox(
       width: size.width * width,
       child: TextField(
+        controller: controller,
         style: Theme.of(context)
             .textTheme
             .bodyMedium!
-            .merge(TextStyle(color: Colors.grey)),
+            .merge(const TextStyle(color: Colors.grey)),
         decoration: InputDecoration(
           hintText: hinttext,
           hintStyle: Theme.of(context).textTheme.bodySmall,

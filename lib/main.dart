@@ -1,8 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:henri_ppp/features/onboarding/view/login.dart';
+import 'package:henri_ppp/providers/user_provider.dart';
+import 'package:henri_ppp/views/onboarding/view/login.dart';
 import 'package:henri_ppp/helpers/theme.dart';
+import 'package:provider/provider.dart';
+import 'package:provider/single_child_widget.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,11 +17,14 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Henri PPP',
-      theme: themedata,
-      home: Splash(),
+    return MultiProvider(
+      providers: providers,
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Henri PPP',
+        theme: themedata,
+        home: Splash(),
+      ),
     );
   }
 }
@@ -69,3 +75,7 @@ class _SplashState extends State<Splash> {
     );
   }
 }
+
+List<SingleChildWidget> providers = [
+  ChangeNotifierProvider<UserProvider>(create: (_) => UserProvider()),
+];
