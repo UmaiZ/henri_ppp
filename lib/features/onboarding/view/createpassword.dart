@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:henri_ppp/view/onboarding/login.dart';
+import 'package:henri_ppp/features/onboarding/view/login.dart';
 import 'package:henri_ppp/widgets/button.dart';
 import 'package:henri_ppp/widgets/textfield.dart';
 

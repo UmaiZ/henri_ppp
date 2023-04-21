@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:henri_ppp/view/root/drawer.dart';
+import 'package:henri_ppp/features/root/view/drawer.dart';
 
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({super.key});

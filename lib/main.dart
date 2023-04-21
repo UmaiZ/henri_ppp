@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:henri_ppp/features/onboarding/view/login.dart';
 import 'package:henri_ppp/helpers/theme.dart';
-import 'package:henri_ppp/view/onboarding/login.dart';
 
 void main() {
   runApp(const MyApp());

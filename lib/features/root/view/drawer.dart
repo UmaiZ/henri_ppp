@@ -1,13 +1,13 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:henri_ppp/view/extra/privacy.dart';
-import 'package:henri_ppp/view/extra/setting.dart';
-import 'package:henri_ppp/view/extra/terms.dart';
-import 'package:henri_ppp/view/live/livelist.dart';
-import 'package:henri_ppp/view/messages/messagelist.dart';
-import 'package:henri_ppp/view/profile/friendlist.dart';
-import 'package:henri_ppp/view/root/mainroot.dart';
+import 'package:henri_ppp/features/extra/view/privacy.dart';
+import 'package:henri_ppp/features/extra/view/setting.dart';
+import 'package:henri_ppp/features/extra/view/terms.dart';
+import 'package:henri_ppp/features/live/view/livelist.dart';
+import 'package:henri_ppp/features/messages/view/messagelist.dart';
+import 'package:henri_ppp/features/profile/view/friendlist.dart';
+import 'package:henri_ppp/features/root/view/mainroot.dart';
 
 class DrawerScreen extends StatefulWidget {
   @override

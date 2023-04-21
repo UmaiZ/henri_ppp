@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:henri_ppp/view/post/createstory.dart';
-import 'package:henri_ppp/view/profile/editprofile.dart';
-import 'package:henri_ppp/view/profile/friendlist.dart';
-import 'package:henri_ppp/view/root/drawer.dart';
+import 'package:henri_ppp/features/post/view/createstory.dart';
+import 'package:henri_ppp/features/profile/view/editprofile.dart';
+import 'package:henri_ppp/features/profile/view/friendlist.dart';
+import 'package:henri_ppp/features/root/view/drawer.dart';
+
 import 'package:henri_ppp/widgets/button.dart';
 
 class ProfileScreen extends StatefulWidget {

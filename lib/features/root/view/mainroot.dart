@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:henri_ppp/view/homeview/home.dart';
-import 'package:henri_ppp/view/notifications/notification.dart';
-import 'package:henri_ppp/view/post/createpost.dart';
-import 'package:henri_ppp/view/profile/profile.dart';
+import 'package:henri_ppp/features/homeview/view/home.dart';
+import 'package:henri_ppp/features/notifications/view/notification.dart';
+import 'package:henri_ppp/features/post/view/createpost.dart';
+import 'package:henri_ppp/features/profile/view/profile.dart';
 
 int pageindex = 0;
 

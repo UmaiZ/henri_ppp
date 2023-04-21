@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:henri_ppp/view/live/livedetails.dart';
+import 'package:henri_ppp/features/live/view/livedetails.dart';
 
 class LiveList extends StatefulWidget {
   const LiveList({super.key});

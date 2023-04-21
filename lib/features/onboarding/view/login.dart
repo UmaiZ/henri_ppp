@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:henri_ppp/view/onboarding/forgot.dart';
-import 'package:henri_ppp/view/onboarding/register.dart';
-import 'package:henri_ppp/view/root/mainroot.dart';
+import 'package:henri_ppp/features/onboarding/view/forgot.dart';
+import 'package:henri_ppp/features/onboarding/view/register.dart';
+import 'package:henri_ppp/features/root/view/mainroot.dart';
+
 import 'package:henri_ppp/widgets/button.dart';
 import 'package:henri_ppp/widgets/textfield.dart';
 

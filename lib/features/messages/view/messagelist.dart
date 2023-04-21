@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:henri_ppp/view/messages/mesagedetail.dart';
+import 'package:henri_ppp/features/messages/view/mesagedetail.dart';
 
 class MessageList extends StatelessWidget {
   const MessageList({super.key});

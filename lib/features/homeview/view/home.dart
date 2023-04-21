@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:henri_ppp/view/live/golive.dart';
-import 'package:henri_ppp/view/root/drawer.dart';
-
-import '../post/createstory.dart';
+import 'package:henri_ppp/features/live/view/golive.dart';
+import 'package:henri_ppp/features/post/view/createstory.dart';
+import 'package:henri_ppp/features/root/view/drawer.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
