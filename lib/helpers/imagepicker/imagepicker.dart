@@ -22,6 +22,15 @@ class ImagePickerHelper {
   }
 
   @override
+  gallerVideoMultiple() async {
+    final image = await imagePicker.pickVideo(source: ImageSource.gallery);
+    if (image == null) {
+      // throw ImageNotSelectedException();
+    }
+    return image!;
+  }
+
+  @override
   Future<List> galleryImageMultiple() async {
     List images = [];
     final image = await imagePicker.pickMultiImage();

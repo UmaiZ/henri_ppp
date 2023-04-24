@@ -5,6 +5,7 @@ import 'package:henri_ppp/helpers/imagepicker/imagepicker.dart';
 import 'package:henri_ppp/providers/create_post_provider.dart';
 import 'package:henri_ppp/views/root/view/drawer.dart';
 import 'package:provider/provider.dart';
+import 'package:video_player/video_player.dart';
 
 class CreatePostScreen extends StatefulWidget {
   const CreatePostScreen({super.key});
@@ -14,9 +15,18 @@ class CreatePostScreen extends StatefulWidget {
 }
 
 class _CreatePostScreenState extends State<CreatePostScreen> {
+  late VideoPlayerController controller;
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final postcontroller = Provider.of<createPostProvider>(context);
+    TextEditingController descriptioncontroller = TextEditingController();
 
     final Size size = MediaQuery.of(context).size;
     final GlobalKey<ScaffoldState> key = GlobalKey();
@@ -39,11 +49,22 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
           style: Theme.of(context).textTheme.headlineMedium,
         ),
         actions: [
-          Padding(
-            padding: const EdgeInsets.all(13.0),
-            child: Text(
-              'Post',
-              style: Theme.of(context).textTheme.headlineSmall,
+          GestureDetector(
+            onTap: () async {
+              var data = {"description": descriptioncontroller.text.toString()};
+
+              if (await postcontroller.createPost(
+                  data, postcontroller.images)) {
+                postcontroller.clearImages();
+                descriptioncontroller.clear();
+              }
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(13.0),
+              child: Text(
+                'Post',
+                style: Theme.of(context).textTheme.headlineSmall,
+              ),
             ),
           )
         ],
@@ -90,16 +111,53 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                     scrollDirection: Axis.horizontal,
                     itemCount: postcontroller.images.length,
                     itemBuilder: (context, index) {
+                      // print(postcontroller.images[index].path
+                      //     .split('.')
+                      //     .last
+                      //     .toString()
+                      //     .toUpperCase());
+                      // print(postcontroller.images[index]);
+
                       return Padding(
                         padding: EdgeInsets.only(left: index == 0 ? 0 : 13),
                         child: Stack(
                           children: [
-                            Image.file(
-                              File(postcontroller.images[index]!.path),
-                              width: size.width * 0.3,
-                              height: size.width * 0.3,
-                              fit: BoxFit.contain,
-                            ),
+                            postcontroller.images[index]!.path
+                                            .split('.')
+                                            .last
+                                            .toString()
+                                            .toUpperCase() ==
+                                        "MOV" ||
+                                    postcontroller.images[index]!.path
+                                            .split('.')
+                                            .last
+                                            .toString()
+                                            .toUpperCase() ==
+                                        "mp4"
+                                ? Container(
+                                    // padding: const EdgeInsets.all(20),
+                                    child: AspectRatio(
+                                      aspectRatio: controller.value.aspectRatio,
+                                      child: Stack(
+                                        alignment: Alignment.bottomCenter,
+                                        children: <Widget>[
+                                          VideoPlayer(controller),
+                                          ClosedCaption(
+                                              text: controller
+                                                  .value.caption.text),
+                                          // _ControlsOverlay(controller: _controller),
+                                          VideoProgressIndicator(controller,
+                                              allowScrubbing: false),
+                                        ],
+                                      ),
+                                    ),
+                                  )
+                                : Image.file(
+                                    File(postcontroller.images[index]!.path),
+                                    width: size.width * 0.3,
+                                    height: size.width * 0.3,
+                                    fit: BoxFit.contain,
+                                  ),
                             Positioned(
                                 right: 0,
                                 child: GestureDetector(
@@ -122,7 +180,8 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
               ),
               SizedBox(
                 width: size.width * 0.9,
-                child: TextField(
+                child: TextFormField(
+                  controller: descriptioncontroller,
                   keyboardType: TextInputType.multiline,
                   minLines: 15,
                   maxLines: 20,
@@ -150,9 +209,29 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                           Icons.emoji_emotions_outlined,
                           color: Colors.white,
                         ),
-                        const Icon(
-                          Icons.video_call_outlined,
-                          color: Colors.white,
+                        GestureDetector(
+                          onTap: () async {
+                            var images =
+                                await ImagePickerHelper().gallerVideoMultiple();
+                            postcontroller.addVideo(images);
+
+                            controller = VideoPlayerController.file(
+                              File(images.path),
+                              // closedCaptionFile: _loadCaptions(),
+                              videoPlayerOptions:
+                                  VideoPlayerOptions(mixWithOthers: true),
+                            );
+
+                            controller.addListener(() {
+                              setState(() {});
+                            });
+                            controller.setLooping(true);
+                            controller.initialize();
+                          },
+                          child: const Icon(
+                            Icons.video_call_outlined,
+                            color: Colors.white,
+                          ),
                         ),
                         GestureDetector(
                           onTap: () async {

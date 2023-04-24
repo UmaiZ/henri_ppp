@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:henri_ppp/models/user.dart';
+import 'package:henri_ppp/services/api.dart';
 
 class createPostProvider extends ChangeNotifier {
   late UserModel _user;
@@ -12,6 +13,11 @@ class createPostProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  addVideo(video) {
+    _selectedImages.add(video);
+    notifyListeners();
+  }
+
   deleteImage(index) {
     _selectedImages.removeAt(index);
     notifyListeners();
@@ -20,5 +26,15 @@ class createPostProvider extends ChangeNotifier {
   clearImages() {
     _selectedImages = [];
     notifyListeners();
+  }
+
+  Future<bool> createPost(data, file) async {
+    bool result = false;
+    try {
+      return await ApiService().createPost("createNewsFeed", data, file);
+    } catch (e) {
+      notifyListeners();
+    }
+    return result;
   }
 }

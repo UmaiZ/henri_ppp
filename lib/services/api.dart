@@ -49,4 +49,25 @@ class ApiService {
       rethrow;
     }
   }
+
+  createPost(url, data, file) async {
+    bool result = false;
+    print(data);
+    print(url);
+
+    try {
+      final response = await NetworkHelper().postFormApi(url, data, file);
+      logger.d(response);
+
+      if (!response['success']) {
+        return showtoast(response['message']);
+      }
+      showtoast(response['message']);
+      result = true;
+      return result;
+    } catch (e) {
+      logger.e(e);
+      rethrow;
+    }
+  }
 }
