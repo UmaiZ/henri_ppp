@@ -29,7 +29,7 @@ const addNewsFeed = async (req, res) => {
     //   });
     // }
 
-    if (req.body.media) {
+    if (files) {
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
         const fileName = file.originalname;
