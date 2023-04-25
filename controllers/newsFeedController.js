@@ -156,6 +156,10 @@ const getNewsFeed = async (req, res) => {
 
     const newsFeed = await newsFeedModel.find({}).sort({ createdAt: -1 }).skip(skip).limit(limitData).populate([
       {
+        path: "createdBy",
+        model: "users",
+      },
+      {
         path: "like",
         model: "likeNewsFeed",
       },
