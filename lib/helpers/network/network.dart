@@ -21,7 +21,7 @@ class NetworkHelper {
     );
     final body = response.body;
     final jsonBody = json.decode(body);
-    return jsonBody as Map<String, dynamic>;
+    return jsonBody;
   }
 
   postApi(String url, data) async {
@@ -49,7 +49,6 @@ class NetworkHelper {
     final headers = {'x-access-token': token};
     request.headers.addAll(headers);
     for (var i = 0; i < file.length; i++) {
-      print('fole add');
       var multipartFile = await http.MultipartFile.fromPath(
           'images', file[i].path,
           filename: file[i].path.split('/').last,
@@ -57,8 +56,6 @@ class NetworkHelper {
       request.files.add(multipartFile);
     }
     var response = await request.send();
-
-    print(request);
     final res = await http.Response.fromStream(response);
 
     if (res.statusCode == 200) {

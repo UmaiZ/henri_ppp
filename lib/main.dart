@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:henri_ppp/providers/create_post_provider.dart';
+import 'package:henri_ppp/providers/feed_provider.dart';
 import 'package:henri_ppp/providers/user_provider.dart';
 import 'package:henri_ppp/views/onboarding/view/login.dart';
 import 'package:henri_ppp/helpers/theme.dart';
@@ -79,6 +80,7 @@ class _SplashState extends State<Splash> {
 
 List<SingleChildWidget> providers = [
   ChangeNotifierProvider<UserProvider>(create: (_) => UserProvider()),
+  ChangeNotifierProvider<FeedProvider>(create: (_) => FeedProvider()),
   ChangeNotifierProvider<createPostProvider>(
       create: (_) => createPostProvider()),
 ];
