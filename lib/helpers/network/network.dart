@@ -5,7 +5,8 @@ import 'package:henri_ppp/providers/user_provider.dart';
 import 'package:http/http.dart' as http;
 
 class NetworkHelper {
-  String baseUrl = "http://localhost:3000";
+  // String baseUrl = "http://localhost:3000";
+  String baseUrl = "http://3.111.58.237:3000";
 
   getApi(String url) async {
     // final query = params?.entries.map((e) => '${e.key}=${e.value}').join('&');
