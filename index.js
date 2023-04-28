@@ -16,11 +16,13 @@ app.use("/public/uploads", express.static(__dirname + "/public/uploads"));
 require("dotenv/config");
 const newsFeedRouter = require("./routes/newsFeedRouter");
 const userRouter = require("./routes/user");
+const statusRouter = require("./routes/statusRouter");
 
 const responseHandler = require("./utils/ResponseHandler/responseHandler");
 
 app.use(newsFeedRouter);
 app.use(userRouter);
+app.use(statusRouter);
 app.get("/", (req, res) => {
   res.status(200).json({ success: true, message: "Server Running" });
 });
