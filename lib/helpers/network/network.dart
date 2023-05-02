@@ -64,4 +64,38 @@ class NetworkHelper {
       return resData;
     }
   }
+
+  storyFormApi(String url, data, file) async {
+    var postUri = Uri.parse('$baseUrl/$url');
+    var request = http.MultipartRequest("POST", postUri);
+    request.fields['user'] = 'blah';
+    data.forEach((key, value) {
+      request.fields['$key'] = value;
+    });
+    final headers = {'x-access-token': token};
+    request.headers.addAll(headers);
+    var multipartFile = await http.MultipartFile.fromPath(
+        file.path.split('.').last.toString().toUpperCase() == "MOV"
+            ? "video"
+            : file.path.split('.').last.toString().toUpperCase() == "MP4"
+                ? "video"
+                : "image",
+        file.path,
+        filename: file.path.split('/').last,
+        contentType: MediaType(
+            file.path.split('.').last.toString().toUpperCase() == "MOV"
+                ? "video"
+                : file.path.split('.').last.toString().toUpperCase() == "MP4"
+                    ? "video"
+                    : "image",
+            "${file.path.split('.').last}"));
+    request.files.add(multipartFile);
+    var response = await request.send();
+    final res = await http.Response.fromStream(response);
+
+    if (res.statusCode == 200 || res.statusCode == 500) {
+      var resData = json.decode(res.body.toString());
+      return resData;
+    }
+  }
 }

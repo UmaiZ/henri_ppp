@@ -1,9 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:henri_ppp/providers/feed_provider.dart';
+import 'package:henri_ppp/providers/status_provider.dart';
 import 'package:henri_ppp/views/homeview/widget/post.dart';
 import 'package:henri_ppp/views/live/view/golive.dart';
 import 'package:henri_ppp/views/post/view/createstory.dart';
@@ -17,11 +15,12 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     final GlobalKey<ScaffoldState> key = GlobalKey();
-    final feedcontroller = Provider.of<FeedProvider>(context);
+    // final feedprovider = Provider.of<FeedProvider>(context);
+    // final statusprovider = Provider.of<StatusProvider>(context);
 
     return Scaffold(
       key: key,
-      drawer: DrawerScreen(),
+      drawer: const DrawerScreen(),
       backgroundColor: Theme.of(context).colorScheme.primary,
       appBar: AppBar(
         leading: GestureDetector(
@@ -59,8 +58,8 @@ class HomeScreen extends StatelessWidget {
           ),
           GestureDetector(
               onTap: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => CameraAppTest()));
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const CameraAppTest()));
               },
               child: Image.asset(
                 'assets/images/story.png',
@@ -125,18 +124,39 @@ class HomeScreen extends StatelessWidget {
               SizedBox(
                 height: size.height * 0.01,
               ),
-              feedcontroller.feeddata.length > 0
-                  ? SizedBox(
-                      child: ListView.builder(
-                          physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: feedcontroller.feeddata.length,
-                          itemBuilder: (context, index) {
-                            return PostWidget(
-                                data: feedcontroller.feeddata[index]);
-                          }),
-                    )
-                  : SizedBox(),
+              Consumer<FeedProvider>(
+                builder: (context, postProvider, child) {
+                  if (postProvider.feeddata.isEmpty) {
+                    postProvider.getFeed();
+                    return const Center(
+                        child: CircularProgressIndicator(
+                      color: Colors.white,
+                    ));
+                  } else {
+                    return ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: postProvider.feeddata.length,
+                      itemBuilder: (context, index) {
+                        return PostWidget(data: postProvider.feeddata[index]);
+                      },
+                    );
+                  }
+                },
+              ),
+
+              // feedprovider.feeddata.isNotEmpty
+              //     ? SizedBox(
+              //         child: ListView.builder(
+              //             physics: const NeverScrollableScrollPhysics(),
+              //             shrinkWrap: true,
+              //             itemCount: feedprovider.feeddata.length,
+              //             itemBuilder: (context, index) {
+              //               return PostWidget(
+              //                   data: feedprovider.feeddata[index]);
+              //             }),
+              //       )
+              //     : const SizedBox(),
               SizedBox(
                 height: size.height * 0.01,
               ),
@@ -150,67 +170,169 @@ class HomeScreen extends StatelessWidget {
 
   Widget storelist(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-
-    return SizedBox(
-      height: size.height * 0.125,
-      width: size.width * 0.95,
-      child: ListView.builder(
-        itemCount: 6,
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (context, i) {
-          return i == 0
-              ? Row(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => CameraAppTest()));
-                      },
-                      child: SizedBox(
-                        width: size.width * 0.2,
-                        height: size.width * 0.2,
-                        child: CircleAvatar(
-                          radius: 100,
-                          backgroundColor:
-                              Theme.of(context).colorScheme.secondary,
-                          child: const Icon(
-                            Icons.add,
-                            color: Colors.grey,
-                            size: 30,
+    return Consumer<StatusProvider>(
+      builder: (context, statusProvider, child) {
+        if (statusProvider.statusdata.isEmpty) {
+          statusProvider.getStatus();
+          return const Center(
+              child: CircularProgressIndicator(
+            color: Colors.white,
+          ));
+        } else {
+          return SizedBox(
+            height: size.height * 0.095,
+            width: size.width * 0.95,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: statusProvider.statusdata.length,
+              itemBuilder: (context, index) {
+                return index == 0
+                    ? Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => const CameraAppTest()));
+                            },
+                            child: SizedBox(
+                              width: size.width * 0.2,
+                              height: size.width * 0.2,
+                              child: CircleAvatar(
+                                radius: 100,
+                                backgroundColor:
+                                    Theme.of(context).colorScheme.secondary,
+                                child: const Icon(
+                                  Icons.add,
+                                  color: Colors.grey,
+                                  size: 30,
+                                ),
+                              ),
+                            ),
                           ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10),
+                            child: SizedBox(
+                              height: size.height * 0.095,
+                              width: size.height * 0.095,
+                              child: statusProvider.statusdata[index].createdBy
+                                          .userImage ==
+                                      ""
+                                  ? Image.asset(
+                                      'assets/images/imageplaceholder.png')
+                                  : ClipRRect(
+                                      borderRadius:
+                                          BorderRadius.circular(100.0),
+                                      child: CachedNetworkImage(
+                                        imageUrl: statusProvider
+                                            .statusdata[index]
+                                            .createdBy
+                                            .userImage
+                                            .toString(),
+                                        placeholder: (context, url) =>
+                                            Container(),
+                                        errorWidget: (context, url, error) =>
+                                            const Icon(Icons.error),
+                                        fit: BoxFit.fill,
+                                      ),
+                                    ),
+                            ),
+                          )
+                        ],
+                      )
+                    : Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: SizedBox(
+                          height: size.height * 0.095,
+                          width: size.height * 0.095,
+                          child: statusProvider
+                                      .statusdata[index].createdBy.userImage ==
+                                  ""
+                              ? Image.asset(
+                                  'assets/images/imageplaceholder.png')
+                              : ClipRRect(
+                                  borderRadius: BorderRadius.circular(100.0),
+                                  child: CachedNetworkImage(
+                                    imageUrl: statusProvider
+                                        .statusdata[index].createdBy.userImage
+                                        .toString(),
+                                    placeholder: (context, url) => Container(),
+                                    errorWidget: (context, url, error) =>
+                                        const Icon(Icons.error),
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
                         ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10),
-                      child: SizedBox(
-                        width: size.width * 0.2,
-                        height: size.width * 0.2,
-                        child: CircleAvatar(
-                          radius: 100,
-                          backgroundColor:
-                              Theme.of(context).colorScheme.secondary,
-                          child:
-                              Image.asset('assets/images/imageplaceholder.png'),
-                        ),
-                      ),
-                    )
-                  ],
-                )
-              : Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: SizedBox(
-                    width: size.width * 0.2,
-                    height: size.width * 0.2,
-                    child: CircleAvatar(
-                      radius: 100,
-                      backgroundColor: Theme.of(context).colorScheme.secondary,
-                      child: Image.asset('assets/images/imageplaceholder.png'),
-                    ),
-                  ),
-                );
-        },
-      ),
+                      );
+              },
+            ),
+          );
+        }
+      },
     );
   }
 }
+  //   return SizedBox(
+  //     height: size.height * 0.125,
+  //     width: size.width * 0.95,
+  //     child: ListView.builder(
+  //       itemCount: 6,
+  //       scrollDirection: Axis.horizontal,
+  //       itemBuilder: (context, i) {
+  //         return i == 0
+  //             ? Row(
+  //                 children: [
+  //                   GestureDetector(
+  //                     onTap: () {
+  //                       Navigator.of(context).push(MaterialPageRoute(
+  //                           builder: (context) => const CameraAppTest()));
+  //                     },
+  //                     child: SizedBox(
+  //                       width: size.width * 0.2,
+  //                       height: size.width * 0.2,
+  //                       child: CircleAvatar(
+  //                         radius: 100,
+  //                         backgroundColor:
+  //                             Theme.of(context).colorScheme.secondary,
+  //                         child: const Icon(
+  //                           Icons.add,
+  //                           color: Colors.grey,
+  //                           size: 30,
+  //                         ),
+  //                       ),
+  //                     ),
+  //                   ),
+  //                   Padding(
+  //                     padding: const EdgeInsets.only(left: 10),
+  //                     child: SizedBox(
+  //                       width: size.width * 0.2,
+  //                       height: size.width * 0.2,
+  //                       child: CircleAvatar(
+  //                         radius: 100,
+  //                         backgroundColor:
+  //                             Theme.of(context).colorScheme.secondary,
+  //                         child:
+  //                             Image.asset('assets/images/imageplaceholder.png'),
+  //                       ),
+  //                     ),
+  //                   )
+  //                 ],
+  //               )
+  //             : Padding(
+  //                 padding: const EdgeInsets.only(left: 10),
+  //                 child: SizedBox(
+  //                   width: size.width * 0.2,
+  //                   height: size.width * 0.2,
+  //                   child: CircleAvatar(
+  //                     radius: 100,
+  //                     backgroundColor: Theme.of(context).colorScheme.secondary,
+  //                     child: Image.asset('assets/images/imageplaceholder.png'),
+  //                   ),
+  //                 ),
+  //               );
+  //       },
+  //     ),
+  //   );
+  
+  
+  // }
+

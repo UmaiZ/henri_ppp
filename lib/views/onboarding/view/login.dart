@@ -8,15 +8,21 @@ import 'package:henri_ppp/widgets/button.dart';
 import 'package:henri_ppp/widgets/textfield.dart';
 import 'package:provider/provider.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
   @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  var formKey = GlobalKey<FormState>();
+
+  @override
   Widget build(BuildContext context) {
-    TextEditingController emailController = TextEditingController();
-    TextEditingController passwordController = TextEditingController();
     final usercontroller = Provider.of<UserProvider>(context, listen: false);
-    var formKey = GlobalKey<FormState>();
 
     final Size size = MediaQuery.of(context).size;
     return Scaffold(

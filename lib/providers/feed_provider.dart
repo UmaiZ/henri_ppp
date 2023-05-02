@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:henri_ppp/models/feed.dart';
-import 'package:henri_ppp/models/user.dart';
 import 'package:henri_ppp/services/api.dart';
 
 class FeedProvider extends ChangeNotifier {
@@ -12,7 +11,6 @@ class FeedProvider extends ChangeNotifier {
   }
 
   Future<bool> getFeed() async {
-    print('call');
     bool result = false;
     try {
       List<FeedModel> user = await ApiService().getFeed("getNewsFeed");

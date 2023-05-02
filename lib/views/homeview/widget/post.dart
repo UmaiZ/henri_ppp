@@ -1,7 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class PostWidget extends StatefulWidget {
@@ -26,24 +24,30 @@ class _PostWidgetState extends State<PostWidget> {
           children: [
             ListTile(
               contentPadding: const EdgeInsets.all(0),
-              leading: widget.data.createdBy.userImage != ""
-                  ? CachedNetworkImage(
-                      imageUrl: widget.data.createdBy.userImage,
-                      placeholder: (context, url) =>
-                          CircularProgressIndicator(),
-                      errorWidget: (context, url, error) => Icon(Icons.error),
-                    )
-                  : SizedBox(
-                      width: size.width * 0.125,
-                      height: size.width * 0.125,
-                      child: CircleAvatar(
-                        radius: 100,
-                        backgroundColor:
-                            Theme.of(context).colorScheme.secondary,
-                        child:
-                            Image.asset('assets/images/imageplaceholder.png'),
+              leading: SizedBox(
+                height: size.height * 0.07,
+                width: size.height * 0.07,
+                child: widget.data.createdBy.userImage == ""
+                    ? Image.asset('assets/images/imageplaceholder.png')
+                    : ClipRRect(
+                        borderRadius: BorderRadius.circular(100.0),
+                        child: CachedNetworkImage(
+                          imageUrl: widget.data.createdBy.userImage.toString(),
+                          placeholder: (context, url) => Container(),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error),
+                          fit: BoxFit.fill,
+                        ),
                       ),
-                    ),
+              )
+              // ? CachedNetworkImage(
+              //     imageUrl: widget.data.createdBy.userImage,
+              //     placeholder: (context, url) =>
+              //         const CircularProgressIndicator(),
+              //     errorWidget: (context, url, error) =>
+              //         const Icon(Icons.error),
+              //   )
+              ,
               title: Text(
                 widget.data.createdBy.userName,
                 style: Theme.of(context).textTheme.headlineSmall,
@@ -85,8 +89,6 @@ class _PostWidgetState extends State<PostWidget> {
                   scrollDirection: Axis.horizontal,
                   itemCount: widget.data.images.length,
                   itemBuilder: (context, index) {
-                    print(widget.data.images[index].toString());
-                    print(widget.data.images[index].toString().split('.').last);
                     return widget.data.images[index]
                                     .toString()
                                     .split('.')
@@ -100,9 +102,9 @@ class _PostWidgetState extends State<PostWidget> {
                         ? CachedNetworkImage(
                             imageUrl: widget.data.images[index],
                             placeholder: (context, url) =>
-                                CircularProgressIndicator(),
+                                const CircularProgressIndicator(),
                             errorWidget: (context, url, error) =>
-                                Icon(Icons.error),
+                                const Icon(Icons.error),
                           )
                         : Container(
                             width: 20,

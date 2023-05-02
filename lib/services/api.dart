@@ -1,18 +1,11 @@
 import 'package:henri_ppp/models/feed.dart';
+import 'package:henri_ppp/models/status.dart';
 import 'package:henri_ppp/models/user.dart';
 import 'package:henri_ppp/helpers/logger/logger.dart';
 import 'package:henri_ppp/helpers/network/network.dart';
 import 'package:henri_ppp/helpers/toast/toast.dart';
 
 class ApiService {
-  static final ApiService _shared = ApiService._internal();
-
-  ApiService._internal();
-
-  factory ApiService() {
-    return _shared;
-  }
-
   Future<UserModel> login(url, data) async {
     UserModel result;
     logger.d(data);
@@ -69,6 +62,24 @@ class ApiService {
     }
   }
 
+  createStory(url, data, file) async {
+    bool result = false;
+    try {
+      final response = await NetworkHelper().storyFormApi(url, data, file);
+      logger.d(response);
+
+      if (!response['success']) {
+        return showtoast(response['message']);
+      }
+      showtoast(response['message']);
+      result = true;
+      return result;
+    } catch (e) {
+      logger.e(e);
+      rethrow;
+    }
+  }
+
   Future<List<FeedModel>> getFeed(url) async {
     List<FeedModel> result;
 
@@ -85,6 +96,26 @@ class ApiService {
           .toList();
       // result = response['data'].map((e) => FeedModel.fromJson(e)).toList();
 
+      return result;
+    } catch (e) {
+      logger.e(e);
+      rethrow;
+    }
+  }
+
+  Future<List<StatusModel>> getStatus(url) async {
+    List<StatusModel> result;
+
+    try {
+      final response = await NetworkHelper().getApi(url);
+      logger.d(response);
+
+      if (!response['success']) {
+        return showtoast(response['message']);
+      }
+      result = response['data']
+          .map<StatusModel>((item) => StatusModel.fromJson(item))
+          .toList();
       return result;
     } catch (e) {
       logger.e(e);
