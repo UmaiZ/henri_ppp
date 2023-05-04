@@ -72,7 +72,6 @@ const updateNewsFeed = async (req, res) => {
     const { files } = req.files;
     const { user_id } = req.user;
     const images = [];
-    console.log(files)
 
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
@@ -159,19 +158,19 @@ const getNewsFeed = async (req, res) => {
         path: "createdBy",
         model: "users",
       },
-      {
-        path: "like",
-        model: "likeNewsFeed",
-      },
-      {
-        path: "comment",
-        model: "commentNewsFeed",
-      },
-      {
-        path: "share",
-        model: "shareNewsFeed",
-        sort: { createdAt: -1 },
-      },
+      // {
+      //   path: "like",
+      //   model: "likeNewsFeed",
+      // },
+      // // {
+      // //   path: "comment",
+      // //   model: "commentNewsFeed",
+      // // },
+      // {
+      //   path: "share",
+      //   model: "shareNewsFeed",
+      //   sort: { createdAt: -1 },
+      // },
     ]);
 
 
@@ -472,6 +471,36 @@ const deleteCommentNewsFeed = async (req, res) => {
   }
 };
 
+const getCommentsOfFeed = async (req, res) => {
+  try {
+
+    const newsFeed = await commentNewsFeedModel.find({ 'newsFeedId': req.params.id }).populate([
+      // {
+      //   path: "like",
+      //   model: "likeNewsFeed",
+      // },
+      {
+        path: "commentBy",
+        model: "users",
+      },
+      // {
+      //   path: "share",
+      //   model: "shareNewsFeed",
+      // }
+    ]);/*  */
+    res.status(200).json({
+      success: true,
+      message: "News Feed Fetched Successfully",
+      data: newsFeed,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+      error: error.message,
+    });
+  }
+};
 
 
 
@@ -488,4 +517,5 @@ module.exports = {
   commentNewsFeed,
   updateCommentNewsFeed,
   deleteCommentNewsFeed,
+  getCommentsOfFeed
 };
