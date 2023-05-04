@@ -1,6 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:henri_ppp/helpers/logger/logger.dart';
+import 'package:henri_ppp/models/comments.dart';
+import 'package:henri_ppp/models/user.dart';
+import 'package:henri_ppp/providers/user_provider.dart';
+import 'package:henri_ppp/services/api.dart';
+import 'package:provider/provider.dart';
 
 class PostWidget extends StatefulWidget {
   final data;
@@ -161,7 +167,7 @@ class _PostWidgetState extends State<PostWidget> {
                     ],
                   ),
                   Text(
-                    '33 Comments',
+                    '${widget.data.comment.length} Comments',
                     style: Theme.of(context).textTheme.bodyLarge!.merge(
                         const TextStyle(
                             color: Colors.grey, fontWeight: FontWeight.w500)),
@@ -199,26 +205,38 @@ class _PostWidgetState extends State<PostWidget> {
                     ),
                   ],
                 ),
-                Row(
-                  children: [
-                    const Icon(
-                      Icons.chat_bubble_outline,
-                      color: Colors.grey,
-                    ),
-                    // Image.asset(
-                    //   'assets/images/flame.png',
-                    //   width: size.width * 0.06,
-                    // ),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    Text(
-                      'Comments',
-                      style: Theme.of(context).textTheme.bodyLarge!.merge(
-                          const TextStyle(
-                              color: Colors.grey, fontWeight: FontWeight.w500)),
-                    ),
-                  ],
+                GestureDetector(
+                  onTap: () async {
+                    var list = await ApiService()
+                        .getComments('newsFeedComment/${widget.data.sId}')
+                        .then((value) {
+                      logger.d(value);
+
+                      commentboxmodal(value, widget.data.sId, context);
+                    });
+                  },
+                  child: Row(
+                    children: [
+                      const Icon(
+                        Icons.chat_bubble_outline,
+                        color: Colors.grey,
+                      ),
+                      // Image.asset(
+                      //   'assets/images/flame.png',
+                      //   width: size.width * 0.06,
+                      // ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Text(
+                        'Comments',
+                        style: Theme.of(context).textTheme.bodyLarge!.merge(
+                            const TextStyle(
+                                color: Colors.grey,
+                                fontWeight: FontWeight.w500)),
+                      ),
+                    ],
+                  ),
                 ),
                 Row(
                   children: [
@@ -248,4 +266,194 @@ class _PostWidgetState extends State<PostWidget> {
       ),
     );
   }
+}
+
+commentboxmodal(comments, newsId, context) {
+  final width = MediaQuery.of(context).size.width;
+  final height = MediaQuery.of(context).size.height;
+
+  TextEditingController chatcontroller = TextEditingController();
+
+  showModalBottomSheet(
+      clipBehavior: Clip.hardEdge,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(),
+      context: context,
+      builder: (
+        context,
+      ) {
+        return StatefulBuilder(builder: (BuildContext context,
+            StateSetter setState /*You can rename this!*/) {
+          return Container(
+              color: Theme.of(context).colorScheme.secondary,
+              height: height * 0.8,
+              child: Column(
+                children: [
+                  Container(
+                    width: double.infinity,
+                    decoration:
+                        BoxDecoration(color: Colors.grey.withOpacity(0.1)),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Center(
+                        child: Text(
+                          'Comments',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .merge(TextStyle(color: Colors.white)),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  SizedBox(
+                    height: height * 0.625,
+                    child: ListView.builder(
+                        itemCount: comments.length,
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                            onTap: () {},
+                            child: Column(
+                              children: [
+                                ListTile(
+                                  leading: CachedNetworkImage(
+                                    imageUrl:
+                                        comments[index].commentBy.userImage,
+                                    imageBuilder: (context, imageProvider) =>
+                                        Container(
+                                      height: 50,
+                                      width: 50,
+                                      decoration: BoxDecoration(
+                                        // color: Colors.white,
+                                        borderRadius:
+                                            BorderRadius.circular(100),
+                                        image: DecorationImage(
+                                          image: imageProvider,
+                                          fit: BoxFit.fill,
+                                        ),
+                                      ),
+                                    ),
+                                    placeholder: (context, url) => Container(),
+                                    errorWidget: (context, url, error) =>
+                                        const Icon(Icons.error),
+                                    fit: BoxFit.fill,
+                                  ),
+                                  title: Text(
+                                    comments[index].commentBy.userName,
+                                    style:
+                                        Theme.of(context).textTheme.bodyMedium,
+                                  ),
+                                  subtitle: Text(
+                                    comments[index].commentDetail,
+                                    style:
+                                        Theme.of(context).textTheme.bodySmall,
+                                  ),
+                                )
+                              ],
+                            ),
+                          );
+                        }),
+                  ),
+                  SizedBox(
+                    width: width * 0.95,
+                    child: TextFormField(
+                      controller: chatcontroller,
+                      autocorrect: false,
+                      enableSuggestions: false,
+                      onChanged: (val) {
+                        // playercontroller.changeSearchString(val);
+                      },
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: Colors.grey,
+                      ),
+                      validator: (value) {
+                        if (value!.isEmpty) return 'Required field';
+                      },
+                      keyboardType: TextInputType.emailAddress,
+
+                      // controller: username,
+                      decoration: InputDecoration(
+                          suffixIcon: GestureDetector(
+                              onTap: () {
+                                print({
+                                  'newsFeedId': newsId,
+                                  'commentDetail':
+                                      chatcontroller.text.toString()
+                                });
+                                if (chatcontroller.text.toString() != "") {
+                                  ApiService().addComment('commentNewsFeed', {
+                                    'newsFeedId': newsId,
+                                    'commentDetail':
+                                        chatcontroller.text.toString()
+                                  }).then((val) {
+                                    if (val) {
+                                      final playercontroller =
+                                          Provider.of<UserProvider>(context,
+                                              listen: false);
+
+                                      setState(() {
+                                        comments.add(CommentModel(
+                                            commentDetail:
+                                                chatcontroller.text.toString(),
+                                            commentBy: UserModel(
+                                                userName: playercontroller
+                                                    .userdata.userName,
+                                                userImage: playercontroller
+                                                    .userdata.userImage)));
+
+                                        // comments.add({
+                                        //   'commentDetail':
+                                        //       chatcontroller.text.toString(),
+                                        //   'commentBy': {
+                                        //     'userName': playercontroller
+                                        //         .userdata.userName,
+                                        //     'userImage': playercontroller
+                                        //         .userdata.userImage,
+                                        //   }
+                                        // });
+                                        chatcontroller.clear();
+                                      });
+                                    }
+                                  });
+                                } else {
+                                  // showToast('Add a comment');
+                                }
+                              },
+                              child: Icon(Icons.send)),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderSide: BorderSide.none,
+                            borderRadius: BorderRadius.all(Radius.circular(14)),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide.none,
+                            borderRadius: BorderRadius.all(Radius.circular(14)),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide.none,
+                            borderRadius: BorderRadius.all(Radius.circular(14)),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderSide: BorderSide.none,
+                            borderRadius: BorderRadius.all(Radius.circular(14)),
+                          ),
+                          hintText: 'Leave your comment',
+                          hintStyle: TextStyle(
+                            fontSize: 14,
+                            color: Colors.grey,
+                          ),
+                          // suffixIcon: inputWidget,
+                          filled: true,
+                          fillColor: Colors.white,
+                          border: InputBorder.none,
+                          contentPadding: const EdgeInsets.all(20)),
+                    ),
+                  ),
+                ],
+              ));
+        });
+      });
 }
