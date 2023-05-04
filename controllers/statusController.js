@@ -6,9 +6,9 @@ const { uploadFileWithFolder } = require("../utils/awsFileUploads");
 
 const uploadOptions = multer({
     storage: multer.memoryStorage(),
-    limits: {
-        fileSize: 5 * 1024 * 1024,
-    },
+    // limits: {
+    //     fileSize: 3145728,
+    // },
 });
 
 const createStatus = async (req, res) => {
