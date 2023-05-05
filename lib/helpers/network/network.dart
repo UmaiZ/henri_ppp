@@ -65,7 +65,7 @@ class NetworkHelper {
     }
   }
 
-  storyFormApi(String url, data, file) async {
+  mediaFormUpload(String url, data, file, type) async {
     var postUri = Uri.parse('$baseUrl/$url');
     var request = http.MultipartRequest("POST", postUri);
     request.fields['user'] = 'blah';
@@ -75,11 +75,12 @@ class NetworkHelper {
     final headers = {'x-access-token': token};
     request.headers.addAll(headers);
     var multipartFile = await http.MultipartFile.fromPath(
-        file.path.split('.').last.toString().toUpperCase() == "MOV"
-            ? "video"
-            : file.path.split('.').last.toString().toUpperCase() == "MP4"
-                ? "video"
-                : "image",
+        // file.path.split('.').last.toString().toUpperCase() == "MOV"
+        //     ? "video"
+        //     : file.path.split('.').last.toString().toUpperCase() == "MP4"
+        //         ? "video"
+        //         : "image",
+        type,
         file.path,
         filename: file.path.split('/').last,
         contentType: MediaType(

@@ -63,10 +63,11 @@ class ApiService {
     }
   }
 
-  createStory(url, data, file) async {
+  createStory(url, data, file, type) async {
     bool result = false;
     try {
-      final response = await NetworkHelper().storyFormApi(url, data, file);
+      final response =
+          await NetworkHelper().mediaFormUpload(url, data, file, type);
       logger.d(response);
 
       if (!response['success']) {
@@ -156,6 +157,26 @@ class ApiService {
         return false;
       }
       return true;
+    } catch (e) {
+      logger.e(e);
+      rethrow;
+    }
+  }
+
+  Future<UserModel> editMedia(url, data, file, type) async {
+    UserModel result;
+    try {
+      print('hit');
+      final response =
+          await NetworkHelper().mediaFormUpload(url, data, file, type);
+      logger.d(response);
+
+      if (!response['success']) {
+        return showtoast(response['message']);
+      }
+      showtoast(response['message']);
+      result = UserModel.fromJson(response['data']);
+      return result;
     } catch (e) {
       logger.e(e);
       rethrow;

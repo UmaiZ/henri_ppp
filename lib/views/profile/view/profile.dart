@@ -1,4 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:henri_ppp/helpers/imagepicker/imagepicker.dart';
+import 'package:henri_ppp/helpers/loader/loader.dart';
 import 'package:henri_ppp/providers/user_provider.dart';
 import 'package:henri_ppp/views/post/view/createstory.dart';
 import 'package:henri_ppp/views/profile/view/editprofile.dart';
@@ -53,24 +56,80 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Stack(
                 alignment: Alignment.bottomCenter,
                 children: [
-                  SizedBox(
-                      width: size.width * 0.95,
+                  GestureDetector(
+                    onTap: () async {
+                      var image = await ImagePickerHelper().galleryImage();
+                      showLoader(context);
+                      if (await usercontroller
+                          .updateMedia({}, image, 'usercover')) {
+                        Navigator.pop(context);
+                      } else {
+                        Navigator.pop(context);
+                      }
+                    },
+                    child: SizedBox(
                       height: size.height * 0.175,
-                      child: Image.asset(
-                        'assets/images/modelbanner.png',
-                        fit: BoxFit.cover,
-                      )),
+                      width: double.infinity,
+                      child: usercontroller.userdata.userCover == ""
+                          ? Image.asset(
+                              'assets/images/modelbanner.png',
+                              fit: BoxFit.cover,
+                            )
+                          : CachedNetworkImage(
+                              imageUrl:
+                                  usercontroller.userdata.userCover.toString(),
+                              placeholder: (context, url) => Container(),
+                              errorWidget: (context, url, error) =>
+                                  const Icon(Icons.error),
+                              fit: BoxFit.fill,
+                            ),
+                    ),
+                  ),
+
+                  // SizedBox(
+                  //     width: size.width * 0.95,
+                  //     height: size.height * 0.175,
+                  //     child: Image.asset(
+                  //       'assets/images/modelbanner.png',
+                  //       fit: BoxFit.cover,
+                  //     )),
                   FractionalTranslation(
                     translation: const Offset(0.0, 0.6),
-                    child: SizedBox(
-                      width: size.width * 0.25,
-                      height: size.width * 0.25,
-                      child: CircleAvatar(
-                        radius: 100,
-                        backgroundColor:
-                            Theme.of(context).colorScheme.secondary,
-                        child:
-                            Image.asset('assets/images/imageplaceholder.png'),
+                    child: GestureDetector(
+                      onTap: () async {
+                        showLoader(context);
+
+                        var image = await ImagePickerHelper().galleryImage();
+                        if (await usercontroller
+                            .updateMedia({}, image, 'userimage')) {
+                          Navigator.pop(context);
+                        } else {
+                          Navigator.pop(context);
+                        }
+                      },
+                      child: SizedBox(
+                        width: size.width * 0.25,
+                        height: size.width * 0.25,
+                        child: CircleAvatar(
+                            radius: 100,
+                            backgroundColor:
+                                Theme.of(context).colorScheme.secondary,
+                            child: usercontroller.userdata.userImage == ""
+                                ? Image.asset(
+                                    'assets/images/imageplaceholder.png')
+                                : ClipRRect(
+                                    borderRadius: BorderRadius.circular(100.0),
+                                    child: CachedNetworkImage(
+                                      imageUrl: usercontroller
+                                          .userdata.userImage
+                                          .toString(),
+                                      placeholder: (context, url) =>
+                                          Container(),
+                                      errorWidget: (context, url, error) =>
+                                          const Icon(Icons.error),
+                                      fit: BoxFit.fill,
+                                    ),
+                                  )),
                       ),
                     ),
                   ),
@@ -134,7 +193,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   GestureDetector(
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => CameraAppTest()));
+                          builder: (context) => const CameraAppTest()));
                     },
                     child: const btnGlobal(
                       width: 0.375,

@@ -127,7 +127,7 @@ class HomeScreen extends StatelessWidget {
               Consumer<FeedProvider>(
                 builder: (context, postProvider, child) {
                   if (postProvider.feeddata.isEmpty) {
-                    postProvider.getFeed();
+                    // postProvider.getFeed();
                     return const Center(
                         child: CircularProgressIndicator(
                       color: Colors.white,
@@ -173,7 +173,7 @@ class HomeScreen extends StatelessWidget {
     return Consumer<StatusProvider>(
       builder: (context, statusProvider, child) {
         if (statusProvider.statusdata.isEmpty) {
-          statusProvider.getStatus();
+          // statusProvider.getStatus();
           return const Center(
               child: CircularProgressIndicator(
             color: Colors.white,

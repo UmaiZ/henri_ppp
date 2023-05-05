@@ -35,4 +35,18 @@ class UserProvider extends ChangeNotifier {
     }
     return result;
   }
+
+  Future<bool> updateMedia(data, file, type) async {
+    bool result = false;
+    try {
+      UserModel user =
+          await ApiService().editMedia("updateUser", data, file, type);
+      _user = user;
+      result = true;
+      notifyListeners();
+    } catch (e) {
+      notifyListeners();
+    }
+    return result;
+  }
 }

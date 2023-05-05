@@ -5,13 +5,21 @@ import 'package:henri_ppp/services/api.dart';
 class StatusProvider extends ChangeNotifier {
   List<StatusModel> _status = [];
   List<StatusModel> get statusdata => _status;
-  StatusProvider() {
-    getStatus();
-  }
+  // StatusProvider() {
+  //   getStatus();
+  // }
   Future<bool> createStory(data, file) async {
     bool result = false;
     try {
-      return await ApiService().createStory("createStatus", data, file);
+      return await ApiService().createStory(
+          "createStatus",
+          data,
+          file,
+          file.path.split('.').last.toString().toUpperCase() == "MOV"
+              ? "video"
+              : file.path.split('.').last.toString().toUpperCase() == "MP4"
+                  ? "video"
+                  : "image");
     } catch (e) {
       notifyListeners();
     }

@@ -13,12 +13,12 @@ class ImagePickerHelper {
   }
 
   @override
-  Future<String> galleryImage() async {
+  Future<XFile> galleryImage() async {
     final image = await imagePicker.pickImage(source: ImageSource.gallery);
     if (image == null) {
       // throw ImageNotSelectedException();
     }
-    return image!.path;
+    return image!;
   }
 
   @override
