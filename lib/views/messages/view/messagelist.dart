@@ -35,8 +35,8 @@ class MessageList extends StatelessWidget {
                     itemBuilder: (context, i) {
                       return GestureDetector(
                         onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const MessageDetails()));
+                          // Navigator.of(context).push(MaterialPageRoute(
+                          //     builder: (context) => const MessageDetails()));
                         },
                         child: Container(
                           padding: const EdgeInsets.only(bottom: 7),

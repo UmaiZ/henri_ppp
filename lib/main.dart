@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:henri_ppp/controller/chat_controller.dart';
 import 'package:henri_ppp/controller/create_post_controller.dart';
 import 'package:henri_ppp/controller/feed_controller.dart';
 import 'package:henri_ppp/controller/status_controller.dart';
@@ -80,6 +81,7 @@ class _SplashState extends State<Splash> {
 }
 
 List<SingleChildWidget> providers = [
+  ChangeNotifierProvider<chatController>(create: (_) => chatController()),
   ChangeNotifierProvider<statusController>(create: (_) => statusController()),
   ChangeNotifierProvider<userController>(create: (_) => userController()),
   ChangeNotifierProvider<feedController>(create: (_) => feedController()),
