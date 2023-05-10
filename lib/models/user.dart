@@ -18,6 +18,8 @@ class UserModel {
   String? userSports;
   int? iV;
   String? userToken;
+  List<String>? userFollowers;
+  List<String>? userFollowing;
 
   UserModel(
       {this.sId,
@@ -37,6 +39,8 @@ class UserModel {
       this.userCoaches,
       this.userBio,
       this.userSports,
+      this.userFollowers,
+      this.userFollowing,
       this.iV,
       this.userToken});
 
@@ -60,29 +64,34 @@ class UserModel {
     userSports = json['userSports'];
     iV = json['__v'];
     userToken = json['userToken'];
+    userFollowers = json['userFollowers'].cast<String>();
+    userFollowing = json['userFollowing'].cast<String>();
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['userName'] = this.userName;
-    data['userFirstName'] = this.userFirstName;
-    data['userLastName'] = this.userLastName;
-    data['userPassword'] = this.userPassword;
-    data['userEmail'] = this.userEmail;
-    data['userCity'] = this.userCity;
-    data['userAddress'] = this.userAddress;
-    data['userCountry'] = this.userCountry;
-    data['userNumber'] = this.userNumber;
-    data['userImage'] = this.userImage;
-    data['userCover'] = this.userCover;
-    data['userSchool'] = this.userSchool;
-    data['userTeam'] = this.userTeam;
-    data['userCoaches'] = this.userCoaches;
-    data['userBio'] = this.userBio;
-    data['userSports'] = this.userSports;
-    data['__v'] = this.iV;
-    data['userToken'] = this.userToken;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['_id'] = sId;
+    data['userName'] = userName;
+    data['userFirstName'] = userFirstName;
+    data['userLastName'] = userLastName;
+    data['userPassword'] = userPassword;
+    data['userEmail'] = userEmail;
+    data['userCity'] = userCity;
+    data['userAddress'] = userAddress;
+    data['userCountry'] = userCountry;
+    data['userNumber'] = userNumber;
+    data['userImage'] = userImage;
+    data['userCover'] = userCover;
+    data['userSchool'] = userSchool;
+    data['userTeam'] = userTeam;
+    data['userCoaches'] = userCoaches;
+    data['userBio'] = userBio;
+    data['userSports'] = userSports;
+    data['__v'] = iV;
+    data['userToken'] = userToken;
+    data['userFollowers'] = userFollowers;
+    data['userFollowing'] = userFollowing;
+
     return data;
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:henri_ppp/providers/user_provider.dart';
+import 'package:henri_ppp/controller/user_controller.dart';
 import 'package:henri_ppp/widgets/greytextfield.dart';
 import 'package:provider/provider.dart';
 
@@ -27,7 +27,7 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   Widget build(BuildContext context) {
-    final usercontroller = Provider.of<UserProvider>(context);
+    final usercontroller = Provider.of<userController>(context);
     namecontroller.text = usercontroller.userdata.userName.toString();
     biocontroller.text = usercontroller.userdata.userBio.toString();
     teamcontroller.text = usercontroller.userdata.userTeam.toString();

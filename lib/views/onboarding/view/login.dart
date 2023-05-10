@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:henri_ppp/providers/user_provider.dart';
+import 'package:henri_ppp/controller/user_controller.dart';
 import 'package:henri_ppp/views/onboarding/view/forgot.dart';
 import 'package:henri_ppp/views/onboarding/view/register.dart';
 import 'package:henri_ppp/views/root/view/mainroot.dart';
@@ -22,7 +22,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    final usercontroller = Provider.of<UserProvider>(context, listen: false);
+    final usercontroller = Provider.of<userController>(context, listen: false);
 
     final Size size = MediaQuery.of(context).size;
     return Scaffold(

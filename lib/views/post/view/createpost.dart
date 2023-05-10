@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:henri_ppp/helpers/imagepicker/imagepicker.dart';
-import 'package:henri_ppp/providers/create_post_provider.dart';
+import 'package:henri_ppp/controller/create_post_controller.dart';
 import 'package:henri_ppp/views/root/view/drawer.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
@@ -25,7 +25,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final postcontroller = Provider.of<createPostProvider>(context);
+    final postcontroller = Provider.of<createPostController>(context);
     TextEditingController descriptioncontroller = TextEditingController();
 
     final Size size = MediaQuery.of(context).size;

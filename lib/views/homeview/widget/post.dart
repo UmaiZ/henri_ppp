@@ -4,8 +4,9 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:henri_ppp/helpers/logger/logger.dart';
 import 'package:henri_ppp/models/comments.dart';
 import 'package:henri_ppp/models/user.dart';
-import 'package:henri_ppp/providers/user_provider.dart';
-import 'package:henri_ppp/services/api.dart';
+import 'package:henri_ppp/controller/user_controller.dart';
+import 'package:henri_ppp/services/feed_service.dart';
+import 'package:henri_ppp/views/profile/view/otherprofile.dart';
 import 'package:provider/provider.dart';
 
 class PostWidget extends StatefulWidget {
@@ -20,6 +21,7 @@ class _PostWidgetState extends State<PostWidget> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    final usercontroller = Provider.of<userController>(context);
 
     return Container(
       width: size.width * 0.95,
@@ -28,52 +30,64 @@ class _PostWidgetState extends State<PostWidget> {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            ListTile(
-              contentPadding: const EdgeInsets.all(0),
-              leading: SizedBox(
-                height: size.height * 0.07,
-                width: size.height * 0.07,
-                child: widget.data.createdBy.userImage == ""
-                    ? Image.asset('assets/images/imageplaceholder.png')
-                    : ClipRRect(
-                        borderRadius: BorderRadius.circular(100.0),
-                        child: CachedNetworkImage(
-                          imageUrl: widget.data.createdBy.userImage.toString(),
-                          placeholder: (context, url) => Container(),
-                          errorWidget: (context, url, error) =>
-                              const Icon(Icons.error),
-                          fit: BoxFit.fill,
+            GestureDetector(
+              onTap: () async {
+                await usercontroller
+                    .fetchselecteduserDetails(widget.data.createdBy.sId);
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => OtherProfileScreen(
+                          userdata: usercontroller.userselecteditem!,
+                        )));
+                // print(usercontroller.userselecteditem);
+              },
+              child: ListTile(
+                contentPadding: const EdgeInsets.all(0),
+                leading: SizedBox(
+                  height: size.height * 0.07,
+                  width: size.height * 0.07,
+                  child: widget.data.createdBy.userImage == ""
+                      ? Image.asset('assets/images/imageplaceholder.png')
+                      : ClipRRect(
+                          borderRadius: BorderRadius.circular(100.0),
+                          child: CachedNetworkImage(
+                            imageUrl:
+                                widget.data.createdBy.userImage.toString(),
+                            placeholder: (context, url) => Container(),
+                            errorWidget: (context, url, error) =>
+                                const Icon(Icons.error),
+                            fit: BoxFit.fill,
+                          ),
                         ),
-                      ),
-              )
-              // ? CachedNetworkImage(
-              //     imageUrl: widget.data.createdBy.userImage,
-              //     placeholder: (context, url) =>
-              //         const CircularProgressIndicator(),
-              //     errorWidget: (context, url, error) =>
-              //         const Icon(Icons.error),
-              //   )
-              ,
-              title: Text(
-                widget.data.createdBy.userName,
-                style: Theme.of(context).textTheme.headlineSmall,
-              ),
-              subtitle: Row(
-                children: [
-                  Text(
-                    '@${widget.data.createdBy.userName}',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium!
-                        .merge(const TextStyle(color: Colors.grey)),
-                  ),
-                  Text(
-                    '  Sponsorship',
-                    style: Theme.of(context).textTheme.bodySmall!.merge(
-                        const TextStyle(
-                            color: Colors.grey, fontWeight: FontWeight.w200)),
-                  ),
-                ],
+                )
+                // ? CachedNetworkImage(
+                //     imageUrl: widget.data.createdBy.userImage,
+                //     placeholder: (context, url) =>
+                //         const CircularProgressIndicator(),
+                //     errorWidget: (context, url, error) =>
+                //         const Icon(Icons.error),
+                //   )
+                ,
+                title: Text(
+                  widget.data.createdBy.userName,
+                  style: Theme.of(context).textTheme.headlineSmall,
+                ),
+                subtitle: Row(
+                  children: [
+                    Text(
+                      '@${widget.data.createdBy.userName}',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium!
+                          .merge(const TextStyle(color: Colors.grey)),
+                    ),
+                    Text(
+                      '  Sponsorship',
+                      style: Theme.of(context).textTheme.bodySmall!.merge(
+                          const TextStyle(
+                              color: Colors.grey, fontWeight: FontWeight.w200)),
+                    ),
+                  ],
+                ),
               ),
             ),
             Align(
@@ -207,7 +221,7 @@ class _PostWidgetState extends State<PostWidget> {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    var list = await ApiService()
+                    var list = await feedService()
                         .getComments('newsFeedComment/${widget.data.sId}')
                         .then((value) {
                       logger.d(value);
@@ -301,12 +315,12 @@ commentboxmodal(comments, newsId, context) {
                           style: Theme.of(context)
                               .textTheme
                               .bodyMedium!
-                              .merge(TextStyle(color: Colors.white)),
+                              .merge(const TextStyle(color: Colors.white)),
                         ),
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   SizedBox(
@@ -372,6 +386,7 @@ commentboxmodal(comments, newsId, context) {
                       ),
                       validator: (value) {
                         if (value!.isEmpty) return 'Required field';
+                        return null;
                       },
                       keyboardType: TextInputType.emailAddress,
 
@@ -385,14 +400,14 @@ commentboxmodal(comments, newsId, context) {
                                       chatcontroller.text.toString()
                                 });
                                 if (chatcontroller.text.toString() != "") {
-                                  ApiService().addComment('commentNewsFeed', {
+                                  feedService().addComment('commentNewsFeed', {
                                     'newsFeedId': newsId,
                                     'commentDetail':
                                         chatcontroller.text.toString()
                                   }).then((val) {
                                     if (val) {
                                       final playercontroller =
-                                          Provider.of<UserProvider>(context,
+                                          Provider.of<userController>(context,
                                               listen: false);
 
                                       setState(() {
@@ -423,25 +438,25 @@ commentboxmodal(comments, newsId, context) {
                                   // showToast('Add a comment');
                                 }
                               },
-                              child: Icon(Icons.send)),
-                          focusedErrorBorder: OutlineInputBorder(
+                              child: const Icon(Icons.send)),
+                          focusedErrorBorder: const OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.all(Radius.circular(14)),
                           ),
-                          enabledBorder: OutlineInputBorder(
+                          enabledBorder: const OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.all(Radius.circular(14)),
                           ),
-                          focusedBorder: OutlineInputBorder(
+                          focusedBorder: const OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.all(Radius.circular(14)),
                           ),
-                          errorBorder: OutlineInputBorder(
+                          errorBorder: const OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.all(Radius.circular(14)),
                           ),
                           hintText: 'Leave your comment',
-                          hintStyle: TextStyle(
+                          hintStyle: const TextStyle(
                             fontSize: 14,
                             color: Colors.grey,
                           ),

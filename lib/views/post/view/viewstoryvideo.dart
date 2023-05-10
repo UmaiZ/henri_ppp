@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:henri_ppp/helpers/loader/loader.dart';
-import 'package:henri_ppp/providers/status_provider.dart';
+import 'package:henri_ppp/controller/status_controller.dart';
 import 'package:henri_ppp/views/root/view/mainroot.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -46,7 +46,7 @@ class _ViewVideoStoryState extends State<ViewVideoStory> {
 
   @override
   Widget build(BuildContext context) {
-    final statuscontroller = Provider.of<StatusProvider>(context);
+    final statuscontroller = Provider.of<statusController>(context);
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.primary,

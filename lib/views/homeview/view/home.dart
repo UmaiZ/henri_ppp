@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:henri_ppp/providers/feed_provider.dart';
-import 'package:henri_ppp/providers/status_provider.dart';
+import 'package:henri_ppp/controller/feed_controller.dart';
+import 'package:henri_ppp/controller/status_controller.dart';
 import 'package:henri_ppp/views/homeview/widget/post.dart';
 import 'package:henri_ppp/views/live/view/golive.dart';
 import 'package:henri_ppp/views/post/view/createstory.dart';
@@ -15,8 +15,8 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     final GlobalKey<ScaffoldState> key = GlobalKey();
-    // final feedprovider = Provider.of<FeedProvider>(context);
-    // final statusprovider = Provider.of<StatusProvider>(context);
+    // final feedController = Provider.of<feedController>(context);
+    // final statusController = Provider.of<statusController>(context);
 
     return Scaffold(
       key: key,
@@ -124,14 +124,11 @@ class HomeScreen extends StatelessWidget {
               SizedBox(
                 height: size.height * 0.01,
               ),
-              Consumer<FeedProvider>(
+              Consumer<feedController>(
                 builder: (context, postProvider, child) {
                   if (postProvider.feeddata.isEmpty) {
                     // postProvider.getFeed();
-                    return const Center(
-                        child: CircularProgressIndicator(
-                      color: Colors.white,
-                    ));
+                    return const Center(child: Text('No Post Available'));
                   } else {
                     return ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
@@ -145,15 +142,15 @@ class HomeScreen extends StatelessWidget {
                 },
               ),
 
-              // feedprovider.feeddata.isNotEmpty
+              // feedController.feeddata.isNotEmpty
               //     ? SizedBox(
               //         child: ListView.builder(
               //             physics: const NeverScrollableScrollPhysics(),
               //             shrinkWrap: true,
-              //             itemCount: feedprovider.feeddata.length,
+              //             itemCount: feedController.feeddata.length,
               //             itemBuilder: (context, index) {
               //               return PostWidget(
-              //                   data: feedprovider.feeddata[index]);
+              //                   data: feedController.feeddata[index]);
               //             }),
               //       )
               //     : const SizedBox(),
@@ -170,21 +167,18 @@ class HomeScreen extends StatelessWidget {
 
   Widget storelist(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    return Consumer<StatusProvider>(
-      builder: (context, statusProvider, child) {
-        if (statusProvider.statusdata.isEmpty) {
-          // statusProvider.getStatus();
-          return const Center(
-              child: CircularProgressIndicator(
-            color: Colors.white,
-          ));
+    return Consumer<statusController>(
+      builder: (context, statusController, child) {
+        if (statusController.statusdata.isEmpty) {
+          // statusController.getStatus();
+          return const Center(child: Text('No Highlights Available'));
         } else {
           return SizedBox(
             height: size.height * 0.095,
             width: size.width * 0.95,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: statusProvider.statusdata.length,
+              itemCount: statusController.statusdata.length,
               itemBuilder: (context, index) {
                 return index == 0
                     ? Row(
@@ -214,8 +208,8 @@ class HomeScreen extends StatelessWidget {
                             child: SizedBox(
                               height: size.height * 0.095,
                               width: size.height * 0.095,
-                              child: statusProvider.statusdata[index].createdBy
-                                          .userImage ==
+                              child: statusController.statusdata[index]
+                                          .createdBy.userImage ==
                                       ""
                                   ? Image.asset(
                                       'assets/images/imageplaceholder.png')
@@ -223,7 +217,7 @@ class HomeScreen extends StatelessWidget {
                                       borderRadius:
                                           BorderRadius.circular(100.0),
                                       child: CachedNetworkImage(
-                                        imageUrl: statusProvider
+                                        imageUrl: statusController
                                             .statusdata[index]
                                             .createdBy
                                             .userImage
@@ -244,7 +238,7 @@ class HomeScreen extends StatelessWidget {
                         child: SizedBox(
                           height: size.height * 0.095,
                           width: size.height * 0.095,
-                          child: statusProvider
+                          child: statusController
                                       .statusdata[index].createdBy.userImage ==
                                   ""
                               ? Image.asset(
@@ -252,7 +246,7 @@ class HomeScreen extends StatelessWidget {
                               : ClipRRect(
                                   borderRadius: BorderRadius.circular(100.0),
                                   child: CachedNetworkImage(
-                                    imageUrl: statusProvider
+                                    imageUrl: statusController
                                         .statusdata[index].createdBy.userImage
                                         .toString(),
                                     placeholder: (context, url) => Container(),

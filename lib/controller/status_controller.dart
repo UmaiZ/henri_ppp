@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:henri_ppp/models/status.dart';
-import 'package:henri_ppp/services/api.dart';
+import 'package:henri_ppp/services/story_service.dart';
 
-class StatusProvider extends ChangeNotifier {
+class statusController extends ChangeNotifier {
   List<StatusModel> _status = [];
   List<StatusModel> get statusdata => _status;
-  // StatusProvider() {
+  // statusController() {
   //   getStatus();
   // }
   Future<bool> createStory(data, file) async {
     bool result = false;
     try {
-      return await ApiService().createStory(
+      return await storyService().createStory(
           "createStatus",
           data,
           file,
@@ -29,7 +29,7 @@ class StatusProvider extends ChangeNotifier {
   Future<bool> getStatus() async {
     bool result = false;
     try {
-      List<StatusModel> status = await ApiService().getStatus("getStatus");
+      List<StatusModel> status = await storyService().getStatus("getStatus");
       _status = status;
       result = true;
       notifyListeners();

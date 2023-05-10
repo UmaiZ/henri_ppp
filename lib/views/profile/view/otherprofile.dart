@@ -3,44 +3,28 @@ import 'package:flutter/material.dart';
 import 'package:henri_ppp/helpers/imagepicker/imagepicker.dart';
 import 'package:henri_ppp/helpers/loader/loader.dart';
 import 'package:henri_ppp/controller/user_controller.dart';
-import 'package:henri_ppp/views/post/view/createstory.dart';
-import 'package:henri_ppp/views/profile/view/editprofile.dart';
-import 'package:henri_ppp/views/root/view/drawer.dart';
-
+import 'package:henri_ppp/models/user.dart';
 import 'package:henri_ppp/widgets/button.dart';
+import 'package:henri_ppp/widgets/roundcacheimage.dart';
+
 import 'package:provider/provider.dart';
 
-class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
+int tabindex = 0;
 
-  @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
-}
+class OtherProfileScreen extends StatelessWidget {
+  final UserModel userdata;
+  const OtherProfileScreen({super.key, required this.userdata});
 
-class _ProfileScreenState extends State<ProfileScreen> {
-  int tabindex = 0;
   @override
   Widget build(BuildContext context) {
     final usercontroller = Provider.of<userController>(context);
 
     final Size size = MediaQuery.of(context).size;
-    final GlobalKey<ScaffoldState> key = GlobalKey();
     return Scaffold(
-      key: key,
-      drawer: const DrawerScreen(),
       backgroundColor: Theme.of(context).colorScheme.primary,
       appBar: AppBar(
-        leading: GestureDetector(
-          onTap: () {
-            key.currentState!.openDrawer();
-          },
-          child: const Icon(
-            Icons.menu,
-            size: 30,
-          ),
-        ),
         title: Text(
-          'PROFILE',
+          '${userdata.userName}',
           style: Theme.of(context).textTheme.headlineMedium,
         ),
         centerTitle: true,
@@ -57,27 +41,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 alignment: Alignment.bottomCenter,
                 children: [
                   GestureDetector(
-                    onTap: () async {
-                      var image = await ImagePickerHelper().galleryImage();
-                      showLoader(context);
-                      if (await usercontroller
-                          .updateMedia({}, image, 'usercover')) {
-                        Navigator.pop(context);
-                      } else {
-                        Navigator.pop(context);
-                      }
-                    },
+                    onTap: () async {},
                     child: SizedBox(
                       height: size.height * 0.175,
                       width: double.infinity,
-                      child: usercontroller.userdata.userCover == ""
+                      child: userdata.userCover == ""
                           ? Image.asset(
                               'assets/images/modelbanner.png',
                               fit: BoxFit.cover,
                             )
                           : CachedNetworkImage(
-                              imageUrl:
-                                  usercontroller.userdata.userCover.toString(),
+                              imageUrl: userdata.userCover.toString(),
                               placeholder: (context, url) => Container(),
                               errorWidget: (context, url, error) =>
                                   const Icon(Icons.error),
@@ -114,22 +88,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             radius: 100,
                             backgroundColor:
                                 Theme.of(context).colorScheme.secondary,
-                            child: usercontroller.userdata.userImage == ""
+                            child: userdata.userImage == ""
                                 ? Image.asset(
                                     'assets/images/imageplaceholder.png')
-                                : ClipRRect(
-                                    borderRadius: BorderRadius.circular(100.0),
-                                    child: CachedNetworkImage(
-                                      imageUrl: usercontroller
-                                          .userdata.userImage
-                                          .toString(),
-                                      placeholder: (context, url) =>
-                                          Container(),
-                                      errorWidget: (context, url, error) =>
-                                          const Icon(Icons.error),
-                                      fit: BoxFit.fill,
-                                    ),
-                                  )),
+                                : CircleCacheImage(
+                                    userImage: userdata.userImage.toString())),
                       ),
                     ),
                   ),
@@ -142,7 +105,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    usercontroller.userdata.userName.toString(),
+                    userdata.userName.toString(),
                     style: Theme.of(context).textTheme.headlineLarge,
                   ),
                   SizedBox(
@@ -161,7 +124,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 height: size.height * 0.005,
               ),
               Text(
-                '${usercontroller.userdata.userCity != "" ? usercontroller.userdata.userCity.toString() : "N/A"} , ${usercontroller.userdata.userCountry != "" ? usercontroller.userdata.userCountry.toString() : "N/A"}',
+                '${userdata.userCity != "" ? userdata.userCity.toString() : "N/A"} , ${userdata.userCountry != "" ? userdata.userCountry.toString() : "N/A"}',
                 style: Theme.of(context)
                     .textTheme
                     .headlineMedium!
@@ -172,44 +135,86 @@ class _ProfileScreenState extends State<ProfileScreen> {
               SizedBox(
                 height: size.height * 0.01,
               ),
-              // GestureDetector(
-              //   onTap: () {
-              //     Navigator.of(context).push(MaterialPageRoute(
-              //         builder: (context) => const FriendList()));
-              //   },
-              //   child: Text(
-              //     '245 Friends',
-              //     style: Theme.of(context).textTheme.headlineSmall!.merge(
-              //         const TextStyle(
-              //             color: Colors.white, fontWeight: FontWeight.bold)),
-              //   ),
-              // ),
-              // SizedBox(
-              //   height: size.height * 0.0125,
-              // ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      // Navigator.of(context).push(MaterialPageRoute(
+                      //     builder: (context) => const FriendList()));
+                    },
+                    child: Text(
+                      '${userdata.userFollowers!.length} Followers',
+                      style: Theme.of(context).textTheme.headlineSmall!.merge(
+                          const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold)),
+                    ),
+                  ),
+                  Text(
+                    '   |   ',
+                    style: Theme.of(context).textTheme.headlineSmall!.merge(
+                        const TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold)),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      // Navigator.of(context).push(MaterialPageRoute(
+                      //     builder: (context) => const FriendList()));
+                    },
+                    child: Text(
+                      '${userdata.userFollowing!.length} Following',
+                      style: Theme.of(context).textTheme.headlineSmall!.merge(
+                          const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold)),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: size.height * 0.0125,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const CameraAppTest()));
+                    onTap: () async {
+                      showLoader(context);
+                      if (usercontroller.userdata.userFollowing!
+                          .contains(userdata.sId)) {
+                        if (await usercontroller.FollowUnFollow(
+                            {'follow_id': userdata.sId})) {
+                          usercontroller.removefollowing(userdata.sId);
+                          usercontroller.removefollowselected(userdata.sId);
+
+                          Navigator.pop(context);
+                        }
+                      } else {
+                        if (await usercontroller.FollowUnFollow(
+                            {'follow_id': userdata.sId})) {
+                          usercontroller.addfollowing(userdata.sId);
+                          usercontroller.addfollowselected(userdata.sId);
+
+                          Navigator.pop(context);
+                        }
+                      }
                     },
-                    child: const btnGlobal(
+                    child: btnGlobal(
                       width: 0.375,
                       height: 0.05,
-                      text: "Add Highlight",
+                      text: usercontroller.userdata.userFollowing!
+                              .contains(userdata.sId)
+                          ? "UnFollow"
+                          : "Follow",
                     ),
                   ),
                   GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const EditProfile()));
-                    },
+                    onTap: () {},
                     child: const btnGlobal(
                       width: 0.375,
                       height: 0.05,
-                      text: "Edit Profile",
+                      text: "Message",
                     ),
                   ),
                 ],
@@ -225,31 +230,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     children: [
                       GestureDetector(
                           onTap: () {
-                            setState(() {
-                              tabindex = 0;
-                            });
+                            // setState(() {
+                            //   tabindex = 0;
+                            // });
                           },
-                          child: TabButtons('Bio', 0)),
+                          child: TabButtons('Bio', 0, context)),
                       SizedBox(
                         width: size.width * 0.0175,
                       ),
                       GestureDetector(
                           onTap: () {
-                            setState(() {
-                              tabindex = 1;
-                            });
+                            // setState(() {
+                            //   tabindex = 1;
+                            // });
                           },
-                          child: TabButtons('Highlights', 1)),
+                          child: TabButtons('Highlights', 1, context)),
                       SizedBox(
                         width: size.width * 0.0175,
                       ),
                       GestureDetector(
                           onTap: () {
-                            setState(() {
-                              tabindex = 2;
-                            });
+                            // setState(() {
+                            //   tabindex = 2;
+                            // });
                           },
-                          child: TabButtons('Rankings', 2)),
+                          child: TabButtons('Rankings', 2, context)),
                       // SizedBox(
                       //   width: size.width * 0.0175,
                       // ),
@@ -291,8 +296,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             height: size.height * 0.01,
                           ),
                           Text(
-                            usercontroller.userdata.userBio != ""
-                                ? usercontroller.userdata.userBio.toString()
+                            userdata.userBio != ""
+                                ? userdata.userBio.toString()
                                 : "N/A",
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),
@@ -307,8 +312,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             height: size.height * 0.01,
                           ),
                           Text(
-                            usercontroller.userdata.userTeam != ""
-                                ? usercontroller.userdata.userTeam.toString()
+                            userdata.userTeam != ""
+                                ? userdata.userTeam.toString()
                                 : "N/A",
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),
@@ -323,8 +328,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             height: size.height * 0.01,
                           ),
                           Text(
-                            usercontroller.userdata.userCoaches != ""
-                                ? usercontroller.userdata.userCoaches.toString()
+                            userdata.userCoaches != ""
+                                ? userdata.userCoaches.toString()
                                 : "N/A",
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),
@@ -339,8 +344,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             height: size.height * 0.01,
                           ),
                           Text(
-                            usercontroller.userdata.userSchool != ""
-                                ? usercontroller.userdata.userSchool.toString()
+                            userdata.userSchool != ""
+                                ? userdata.userSchool.toString()
                                 : "N/A",
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),
@@ -381,7 +386,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget TabButtons(text, index) {
+  Widget TabButtons(text, index, context) {
     final Size size = MediaQuery.of(context).size;
 
     return Container(

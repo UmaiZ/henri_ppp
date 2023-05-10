@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:henri_ppp/models/user.dart';
-import 'package:henri_ppp/services/api.dart';
+import 'package:henri_ppp/services/feed_service.dart';
 
-class createPostProvider extends ChangeNotifier {
+class createPostController extends ChangeNotifier {
   late UserModel _user;
   UserModel get userdata => _user;
   List _selectedImages = [];
@@ -31,7 +31,7 @@ class createPostProvider extends ChangeNotifier {
   Future<bool> createPost(data, file) async {
     bool result = false;
     try {
-      return await ApiService().createPost("createNewsFeed", data, file);
+      return await feedService().createPost("createNewsFeed", data, file);
     } catch (e) {
       notifyListeners();
     }

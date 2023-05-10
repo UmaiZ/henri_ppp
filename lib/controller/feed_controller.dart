@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:henri_ppp/models/feed.dart';
-import 'package:henri_ppp/services/api.dart';
+import 'package:henri_ppp/services/feed_service.dart';
 
-class FeedProvider extends ChangeNotifier {
+class feedController extends ChangeNotifier {
   List<FeedModel> _feeds = [];
   List<FeedModel> get feeddata => _feeds;
 
-  FeedProvider() {
+  feedController() {
     getFeed();
   }
 
-  Future<bool> getFeed() async {
+  getFeed() async {
     bool result = false;
     try {
-      List<FeedModel> user = await ApiService().getFeed("getNewsFeed");
+      List<FeedModel> user = await feedService().getFeed("getNewsFeed");
       _feeds = user;
       result = true;
       notifyListeners();

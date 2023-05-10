@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:henri_ppp/providers/create_post_provider.dart';
-import 'package:henri_ppp/providers/feed_provider.dart';
-import 'package:henri_ppp/providers/status_provider.dart';
-import 'package:henri_ppp/providers/user_provider.dart';
+import 'package:henri_ppp/controller/create_post_controller.dart';
+import 'package:henri_ppp/controller/feed_controller.dart';
+import 'package:henri_ppp/controller/status_controller.dart';
+import 'package:henri_ppp/controller/user_controller.dart';
 import 'package:henri_ppp/views/onboarding/view/login.dart';
 import 'package:henri_ppp/helpers/theme.dart';
 import 'package:provider/provider.dart';
@@ -80,9 +80,9 @@ class _SplashState extends State<Splash> {
 }
 
 List<SingleChildWidget> providers = [
-  ChangeNotifierProvider<StatusProvider>(create: (_) => StatusProvider()),
-  ChangeNotifierProvider<UserProvider>(create: (_) => UserProvider()),
-  ChangeNotifierProvider<FeedProvider>(create: (_) => FeedProvider()),
-  ChangeNotifierProvider<createPostProvider>(
-      create: (_) => createPostProvider()),
+  ChangeNotifierProvider<statusController>(create: (_) => statusController()),
+  ChangeNotifierProvider<userController>(create: (_) => userController()),
+  ChangeNotifierProvider<feedController>(create: (_) => feedController()),
+  ChangeNotifierProvider<createPostController>(
+      create: (_) => createPostController()),
 ];
