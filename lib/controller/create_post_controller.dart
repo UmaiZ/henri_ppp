@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:henri_ppp/helpers/network/network.dart';
 import 'package:henri_ppp/models/user.dart';
 import 'package:henri_ppp/services/feed_service.dart';
 
@@ -31,7 +32,8 @@ class createPostController extends ChangeNotifier {
   Future<bool> createPost(data, file) async {
     bool result = false;
     try {
-      return await feedService().createPost("createNewsFeed", data, file);
+      return await feedService()
+          .createPost(ApiUrls().createNewsFeed, data, file);
     } catch (e) {
       notifyListeners();
     }

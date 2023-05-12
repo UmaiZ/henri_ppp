@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:henri_ppp/helpers/network/network.dart';
 import 'package:henri_ppp/models/status.dart';
 import 'package:henri_ppp/services/story_service.dart';
 
@@ -12,7 +13,7 @@ class statusController extends ChangeNotifier {
     bool result = false;
     try {
       return await storyService().createStory(
-          "createStatus",
+          ApiUrls().createStatus,
           data,
           file,
           file.path.split('.').last.toString().toUpperCase() == "MOV"
@@ -29,7 +30,8 @@ class statusController extends ChangeNotifier {
   Future<bool> getStatus() async {
     bool result = false;
     try {
-      List<StatusModel> status = await storyService().getStatus("getStatus");
+      List<StatusModel> status =
+          await storyService().getStatus(ApiUrls().getStatus);
       _status = status;
       result = true;
       notifyListeners();

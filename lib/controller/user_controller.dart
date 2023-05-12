@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:henri_ppp/helpers/network/network.dart';
 import 'package:henri_ppp/models/user.dart';
 import 'package:henri_ppp/services/auth_service.dart';
 
@@ -15,7 +16,7 @@ class userController extends ChangeNotifier {
   Future<bool> LoginHit(data) async {
     bool result = false;
     try {
-      UserModel user = await AuthService().login("login", data);
+      UserModel user = await AuthService().login(ApiUrls().login, data);
       _user = user;
       token = _user.userToken.toString();
       result = true;
@@ -29,7 +30,7 @@ class userController extends ChangeNotifier {
   Future<bool> UpdateUser(data) async {
     bool result = false;
     try {
-      UserModel user = await AuthService().update("updateUser", data);
+      UserModel user = await AuthService().update(ApiUrls().updateUser, data);
       _user = user;
 
       result = true;
@@ -42,8 +43,8 @@ class userController extends ChangeNotifier {
 
   Future<void> fetchselecteduserDetails(String userID) async {
     try {
-      UserModel user =
-          await AuthService().getUserByID("getUserByUserID/$userID");
+      UserModel user = await AuthService()
+          .getUserByID("${ApiUrls().getUserByUserID}/$userID");
       _selecteduser = user;
       notifyListeners();
     } catch (e) {
@@ -54,8 +55,8 @@ class userController extends ChangeNotifier {
   Future<bool> updateMedia(data, file, type) async {
     bool result = false;
     try {
-      UserModel user =
-          await AuthService().updateMedia("updateUser", data, file, type);
+      UserModel user = await AuthService()
+          .updateMedia(ApiUrls().updateUser, data, file, type);
       _user = user;
       result = true;
       notifyListeners();
@@ -69,7 +70,7 @@ class userController extends ChangeNotifier {
     bool result = false;
     try {
       result = await AuthService().followunfollow(
-        "followOrUnfollow",
+        ApiUrls().followOrUnfollow,
         data,
       );
       notifyListeners();

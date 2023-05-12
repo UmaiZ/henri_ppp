@@ -5,15 +5,12 @@ import 'package:henri_ppp/controller/user_controller.dart';
 import 'package:http/http.dart' as http;
 
 class NetworkHelper {
-  String baseUrl = "http://localhost:3000";
-  // String baseUrl = "http://3.111.58.237:3000";
-
   getApi(String url) async {
     // final query = params?.entries.map((e) => '${e.key}=${e.value}').join('&');
 
     final response = await http.get(
       // Uri.parse('$url?$query'),
-      Uri.parse('$baseUrl/$url'),
+      Uri.parse(url),
       headers: {
         'x-access-token': token,
         'Accept': 'application/json',
@@ -28,7 +25,7 @@ class NetworkHelper {
   postApi(String url, data) async {
     String jsondata = json.encode(data);
 
-    final response = await http.post(Uri.parse('$baseUrl/$url'),
+    final response = await http.post(Uri.parse(url),
         headers: {
           'x-access-token': token,
           'Accept': 'application/json',
@@ -41,7 +38,7 @@ class NetworkHelper {
   }
 
   postFormApi(String url, data, file) async {
-    var postUri = Uri.parse('$baseUrl/$url');
+    var postUri = Uri.parse(url);
     var request = http.MultipartRequest("POST", postUri);
     request.fields['user'] = 'blah';
     data.forEach((key, value) {
@@ -66,7 +63,7 @@ class NetworkHelper {
   }
 
   mediaFormUpload(String url, data, file, type) async {
-    var postUri = Uri.parse('$baseUrl/$url');
+    var postUri = Uri.parse(url);
     var request = http.MultipartRequest("POST", postUri);
     request.fields['user'] = 'blah';
     data.forEach((key, value) {
@@ -99,4 +96,22 @@ class NetworkHelper {
       return resData;
     }
   }
+}
+
+class ApiUrls {
+  static const String baseUrl = "http://localhost:3000";
+
+  //For Users
+  String login = "$baseUrl/login";
+  String updateUser = "$baseUrl/updateUser";
+  String getUserByUserID = "$baseUrl/getUserByUserID";
+  String followOrUnfollow = "$baseUrl/followOrUnfollow";
+
+  //For Feed
+  String createNewsFeed = "$baseUrl/createNewsFeed";
+  String getNewsFeed = "$baseUrl/getNewsFeed";
+
+  //For Status
+  String createStatus = "$baseUrl/createStatus";
+  String getStatus = "$baseUrl/getStatus";
 }
