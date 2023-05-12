@@ -1,9 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:henri_ppp/controller/chat_controller.dart';
 import 'package:henri_ppp/helpers/imagepicker/imagepicker.dart';
 import 'package:henri_ppp/helpers/loader/loader.dart';
 import 'package:henri_ppp/controller/user_controller.dart';
 import 'package:henri_ppp/models/user.dart';
+import 'package:henri_ppp/views/messages/view/mesagedetail.dart';
 import 'package:henri_ppp/widgets/button.dart';
 import 'package:henri_ppp/widgets/roundcacheimage.dart';
 
@@ -18,6 +20,7 @@ class OtherProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final usercontroller = Provider.of<userController>(context);
+    final chatcontroller = Provider.of<chatController>(context);
 
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
@@ -210,7 +213,31 @@ class OtherProfileScreen extends StatelessWidget {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () async {
+                      showLoader(context);
+                      await chatcontroller.openMessage({
+                        'users': [userdata.sId]
+                      }).then((value) {
+                        Navigator.pop(context);
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => ChatDetails(
+                                  username: userdata.userName,
+                                  userimage: userdata.userImage,
+                                  roomid: value,
+                                )));
+                      });
+
+                      // showLoader(context);
+                      // if (await chatcontroller.openMessage({
+                      //   'users': [userdata.sId]
+                      // })) {
+                      //   // usercontroller.addfollowing(userdata.sId);
+                      //   // usercontroller.addfollowselected(userdata.sId);
+                      //   Navigator.of(context).push(MaterialPageRoute(
+                      //       builder: (context) => MessageDetails()));
+                      //   Navigator.pop(context);
+                      // }
+                    },
                     child: const btnGlobal(
                       width: 0.375,
                       height: 0.05,

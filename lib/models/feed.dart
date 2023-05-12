@@ -1,3 +1,4 @@
+import 'package:henri_ppp/models/rating.dart';
 import 'package:henri_ppp/models/user.dart';
 
 class FeedModel {
@@ -10,6 +11,7 @@ class FeedModel {
   String? createdAt;
   String? updatedAt;
   int? iV;
+  List<Rating>? rating;
 
   FeedModel(
       {this.sId,
@@ -20,6 +22,7 @@ class FeedModel {
       this.isDeleted,
       this.createdAt,
       this.updatedAt,
+      this.rating,
       this.iV});
 
   FeedModel.fromJson(Map<String, dynamic> json) {
@@ -27,6 +30,12 @@ class FeedModel {
     createdBy = json['createdBy'] != null
         ? new UserModel.fromJson(json['createdBy'])
         : null;
+    if (json['rating'] != null) {
+      rating = <Rating>[];
+      json['rating'].forEach((v) {
+        rating!.add(new Rating.fromJson(v));
+      });
+    }
     description = json['description'];
     images = json['images'].cast<String>();
     comment = json['comment'].cast<String>();
@@ -43,6 +52,9 @@ class FeedModel {
     data['_id'] = this.sId;
     if (this.createdBy != null) {
       data['createdBy'] = this.createdBy!.toJson();
+    }
+    if (this.rating != null) {
+      data['rating'] = this.rating!.map((v) => v.toJson()).toList();
     }
     data['description'] = this.description;
     data['images'] = this.images;

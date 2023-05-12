@@ -22,6 +22,7 @@ class _PostWidgetState extends State<PostWidget> {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     final usercontroller = Provider.of<userController>(context);
+    print(widget.data.rating);
 
     return Container(
       width: size.width * 0.95,
@@ -151,7 +152,11 @@ class _PostWidgetState extends State<PostWidget> {
                     children: [
                       RatingBar(
                         itemSize: 20.0,
-                        initialRating: 3,
+                        initialRating: widget.data.rating.length > 0
+                            ? widget.data.rating
+                                .map((m) => m.rating)
+                                .reduce((a, b) => a + b)
+                            : 0,
                         direction: Axis.horizontal,
                         allowHalfRating: true,
                         itemCount: 5,
@@ -172,7 +177,9 @@ class _PostWidgetState extends State<PostWidget> {
                         },
                       ),
                       Text(
-                        '4.5 Rating',
+                        widget.data.rating.length > 0
+                            ? '${widget.data.rating.map((m) => m.rating).reduce((a, b) => a + b)} Rating'
+                            : '0 Rating',
                         style: Theme.of(context).textTheme.bodyLarge!.merge(
                             const TextStyle(
                                 color: Colors.grey,
