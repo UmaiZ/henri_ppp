@@ -1,7 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:henri_ppp/controller/user_controller.dart';
 import 'package:henri_ppp/helpers/network/network.dart';
 import 'package:provider/provider.dart';
@@ -50,7 +48,7 @@ class _ChatDetailsState extends State<ChatDetails> {
 
     try {
       // Configure socket transports must be sepecified
-      socket = IO.io(NetworkHelper().baseUrl, <String, dynamic>{
+      socket = IO.io(ApiUrls().SocketUrl, <String, dynamic>{
         'transports': ['websocket'],
         'autoConnect': true,
         'force new connection': true,
@@ -69,7 +67,7 @@ class _ChatDetailsState extends State<ChatDetails> {
             messageList = data['data']['messages'];
             messageList = Set.of(messageList).toList();
           });
-          Future.delayed(Duration(seconds: 1), () {
+          Future.delayed(const Duration(seconds: 1), () {
             _scrollController.animateTo(
               _scrollController.position.maxScrollExtent,
               curve: Curves.easeOut,
@@ -82,10 +80,9 @@ class _ChatDetailsState extends State<ChatDetails> {
           print(data);
           setState(() {
             if (messageList
-                    .where((element) => element['_id'] == data['data']['id'])
-                    .toList()
-                    .length >
-                0) {
+                .where((element) => element['_id'] == data['data']['id'])
+                .toList()
+                .isNotEmpty) {
             } else {
               messageList.add(data['data']);
             }
@@ -136,7 +133,7 @@ class _ChatDetailsState extends State<ChatDetails> {
                           ),
                         )),
             ),
-            SizedBox(
+            const SizedBox(
               width: 10,
             ),
             widget.usersarray != null
@@ -157,7 +154,7 @@ class _ChatDetailsState extends State<ChatDetails> {
                                   '...',
                                   style: Theme.of(context).textTheme.bodyMedium,
                                 )
-                              : SizedBox(),
+                              : const SizedBox(),
                         ],
                       ),
                     ),
@@ -178,7 +175,7 @@ class _ChatDetailsState extends State<ChatDetails> {
             width: double.infinity,
             child: Column(
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 SizedBox(
@@ -242,7 +239,7 @@ class _ChatDetailsState extends State<ChatDetails> {
                                 Card(
                                   color:
                                       Theme.of(context).colorScheme.secondary,
-                                  shape: RoundedRectangleBorder(
+                                  shape: const RoundedRectangleBorder(
                                     borderRadius: BorderRadius.only(
                                         topLeft: Radius.circular(10),
                                         bottomLeft: Radius.circular(10),
@@ -255,7 +252,7 @@ class _ChatDetailsState extends State<ChatDetails> {
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyLarge!
-                                            .merge(TextStyle(
+                                            .merge(const TextStyle(
                                                 color: Colors.white))),
                                   ),
                                 ),
@@ -273,7 +270,7 @@ class _ChatDetailsState extends State<ChatDetails> {
                         );
                       }),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
               ],
@@ -294,7 +291,7 @@ class _ChatDetailsState extends State<ChatDetails> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Container(
+            SizedBox(
               width: MediaQuery.of(context).size.width * 0.9,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -312,7 +309,7 @@ class _ChatDetailsState extends State<ChatDetails> {
                         keyboardType: TextInputType.multiline,
                         minLines: 1,
                         maxLines: 5,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                             border: InputBorder.none,
                             hintText: "Type a message",
                             hintStyle: TextStyle(color: Colors.grey)
