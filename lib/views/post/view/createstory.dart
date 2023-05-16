@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:henri_ppp/helpers/logger/logger.dart';
 import 'package:henri_ppp/views/post/view/viewstoryvideo.dart';
 import 'package:video_player/video_player.dart';
 import 'package:path_provider/path_provider.dart';
@@ -46,13 +47,13 @@ class _CameraAppTestState extends State<CameraAppTest> {
       final image = await _cameraController!.takePicture();
       return image;
     } on CameraException catch (e) {
-      print('Error capturing image: $e');
+      logger.e('Error capturing image: $e');
+
       return Future.error("Failed to capture image");
     }
   }
 
   Future<String?> _startRecording() async {
-    print('start');
     final Directory appDirectory = await getApplicationDocumentsDirectory();
     final String videoDirectory = '${appDirectory.path}/Videos';
     await Directory(videoDirectory).create(recursive: true);
@@ -66,13 +67,12 @@ class _CameraAppTestState extends State<CameraAppTest> {
       await _cameraController!.startVideoRecording();
       return filePath;
     } on CameraException catch (e) {
-      print(e);
+      logger.e(e);
       return null;
     }
   }
 
   Future<XFile?> _stopRecording() async {
-    print('stop');
     // if (!_cameraController!.value.isRecordingVideo) {
     //   // Do nothing if not recording
     //   return;
@@ -81,7 +81,7 @@ class _CameraAppTestState extends State<CameraAppTest> {
       XFile videoFile = await _cameraController!.stopVideoRecording();
       return videoFile;
     } on CameraException catch (e) {
-      print(e);
+      logger.e(e);
     }
     return null;
   }
@@ -179,12 +179,9 @@ class _CameraAppTestState extends State<CameraAppTest> {
                               if (_cameraController != null &&
                                   _cameraController!.value.isInitialized &&
                                   !_cameraController!.value.isRecordingVideo) {
-                                print('call');
                                 final String? filePath =
                                     await _startRecording();
                                 if (filePath != null) {
-                                  print(filePath);
-
                                   setState(() {
                                     _videoPlayerController =
                                         VideoPlayerController.file(
@@ -196,11 +193,11 @@ class _CameraAppTestState extends State<CameraAppTest> {
                                 }
                               } else {
                                 XFile? videopath = await _stopRecording();
-                                print('ohh path${videopath!.path}');
+
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) => ViewVideoStory(
                                           type: 'video',
-                                          path: videopath.path,
+                                          path: videopath!.path,
                                           file: videopath,
                                         )));
                               }

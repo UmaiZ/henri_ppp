@@ -62,7 +62,6 @@ class AuthService {
   Future<UserModel> updateMedia(url, data, file, type) async {
     UserModel result;
     try {
-      print('hit');
       final response =
           await NetworkHelper().mediaFormUpload(url, data, file, type);
       logger.d(response);

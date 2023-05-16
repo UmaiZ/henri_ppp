@@ -111,13 +111,6 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                     scrollDirection: Axis.horizontal,
                     itemCount: postcontroller.images.length,
                     itemBuilder: (context, index) {
-                      // print(postcontroller.images[index].path
-                      //     .split('.')
-                      //     .last
-                      //     .toString()
-                      //     .toUpperCase());
-                      // print(postcontroller.images[index]);
-
                       return Padding(
                         padding: EdgeInsets.only(left: index == 0 ? 0 : 13),
                         child: Stack(

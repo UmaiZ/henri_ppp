@@ -1,11 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:henri_ppp/controller/feed_controller.dart';
+import 'package:henri_ppp/helpers/loader/loader.dart';
 import 'package:henri_ppp/helpers/logger/logger.dart';
-import 'package:henri_ppp/models/comments.dart';
-import 'package:henri_ppp/models/user.dart';
 import 'package:henri_ppp/controller/user_controller.dart';
+import 'package:henri_ppp/helpers/network/network.dart';
 import 'package:henri_ppp/services/feed_service.dart';
+import 'package:henri_ppp/views/homeview/widget/commentbox.dart';
 import 'package:henri_ppp/views/profile/view/otherprofile.dart';
 import 'package:provider/provider.dart';
 
@@ -153,10 +155,19 @@ class _PostWidgetState extends State<PostWidget> {
                       RatingBar(
                         itemSize: 20.0,
                         initialRating: widget.data.rating.length > 0
-                            ? widget.data.rating
-                                .map((m) => m.rating)
-                                .reduce((a, b) => a + b)
+                            ? widget.data.rating.length == 1
+                                ? widget.data.rating[0].rating.toDouble()
+                                : widget.data.rating
+                                        .map((m) => m.rating)
+                                        .reduce((a, b) => a + b) /
+                                    widget.data.rating.length
                             : 0,
+                        // initialRating: widget.data.rating.length > 0
+                        //     ? widget.data.rating
+                        //             .map((m) => m.rating)
+                        //             .reduce((a, b) => a + b) /
+                        //         widget.data.rating.length
+                        //     : 0,
                         direction: Axis.horizontal,
                         allowHalfRating: true,
                         itemCount: 5,
@@ -178,7 +189,7 @@ class _PostWidgetState extends State<PostWidget> {
                       ),
                       Text(
                         widget.data.rating.length > 0
-                            ? '${widget.data.rating.map((m) => m.rating).reduce((a, b) => a + b)} Rating'
+                            ? '${widget.data.rating.map((m) => m.rating).reduce((a, b) => a + b) / widget.data.rating.length} Rating'
                             : '0 Rating',
                         style: Theme.of(context).textTheme.bodyLarge!.merge(
                             const TextStyle(
@@ -209,31 +220,74 @@ class _PostWidgetState extends State<PostWidget> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Row(
-                  children: [
-                    Image.asset(
-                      'assets/images/flame.png',
-                      width: size.width * 0.06,
-                    ),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    Text(
-                      'Rate',
-                      style: Theme.of(context).textTheme.bodyLarge!.merge(
-                          const TextStyle(
-                              color: Colors.grey, fontWeight: FontWeight.w500)),
-                    ),
-                  ],
+                GestureDetector(
+                  onTap: () {
+                    // print(widget.data.rating);
+                    // var foundItem = widget.data.rating.firstWhere(
+                    //     (item) => item.ratingBy == usercontroller.userdata.sId);
+                    // print(foundItem);
+                    showModalBottomSheet(
+                        clipBehavior: Clip.hardEdge,
+                        isScrollControlled: true,
+                        shape: const RoundedRectangleBorder(),
+                        context: context,
+                        builder: (
+                          context,
+                        ) {
+                          return ratePost(
+                            ratinggive: !widget.data.rating.any((item) =>
+                                    item.ratingBy ==
+                                    usercontroller.userdata.sId)
+                                ? 0.0
+                                : 0.0,
+                            feedID: widget.data.sId,
+                          );
+                        });
+                  },
+                  child: Row(
+                    children: [
+                      Image.asset(
+                        'assets/images/flame.png',
+                        width: size.width * 0.06,
+                        color: !widget.data.rating.any((item) =>
+                                item.ratingBy == usercontroller.userdata.sId)
+                            ? Colors.grey
+                            : null,
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Text(
+                        'Rate',
+                        style: Theme.of(context).textTheme.bodyLarge!.merge(
+                            const TextStyle(
+                                color: Colors.grey,
+                                fontWeight: FontWeight.w500)),
+                      ),
+                    ],
+                  ),
                 ),
                 GestureDetector(
                   onTap: () async {
-                    var list = await feedService()
-                        .getComments('newsFeedComment/${widget.data.sId}')
+                    await feedService()
+                        .getComments(
+                            '${ApiUrls().newsFeedComment}/${widget.data.sId}')
                         .then((value) {
                       logger.d(value);
 
-                      commentboxmodal(value, widget.data.sId, context);
+                      showModalBottomSheet(
+                          clipBehavior: Clip.hardEdge,
+                          isScrollControlled: true,
+                          shape: const RoundedRectangleBorder(),
+                          context: context,
+                          builder: (
+                            context,
+                          ) {
+                            return commentBox(
+                              comments: value,
+                              newsId: widget.data.sId,
+                            );
+                          });
                     });
                   },
                   child: Row(
@@ -289,193 +343,74 @@ class _PostWidgetState extends State<PostWidget> {
   }
 }
 
-commentboxmodal(comments, newsId, context) {
-  final width = MediaQuery.of(context).size.width;
-  final height = MediaQuery.of(context).size.height;
+class ratePost extends StatelessWidget {
+  final ratinggive;
+  final feedID;
+  const ratePost({super.key, this.ratinggive, this.feedID});
 
-  TextEditingController chatcontroller = TextEditingController();
+  @override
+  Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
+    final feedcontroller = Provider.of<feedController>(context);
+    final usercontroller = Provider.of<userController>(context);
 
-  showModalBottomSheet(
-      clipBehavior: Clip.hardEdge,
-      isScrollControlled: true,
-      shape: const RoundedRectangleBorder(),
-      context: context,
-      builder: (
-        context,
-      ) {
-        return StatefulBuilder(builder: (BuildContext context,
-            StateSetter setState /*You can rename this!*/) {
-          return Container(
-              color: Theme.of(context).colorScheme.secondary,
-              height: height * 0.8,
-              child: Column(
-                children: [
-                  Container(
-                    width: double.infinity,
-                    decoration:
-                        BoxDecoration(color: Colors.grey.withOpacity(0.1)),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Center(
-                        child: Text(
-                          'Comments',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium!
-                              .merge(const TextStyle(color: Colors.white)),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  SizedBox(
-                    height: height * 0.625,
-                    child: ListView.builder(
-                        itemCount: comments.length,
-                        itemBuilder: (context, index) {
-                          return GestureDetector(
-                            onTap: () {},
-                            child: Column(
-                              children: [
-                                ListTile(
-                                  leading: CachedNetworkImage(
-                                    imageUrl:
-                                        comments[index].commentBy.userImage,
-                                    imageBuilder: (context, imageProvider) =>
-                                        Container(
-                                      height: 50,
-                                      width: 50,
-                                      decoration: BoxDecoration(
-                                        // color: Colors.white,
-                                        borderRadius:
-                                            BorderRadius.circular(100),
-                                        image: DecorationImage(
-                                          image: imageProvider,
-                                          fit: BoxFit.fill,
-                                        ),
-                                      ),
-                                    ),
-                                    placeholder: (context, url) => Container(),
-                                    errorWidget: (context, url, error) =>
-                                        const Icon(Icons.error),
-                                    fit: BoxFit.fill,
-                                  ),
-                                  title: Text(
-                                    comments[index].commentBy.userName,
-                                    style:
-                                        Theme.of(context).textTheme.bodyMedium,
-                                  ),
-                                  subtitle: Text(
-                                    comments[index].commentDetail,
-                                    style:
-                                        Theme.of(context).textTheme.bodySmall,
-                                  ),
-                                )
-                              ],
-                            ),
-                          );
-                        }),
-                  ),
-                  SizedBox(
-                    width: width * 0.95,
-                    child: TextFormField(
-                      controller: chatcontroller,
-                      autocorrect: false,
-                      enableSuggestions: false,
-                      onChanged: (val) {
-                        // playercontroller.changeSearchString(val);
-                      },
-                      style: const TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey,
-                      ),
-                      validator: (value) {
-                        if (value!.isEmpty) return 'Required field';
-                        return null;
-                      },
-                      keyboardType: TextInputType.emailAddress,
+    return Container(
+      color: Theme.of(context).colorScheme.secondary,
+      height: height * 0.2,
+      child: Column(
+        children: [
+          Container(
+            width: double.infinity,
+            decoration: BoxDecoration(color: Colors.grey.withOpacity(0.1)),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Center(
+                child: Text(
+                  'Rate',
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .merge(const TextStyle(color: Colors.white)),
+                ),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: height * 0.025,
+          ),
+          RatingBar(
+            itemSize: 40.0,
+            initialRating: ratinggive,
+            direction: Axis.horizontal,
+            allowHalfRating: true,
+            itemCount: 5,
+            ratingWidget: RatingWidget(
+              full: Image.asset(
+                'assets/images/flame.png',
+              ),
+              half: Image.asset('assets/images/flame.png'),
+              empty: Image.asset(
+                'assets/images/flame.png',
+                color: Colors.grey,
+              ),
+            ),
+            itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+            onRatingUpdate: (rating) async {
+              // print(await feedcontroller.createRating(
+              //     {'rating': rating}, feedID, usercontroller.userdata.sId));
+              showLoader(context);
+              await feedcontroller.createRating({'rating': rating}, feedID,
+                  usercontroller.userdata.sId).then((res) {
+                Navigator.pop(context);
+              });
 
-                      // controller: username,
-                      decoration: InputDecoration(
-                          suffixIcon: GestureDetector(
-                              onTap: () {
-                                print({
-                                  'newsFeedId': newsId,
-                                  'commentDetail':
-                                      chatcontroller.text.toString()
-                                });
-                                if (chatcontroller.text.toString() != "") {
-                                  feedService().addComment('commentNewsFeed', {
-                                    'newsFeedId': newsId,
-                                    'commentDetail':
-                                        chatcontroller.text.toString()
-                                  }).then((val) {
-                                    if (val) {
-                                      final playercontroller =
-                                          Provider.of<userController>(context,
-                                              listen: false);
-
-                                      setState(() {
-                                        comments.add(CommentModel(
-                                            commentDetail:
-                                                chatcontroller.text.toString(),
-                                            commentBy: UserModel(
-                                                userName: playercontroller
-                                                    .userdata.userName,
-                                                userImage: playercontroller
-                                                    .userdata.userImage)));
-
-                                        // comments.add({
-                                        //   'commentDetail':
-                                        //       chatcontroller.text.toString(),
-                                        //   'commentBy': {
-                                        //     'userName': playercontroller
-                                        //         .userdata.userName,
-                                        //     'userImage': playercontroller
-                                        //         .userdata.userImage,
-                                        //   }
-                                        // });
-                                        chatcontroller.clear();
-                                      });
-                                    }
-                                  });
-                                } else {
-                                  // showToast('Add a comment');
-                                }
-                              },
-                              child: const Icon(Icons.send)),
-                          focusedErrorBorder: const OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.all(Radius.circular(14)),
-                          ),
-                          enabledBorder: const OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.all(Radius.circular(14)),
-                          ),
-                          focusedBorder: const OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.all(Radius.circular(14)),
-                          ),
-                          errorBorder: const OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.all(Radius.circular(14)),
-                          ),
-                          hintText: 'Leave your comment',
-                          hintStyle: const TextStyle(
-                            fontSize: 14,
-                            color: Colors.grey,
-                          ),
-                          // suffixIcon: inputWidget,
-                          filled: true,
-                          fillColor: Colors.white,
-                          border: InputBorder.none,
-                          contentPadding: const EdgeInsets.all(20)),
-                    ),
-                  ),
-                ],
-              ));
-        });
-      });
+              // Navigator.pop(context);
+              // Navigator.pop(context);
+            },
+          ),
+        ],
+      ),
+    );
+  }
 }

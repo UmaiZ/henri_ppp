@@ -111,6 +111,8 @@ class ApiUrls {
   //For Feed
   String createNewsFeed = "$baseUrl/createNewsFeed";
   String getNewsFeed = "$baseUrl/getNewsFeed";
+  String newsFeedComment = "$baseUrl/newsFeedComment";
+  String ratingnewsFeed = "$baseUrl/ratingnewsFeed";
 
   //For Status
   String createStatus = "$baseUrl/createStatus";

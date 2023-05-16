@@ -83,4 +83,23 @@ class feedService {
       rethrow;
     }
   }
+
+  addRating(url, data) async {
+    logger.d(data);
+    logger.d(url);
+
+    try {
+      final response = await NetworkHelper().postApi(url, data);
+      logger.d(response);
+
+      if (!response['success']) {
+        showtoast(response['message']);
+        return false;
+      }
+      return response;
+    } catch (e) {
+      logger.e(e);
+      rethrow;
+    }
+  }
 }

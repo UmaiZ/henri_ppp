@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:henri_ppp/controller/user_controller.dart';
+import 'package:henri_ppp/helpers/logger/logger.dart';
 import 'package:henri_ppp/helpers/network/network.dart';
 import 'package:provider/provider.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
@@ -77,7 +78,6 @@ class _ChatDetailsState extends State<ChatDetails> {
         });
 
         socket.on('message', (data) {
-          print(data);
           setState(() {
             if (messageList
                 .where((element) => element['_id'] == data['data']['id'])
@@ -90,7 +90,7 @@ class _ChatDetailsState extends State<ChatDetails> {
         });
       });
     } catch (e) {
-      print(e.toString());
+      logger.e(e);
     }
   }
 

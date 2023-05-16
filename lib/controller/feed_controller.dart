@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:henri_ppp/helpers/network/network.dart';
 import 'package:henri_ppp/models/feed.dart';
+import 'package:henri_ppp/models/rating.dart';
 import 'package:henri_ppp/services/feed_service.dart';
 
 class feedController extends ChangeNotifier {
@@ -22,5 +23,34 @@ class feedController extends ChangeNotifier {
       notifyListeners();
     }
     return result;
+  }
+
+  createRating(data, newsid, userid) async {
+    try {
+      var res = await feedService()
+          .addRating("${ApiUrls().ratingnewsFeed}/$newsid", data);
+      for (var element in _feeds) {
+        if (element.sId == newsid) {
+          if (element.rating!.any((item) => item.ratingBy == userid)) {
+            print('exist');
+            int indexToUpdate = element.rating!
+                .indexWhere((item) => item.ratingBy == res['ratingBy']);
+            element.rating![indexToUpdate].rating = res['rating'];
+          } else {
+            print('noexist');
+            element.rating!.add(Rating(
+                sId: res['_id'],
+                newsFeedId: res['newsFeedId'],
+                ratingBy: res['ratingBy'],
+                rating: res['rating'],
+                createdAt: res['createdAt'],
+                updatedAt: res['updatedAt']));
+          }
+          notifyListeners();
+        }
+      }
+    } catch (e) {
+      notifyListeners();
+    }
   }
 }

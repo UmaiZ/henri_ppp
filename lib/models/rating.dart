@@ -2,7 +2,7 @@ class Rating {
   String? sId;
   String? newsFeedId;
   String? ratingBy;
-  double? rating;
+  num? rating;
   String? createdAt;
   String? updatedAt;
   int? iV;
@@ -27,14 +27,14 @@ class Rating {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['newsFeedId'] = this.newsFeedId;
-    data['ratingBy'] = this.ratingBy;
-    data['rating'] = this.rating;
-    data['createdAt'] = this.createdAt;
-    data['updatedAt'] = this.updatedAt;
-    data['__v'] = this.iV;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['_id'] = sId;
+    data['newsFeedId'] = newsFeedId;
+    data['ratingBy'] = ratingBy;
+    data['rating'] = rating;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
+    data['__v'] = iV;
     return data;
   }
 }
