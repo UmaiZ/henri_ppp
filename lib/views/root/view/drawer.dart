@@ -8,6 +8,7 @@ import 'package:henri_ppp/views/messages/view/messagelist.dart';
 import 'package:henri_ppp/views/profile/view/friendlist.dart';
 import 'package:henri_ppp/views/profile/view/teamlist.dart';
 import 'package:henri_ppp/views/root/view/mainroot.dart';
+import 'package:henri_ppp/widgets/circlecacheimage.dart';
 import 'package:provider/provider.dart';
 
 class DrawerScreen extends StatefulWidget {
@@ -60,9 +61,11 @@ class _DrawerScreenState extends State<DrawerScreen> {
                       padding: const EdgeInsets.only(left: 10),
                       child: Row(
                         children: [
-                          Image.asset(
-                            'assets/images/imageplaceholder.png',
-                            width: 60,
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.15,
+                            child: CircleCacheImage(
+                              url: usercontroller.userdata.userImage.toString(),
+                            ),
                           ),
                           const SizedBox(
                             width: 15,
@@ -70,14 +73,14 @@ class _DrawerScreenState extends State<DrawerScreen> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('Natasha Joe',
+                              Text(usercontroller.userdata.userName.toString(),
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyLarge!
                                       .merge(const TextStyle(
                                           color: Colors.white))),
                               Text(
-                                'natashajoe@gmail.com',
+                                usercontroller.userdata.userEmail.toString(),
                                 style: Theme.of(context).textTheme.bodyMedium,
                               )
                             ],

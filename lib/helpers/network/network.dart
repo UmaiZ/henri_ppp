@@ -103,8 +103,10 @@ class NetworkHelper {
 }
 
 class ApiUrls {
+  // static const String baseUrl = "http://3.111.58.237:3000";
   static const String baseUrl = "http://localhost:3000";
-  String SocketUrl = "http://localhost:3000";
+
+  String SocketUrl = "http://3.111.58.237:3000";
 
   //For Users
   String login = "$baseUrl/login";

@@ -72,7 +72,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       var image = await ImagePickerHelper().galleryImage();
                       showLoader(context);
                       if (await usercontroller
-                          .updateMedia({}, image, 'usercover')) {
+                          .updateMedia({}, image, 'coverimage')) {
                         Navigator.pop(context);
                       } else {
                         Navigator.pop(context);
@@ -112,7 +112,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                         var image = await ImagePickerHelper().galleryImage();
                         if (await usercontroller
-                            .updateMedia({}, image, 'userimage')) {
+                            .updateMedia({}, image, 'image')) {
                           Navigator.pop(context);
                         } else {
                           Navigator.pop(context);

@@ -18,21 +18,20 @@ class CircleCacheImage extends StatelessWidget {
               ),
             ),
           )
-        : CircleAvatar(
-            radius: 50,
-            backgroundColor: Colors.grey,
-            child: ClipOval(
-              child: CachedNetworkImage(
-                imageUrl: url,
-                placeholder: (context, url) =>
-                    const CircularProgressIndicator(),
-                errorWidget: (context, url, error) => Image.asset(
-                  'assets/images/imageplaceholder.png',
-                  fit: BoxFit.cover,
-                ),
-                fit: BoxFit.cover,
+        : CachedNetworkImage(
+            imageUrl: url,
+            placeholder: (context, url) => const CircularProgressIndicator(),
+            imageBuilder: (context, imageProvider) => Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                image: DecorationImage(image: imageProvider, fit: BoxFit.cover),
               ),
             ),
+            errorWidget: (context, url, error) => Image.asset(
+              'assets/images/imageplaceholder.png',
+              fit: BoxFit.cover,
+            ),
+            fit: BoxFit.cover,
           );
   }
 }
