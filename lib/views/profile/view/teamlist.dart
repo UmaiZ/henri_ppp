@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:henri_ppp/controller/user_controller.dart';
 import 'package:provider/provider.dart';
 
-class FriendList extends StatelessWidget {
-  FriendList({super.key});
+class TeamList extends StatelessWidget {
+  TeamList({super.key});
 
   int tabindex = 0;
 
@@ -15,7 +15,7 @@ class FriendList extends StatelessWidget {
       backgroundColor: Theme.of(context).colorScheme.primary,
       appBar: AppBar(
         title: Text(
-          'FRIEND LIST',
+          'TEAM LIST',
           style: Theme.of(context).textTheme.headlineMedium,
         ),
         centerTitle: true,
@@ -77,7 +77,7 @@ class FriendList extends StatelessWidget {
             ),
             Consumer<userController>(
               builder: (context, uprovider, child) {
-                if (uprovider.userFans.isEmpty) {
+                if (uprovider.userTeammates.isEmpty) {
                   // postProvider.getFeed();
                   return const Center(child: Text('No Fans Available'));
                 } else {
@@ -85,7 +85,7 @@ class FriendList extends StatelessWidget {
                     child: SizedBox(
                       width: size.width * 0.925,
                       child: ListView.builder(
-                          itemCount: uprovider.userFans.length,
+                          itemCount: uprovider.userTeammates.length,
                           itemBuilder: (context, i) {
                             return Container(
                               padding: const EdgeInsets.only(bottom: 7),
@@ -105,7 +105,8 @@ class FriendList extends StatelessWidget {
                                   ),
                                 ),
                                 title: Text(
-                                  uprovider.userFans[i].userName.toString(),
+                                  uprovider.userTeammates[i].userName
+                                      .toString(),
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyLarge!

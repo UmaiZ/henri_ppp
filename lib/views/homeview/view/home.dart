@@ -171,37 +171,39 @@ class HomeScreen extends StatelessWidget {
       builder: (context, statusController, child) {
         if (statusController.statusdata.isEmpty) {
           // statusController.getStatus();
-          return Center(
-              child: Row(
-            children: [
-              SizedBox(
-                width: size.width * 0.025,
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const CameraAppTest()));
-                },
-                child: SizedBox(
-                  width: size.width * 0.2,
-                  height: size.width * 0.2,
-                  child: CircleAvatar(
-                    radius: 100,
-                    backgroundColor: Theme.of(context).colorScheme.secondary,
-                    child: const Icon(
-                      Icons.add,
-                      color: Colors.grey,
-                      size: 30,
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 15),
+            child: Row(
+              children: [
+                SizedBox(
+                  width: size.width * 0.025,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const CameraAppTest()));
+                  },
+                  child: SizedBox(
+                    width: size.width * 0.2,
+                    height: size.width * 0.2,
+                    child: CircleAvatar(
+                      radius: 100,
+                      backgroundColor: Theme.of(context).colorScheme.secondary,
+                      child: const Icon(
+                        Icons.add,
+                        color: Colors.grey,
+                        size: 30,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              SizedBox(
-                width: size.width * 0.025,
-              ),
-              const Text('No Highlights Available'),
-            ],
-          ));
+                SizedBox(
+                  width: size.width * 0.025,
+                ),
+                const Text('No Highlights Available'),
+              ],
+            ),
+          );
         } else {
           return SizedBox(
             height: size.height * 0.095,

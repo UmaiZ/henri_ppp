@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:henri_ppp/controller/tabs_controller.dart';
 import 'package:henri_ppp/helpers/imagepicker/imagepicker.dart';
 import 'package:henri_ppp/helpers/loader/loader.dart';
 import 'package:henri_ppp/controller/user_controller.dart';
@@ -8,6 +10,7 @@ import 'package:henri_ppp/views/profile/view/editprofile.dart';
 import 'package:henri_ppp/views/root/view/drawer.dart';
 
 import 'package:henri_ppp/widgets/button.dart';
+import 'package:henri_ppp/widgets/circlecacheimage.dart';
 import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -18,11 +21,19 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  int tabindex = 0;
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration.zero, () {
+      final controller = Provider.of<userController>(context, listen: false);
+      controller.getAverage();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final usercontroller = Provider.of<userController>(context);
-
+    final tabcontroller = Provider.of<TabsController>(context);
     final Size size = MediaQuery.of(context).size;
     final GlobalKey<ScaffoldState> key = GlobalKey();
     return Scaffold(
@@ -110,26 +121,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: SizedBox(
                         width: size.width * 0.25,
                         height: size.width * 0.25,
-                        child: CircleAvatar(
-                            radius: 100,
-                            backgroundColor:
-                                Theme.of(context).colorScheme.secondary,
-                            child: usercontroller.userdata.userImage == ""
-                                ? Image.asset(
-                                    'assets/images/imageplaceholder.png')
-                                : ClipRRect(
-                                    borderRadius: BorderRadius.circular(100.0),
-                                    child: CachedNetworkImage(
-                                      imageUrl: usercontroller
-                                          .userdata.userImage
-                                          .toString(),
-                                      placeholder: (context, url) =>
-                                          Container(),
-                                      errorWidget: (context, url, error) =>
-                                          const Icon(Icons.error),
-                                      fit: BoxFit.fill,
-                                    ),
-                                  )),
+                        child: CircleCacheImage(
+                            url: usercontroller.userdata.userImage.toString()),
                       ),
                     ),
                   ),
@@ -149,7 +142,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     width: size.width * 0.0125,
                   ),
                   Text(
-                    '(Review 4.5)',
+                    '(Review ${usercontroller.useraveragedata.averageRating.toString()})',
                     style: Theme.of(context)
                         .textTheme
                         .headlineSmall!
@@ -172,21 +165,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
               SizedBox(
                 height: size.height * 0.01,
               ),
-              // GestureDetector(
-              //   onTap: () {
-              //     Navigator.of(context).push(MaterialPageRoute(
-              //         builder: (context) => const FriendList()));
-              //   },
-              //   child: Text(
-              //     '245 Friends',
-              //     style: Theme.of(context).textTheme.headlineSmall!.merge(
-              //         const TextStyle(
-              //             color: Colors.white, fontWeight: FontWeight.bold)),
-              //   ),
-              // ),
-              // SizedBox(
-              //   height: size.height * 0.0125,
-              // ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -225,9 +203,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     children: [
                       GestureDetector(
                           onTap: () {
-                            setState(() {
-                              tabindex = 0;
-                            });
+                            tabcontroller.changeIndex(0);
                           },
                           child: TabButtons('Bio', 0)),
                       SizedBox(
@@ -235,9 +211,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       GestureDetector(
                           onTap: () {
-                            setState(() {
-                              tabindex = 1;
-                            });
+                            tabcontroller.changeIndex(1);
                           },
                           child: TabButtons('Highlights', 1)),
                       SizedBox(
@@ -245,31 +219,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       GestureDetector(
                           onTap: () {
-                            setState(() {
-                              tabindex = 2;
-                            });
+                            tabcontroller.changeIndex(2);
                           },
                           child: TabButtons('Rankings', 2)),
-                      // SizedBox(
-                      //   width: size.width * 0.0175,
-                      // ),
-                      // GestureDetector(
-                      //     onTap: () {
-                      //       setState(() {
-                      //         tabindex = 3;
-                      //       });
-                      //     },
-                      //     child: TabButtons('Detail', 3)),
-                      // SizedBox(
-                      //   width: size.width * 0.0175,
-                      // ),
-                      // GestureDetector(
-                      //     onTap: () {
-                      //       setState(() {
-                      //         tabindex = 4;
-                      //       });
-                      //     },
-                      //     child: TabButtons('Videos', 4))
                     ],
                   ),
                 ),
@@ -277,7 +229,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               SizedBox(
                 height: size.height * 0.02,
               ),
-              tabindex == 0
+              tabcontroller.tabindex == 0
                   ? SizedBox(
                       width: size.width * 0.95,
                       child: Column(
@@ -351,7 +303,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     )
                   : Container(),
-              tabindex == 1
+              tabcontroller.tabindex == 1
                   ? SizedBox(
                       width: size.width * 0.95,
                       child: GridView.builder(
@@ -373,6 +325,77 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                       ),
                     )
+                  : const SizedBox(),
+              tabcontroller.tabindex == 2
+                  ? Consumer<userController>(
+                      builder: (context, uprovider, child) {
+                        if (uprovider.useraveragedata.ratings!.isEmpty) {
+                          // postProvider.getFeed();
+                          return const Center(child: Text('No Fans Available'));
+                        } else {
+                          return SizedBox(
+                            width: size.width * 0.925,
+                            child: ListView.builder(
+                                shrinkWrap: true,
+                                itemCount:
+                                    uprovider.useraveragedata.ratings!.length,
+                                itemBuilder: (context, i) {
+                                  return Container(
+                                    padding: const EdgeInsets.only(bottom: 7),
+                                    child: ListTile(
+                                      tileColor: Theme.of(context)
+                                          .colorScheme
+                                          .secondary,
+                                      title: Text(
+                                        uprovider.useraveragedata.ratings![i]
+                                            .description
+                                            .toString(),
+                                        overflow: TextOverflow.ellipsis,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge!
+                                            .merge(const TextStyle(
+                                                color: Colors.white)),
+                                      ),
+                                      trailing: Wrap(
+                                        children: [
+                                          RatingBar(
+                                            itemSize: 20.0,
+                                            initialRating: uprovider
+                                                .useraveragedata
+                                                .ratings![i]
+                                                .count!
+                                                .toDouble(),
+                                            direction: Axis.horizontal,
+                                            allowHalfRating: true,
+                                            itemCount: 5,
+                                            ratingWidget: RatingWidget(
+                                              full: Image.asset(
+                                                'assets/images/flame.png',
+                                              ),
+                                              half: Image.asset(
+                                                  'assets/images/flame.png'),
+                                              empty: Image.asset(
+                                                'assets/images/flame.png',
+                                                color: Colors.grey,
+                                              ),
+                                            ),
+                                            itemPadding:
+                                                const EdgeInsets.symmetric(
+                                                    horizontal: 4.0),
+                                            onRatingUpdate: (rating) {
+                                              print(rating);
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                }),
+                          );
+                        }
+                      },
+                    )
                   : const SizedBox()
             ],
           ),
@@ -383,6 +406,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget TabButtons(text, index) {
     final Size size = MediaQuery.of(context).size;
+    final tabcontroller = Provider.of<TabsController>(context);
 
     return Container(
       width: size.width * 0.25,
@@ -392,13 +416,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: <Color>[
-            index == tabindex
+            index == tabcontroller.tabindex
                 ? const Color(0xff916412)
                 : Theme.of(context).colorScheme.secondary,
-            index == tabindex
+            index == tabcontroller.tabindex
                 ? const Color(0xfff1c720)
                 : Theme.of(context).colorScheme.secondary,
-            index == tabindex
+            index == tabcontroller.tabindex
                 ? const Color(0xff916412)
                 : Theme.of(context).colorScheme.secondary
           ],
@@ -410,7 +434,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
           child: Text(
             text,
             style: Theme.of(context).textTheme.bodyMedium!.merge(TextStyle(
-                color: index == tabindex ? Colors.black : Colors.grey)),
+                color: index == tabcontroller.tabindex
+                    ? Colors.black
+                    : Colors.grey)),
           ),
         ),
       ),

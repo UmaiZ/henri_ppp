@@ -17,9 +17,11 @@ class NetworkHelper {
         'Content-Type': 'application/json',
       },
     );
-    final body = response.body;
-    final jsonBody = json.decode(body);
-    return jsonBody;
+    if (response.statusCode == 200) {
+      final body = response.body;
+      final jsonBody = json.decode(body);
+      return jsonBody;
+    }
   }
 
   postApi(String url, data) async {
@@ -32,9 +34,11 @@ class NetworkHelper {
           'Content-Type': 'application/json',
         },
         body: jsondata);
-    final body = response.body;
-    final jsonBody = json.decode(body);
-    return jsonBody as Map<String, dynamic>;
+    if (response.statusCode == 200) {
+      final body = response.body;
+      final jsonBody = json.decode(body);
+      return jsonBody as Map<String, dynamic>;
+    }
   }
 
   postFormApi(String url, data, file) async {
@@ -104,9 +108,14 @@ class ApiUrls {
 
   //For Users
   String login = "$baseUrl/login";
+  String register = "$baseUrl/register";
+
   String updateUser = "$baseUrl/updateUser";
   String getUserByUserID = "$baseUrl/getUserByUserID";
   String followOrUnfollow = "$baseUrl/followOrUnfollow";
+  String getUsersFans = "$baseUrl/getUsersFans";
+  String getUserTeamMates = "$baseUrl/getUserTeamMates";
+  String getAverageRating = "$baseUrl/getAverageRating";
 
   //For Feed
   String createNewsFeed = "$baseUrl/createNewsFeed";

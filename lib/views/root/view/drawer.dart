@@ -1,13 +1,14 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
+import 'package:henri_ppp/controller/user_controller.dart';
 import 'package:henri_ppp/views/extra/view/privacy.dart';
 import 'package:henri_ppp/views/extra/view/setting.dart';
 import 'package:henri_ppp/views/extra/view/terms.dart';
 import 'package:henri_ppp/views/live/view/livelist.dart';
 import 'package:henri_ppp/views/messages/view/messagelist.dart';
 import 'package:henri_ppp/views/profile/view/friendlist.dart';
+import 'package:henri_ppp/views/profile/view/teamlist.dart';
 import 'package:henri_ppp/views/root/view/mainroot.dart';
+import 'package:provider/provider.dart';
 
 class DrawerScreen extends StatefulWidget {
   const DrawerScreen({super.key});
@@ -28,6 +29,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final usercontroller = Provider.of<userController>(context);
+
     double resWidth = MediaQuery.of(context).size.width;
     double resHeight = MediaQuery.of(context).size.height;
     return Container(
@@ -181,9 +184,11 @@ class _DrawerScreenState extends State<DrawerScreen> {
                       height: 5,
                     ),
                     GestureDetector(
-                      onTap: () {
+                      onTap: () async {
+                        await usercontroller.getFans();
+
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const FriendList()));
+                            builder: (context) => FriendList()));
                       },
                       child: Container(
                           width: resWidth * 0.7,
@@ -212,9 +217,11 @@ class _DrawerScreenState extends State<DrawerScreen> {
                       height: 5,
                     ),
                     GestureDetector(
-                      onTap: () {
+                      onTap: () async {
+                        await usercontroller.getTeammates();
+
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const FriendList()));
+                            builder: (context) => TeamList()));
                       },
                       child: Container(
                           width: resWidth * 0.7,

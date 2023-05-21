@@ -7,7 +7,7 @@ import 'package:henri_ppp/controller/user_controller.dart';
 import 'package:henri_ppp/models/user.dart';
 import 'package:henri_ppp/views/messages/view/mesagedetail.dart';
 import 'package:henri_ppp/widgets/button.dart';
-import 'package:henri_ppp/widgets/roundcacheimage.dart';
+import 'package:henri_ppp/widgets/circlecacheimage.dart';
 
 import 'package:provider/provider.dart';
 
@@ -85,17 +85,14 @@ class OtherProfileScreen extends StatelessWidget {
                         }
                       },
                       child: SizedBox(
-                        width: size.width * 0.25,
-                        height: size.width * 0.25,
+                        width: size.width * 0.15,
+                        height: size.width * 0.15,
                         child: CircleAvatar(
                             radius: 100,
                             backgroundColor:
                                 Theme.of(context).colorScheme.secondary,
-                            child: userdata.userImage == ""
-                                ? Image.asset(
-                                    'assets/images/imageplaceholder.png')
-                                : CircleCacheImage(
-                                    userImage: userdata.userImage.toString())),
+                            child: CircleCacheImage(
+                                url: userdata.userImage.toString())),
                       ),
                     ),
                   ),

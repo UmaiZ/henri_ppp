@@ -17,7 +17,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
     final GlobalKey<ScaffoldState> key = GlobalKey();
     return Scaffold(
       key: key,
-      drawer: DrawerScreen(),
+      drawer: const DrawerScreen(),
       backgroundColor: Theme.of(context).colorScheme.primary,
       appBar: AppBar(
         leading: GestureDetector(

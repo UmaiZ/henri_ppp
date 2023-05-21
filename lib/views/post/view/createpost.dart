@@ -1,9 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:henri_ppp/controller/user_controller.dart';
 import 'package:henri_ppp/helpers/imagepicker/imagepicker.dart';
 import 'package:henri_ppp/controller/create_post_controller.dart';
 import 'package:henri_ppp/views/root/view/drawer.dart';
+import 'package:henri_ppp/widgets/circlecacheimage.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 
@@ -27,6 +29,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
   Widget build(BuildContext context) {
     final postcontroller = Provider.of<createPostController>(context);
     TextEditingController descriptioncontroller = TextEditingController();
+    final usercontroller = Provider.of<userController>(context);
 
     final Size size = MediaQuery.of(context).size;
     final GlobalKey<ScaffoldState> key = GlobalKey();
@@ -86,16 +89,13 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                 child: ListTile(
                   contentPadding: const EdgeInsets.all(0),
                   leading: SizedBox(
-                    width: size.width * 0.125,
-                    height: size.width * 0.125,
-                    child: CircleAvatar(
-                      radius: 100,
-                      backgroundColor: Theme.of(context).colorScheme.secondary,
-                      child: Image.asset('assets/images/imageplaceholder.png'),
+                    width: size.width * 0.15,
+                    child: CircleCacheImage(
+                      url: usercontroller.userdata.userImage.toString(),
                     ),
                   ),
                   title: Text(
-                    'John',
+                    usercontroller.userdata.userName.toString(),
                     style: Theme.of(context).textTheme.headlineMedium,
                   ),
                 ),

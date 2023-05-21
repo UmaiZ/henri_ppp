@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:henri_ppp/helpers/network/network.dart';
+import 'package:henri_ppp/models/averagerating.dart';
 import 'package:henri_ppp/models/user.dart';
 import 'package:henri_ppp/services/auth_service.dart';
+import 'package:henri_ppp/services/user_service.dart';
 
 String token = "";
 
@@ -9,14 +11,37 @@ class userController extends ChangeNotifier {
   late UserModel _user;
   UserModel get userdata => _user;
 
+  late List<UserModel> _userFans;
+  List<UserModel> get userFans => _userFans;
+
+  late List<UserModel> _userTeammates;
+  List<UserModel> get userTeammates => _userTeammates;
+
   late UserModel _selecteduser;
 
   UserModel? get userselecteditem => _selecteduser;
+
+  late AverageRating _useraverage;
+  AverageRating get useraveragedata => _useraverage;
 
   Future<bool> LoginHit(data) async {
     bool result = false;
     try {
       UserModel user = await AuthService().login(ApiUrls().login, data);
+      _user = user;
+      token = _user.userToken.toString();
+      result = true;
+      notifyListeners();
+    } catch (e) {
+      notifyListeners();
+    }
+    return result;
+  }
+
+  Future<bool> RegisterHit(data) async {
+    bool result = false;
+    try {
+      UserModel user = await AuthService().login(ApiUrls().register, data);
       _user = user;
       token = _user.userToken.toString();
       result = true;
@@ -52,6 +77,17 @@ class userController extends ChangeNotifier {
     }
   }
 
+  Future<void> getAverage() async {
+    try {
+      AverageRating user =
+          await UserService().getAverage(ApiUrls().getAverageRating);
+      _useraverage = user;
+      notifyListeners();
+    } catch (e) {
+      notifyListeners();
+    }
+  }
+
   Future<bool> updateMedia(data, file, type) async {
     bool result = false;
     try {
@@ -73,6 +109,34 @@ class userController extends ChangeNotifier {
         ApiUrls().followOrUnfollow,
         data,
       );
+      notifyListeners();
+    } catch (e) {
+      notifyListeners();
+    }
+    return result;
+  }
+
+  getFans() async {
+    bool result = false;
+    try {
+      List<UserModel> user =
+          await UserService().getUserFansandTeammates(ApiUrls().getUsersFans);
+      _userFans = user;
+      result = true;
+      notifyListeners();
+    } catch (e) {
+      notifyListeners();
+    }
+    return result;
+  }
+
+  getTeammates() async {
+    bool result = false;
+    try {
+      List<UserModel> user = await UserService()
+          .getUserFansandTeammates(ApiUrls().getUserTeamMates);
+      _userTeammates = user;
+      result = true;
       notifyListeners();
     } catch (e) {
       notifyListeners();

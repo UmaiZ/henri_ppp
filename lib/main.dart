@@ -5,6 +5,7 @@ import 'package:henri_ppp/controller/chat_controller.dart';
 import 'package:henri_ppp/controller/create_post_controller.dart';
 import 'package:henri_ppp/controller/feed_controller.dart';
 import 'package:henri_ppp/controller/status_controller.dart';
+import 'package:henri_ppp/controller/tabs_controller.dart';
 import 'package:henri_ppp/controller/user_controller.dart';
 import 'package:henri_ppp/views/onboarding/view/login.dart';
 import 'package:henri_ppp/helpers/theme.dart';
@@ -85,6 +86,7 @@ List<SingleChildWidget> providers = [
   ChangeNotifierProvider<statusController>(create: (_) => statusController()),
   ChangeNotifierProvider<userController>(create: (_) => userController()),
   ChangeNotifierProvider<feedController>(create: (_) => feedController()),
+  ChangeNotifierProvider<TabsController>(create: (_) => TabsController()),
   ChangeNotifierProvider<createPostController>(
       create: (_) => createPostController()),
 ];
