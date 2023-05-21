@@ -60,8 +60,6 @@ class AuthService {
   }
 
   Future<UserModel> updateMedia(url, data, file, type) async {
-    print(url);
-
     UserModel result;
     try {
       final response =

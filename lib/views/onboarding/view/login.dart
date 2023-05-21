@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:henri_ppp/controller/user_controller.dart';
+import 'package:henri_ppp/helpers/loader/loader.dart';
 import 'package:henri_ppp/views/onboarding/view/forgot.dart';
 import 'package:henri_ppp/views/onboarding/view/register.dart';
 import 'package:henri_ppp/views/root/view/mainroot.dart';
@@ -111,13 +112,18 @@ class _LoginPageState extends State<LoginPage> {
                   GestureDetector(
                     onTap: () async {
                       if (formKey.currentState!.validate()) {
+                        showLoader(context);
+
                         if (await usercontroller.LoginHit({
                           "userEmail":
                               emailController.text.trim().toLowerCase(),
                           "userPassword": passwordController.text.trim(),
                         })) {
+                          Navigator.pop(context);
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => const MainRoot()));
+                        } else {
+                          Navigator.pop(context);
                         }
                       }
                     },

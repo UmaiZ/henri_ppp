@@ -32,13 +32,10 @@ class feedController extends ChangeNotifier {
       for (var element in _feeds) {
         if (element.sId == newsid) {
           if (element.rating!.any((item) => item.ratingBy == userid)) {
-            print('exist');
-            print(element.rating!);
             int indexToUpdate =
                 element.rating!.indexWhere((item) => item.ratingBy == userid);
             element.rating![indexToUpdate].rating = res['data']['rating'];
           } else {
-            print('noexist');
             element.rating!.add(Rating(
                 sId: res['_id'],
                 newsFeedId: res['newsFeedId'],
