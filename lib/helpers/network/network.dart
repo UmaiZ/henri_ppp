@@ -17,6 +17,7 @@ class NetworkHelper {
         'Content-Type': 'application/json',
       },
     );
+    print(response.body);
     if (response.statusCode == 200) {
       final body = response.body;
       final jsonBody = json.decode(body);
@@ -25,6 +26,7 @@ class NetworkHelper {
   }
 
   postApi(String url, data) async {
+    print('uuuu ${url}');
     String jsondata = json.encode(data);
 
     final response = await http.post(Uri.parse(url),
@@ -34,6 +36,8 @@ class NetworkHelper {
           'Content-Type': 'application/json',
         },
         body: jsondata);
+    print('uuuu ${response.body}');
+
     if (response.statusCode == 200) {
       final body = response.body;
       final jsonBody = json.decode(body);
@@ -104,9 +108,9 @@ class NetworkHelper {
 
 class ApiUrls {
   // static const String baseUrl = "http://3.111.58.237:3000";
-  static const String baseUrl = "http://3.111.58.237:3000";
+  static const String baseUrl = "http://localhost:3000";
 
-  String SocketUrl = "http://3.111.58.237:3000";
+  String SocketUrl = "http://localhost:3000";
 
   //For Users
   String login = "$baseUrl/login";
@@ -128,4 +132,8 @@ class ApiUrls {
   //For Status
   String createStatus = "$baseUrl/createStatus";
   String getStatus = "$baseUrl/getStatus";
+
+  //For Chat
+  String createChatRoom = "$baseUrl/createChatRoom";
+  String getChatRooms = "$baseUrl/getChatRooms";
 }
