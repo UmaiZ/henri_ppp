@@ -17,7 +17,6 @@ class NetworkHelper {
         'Content-Type': 'application/json',
       },
     );
-    print(response.body);
     if (response.statusCode == 200) {
       final body = response.body;
       final jsonBody = json.decode(body);

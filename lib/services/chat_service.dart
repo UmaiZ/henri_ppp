@@ -23,17 +23,20 @@ class chatService {
     }
   }
 
-  Future<List<ChatListModel>> getChatList(url) async {
-    logger.d(url);
+  Future<List<ChatListModel>> getchatList(url) async {
+    List<ChatListModel> result;
     try {
       final response = await NetworkHelper().getApi(url);
       logger.d(response);
 
       if (!response['success']) {
-        showtoast(response['message']);
-        return response;
+        return showtoast(response['message']);
       }
-      return response['data'];
+      // result = UserModel.fromJson(response['data']);
+      result = response['data']
+          .map<ChatListModel>((item) => ChatListModel.fromJson(item))
+          .toList();
+      return result;
     } catch (e) {
       logger.e(e);
       rethrow;

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:henri_ppp/controller/chat_controller.dart';
 import 'package:henri_ppp/controller/user_controller.dart';
 import 'package:henri_ppp/views/extra/view/privacy.dart';
 import 'package:henri_ppp/views/extra/view/setting.dart';
@@ -31,6 +32,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
   @override
   Widget build(BuildContext context) {
     final usercontroller = Provider.of<userController>(context);
+    final chatcontroller = Provider.of<chatController>(context);
 
     double resWidth = MediaQuery.of(context).size.width;
     double resHeight = MediaQuery.of(context).size.height;
@@ -123,7 +125,9 @@ class _DrawerScreenState extends State<DrawerScreen> {
                       height: 5,
                     ),
                     GestureDetector(
-                      onTap: () {
+                      onTap: () async {
+                        await chatcontroller.getChatList();
+
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => const MessageList()));
                       },

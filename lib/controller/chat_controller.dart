@@ -19,7 +19,7 @@ class chatController extends ChangeNotifier {
   getChatList() async {
     try {
       List<ChatListModel> user =
-          await chatService().getChatList(ApiUrls().getChatRooms);
+          await chatService().getchatList(ApiUrls().getChatRooms);
       _chats = user;
       notifyListeners();
     } catch (e) {
