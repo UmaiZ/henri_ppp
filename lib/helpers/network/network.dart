@@ -25,7 +25,7 @@ class NetworkHelper {
   }
 
   postApi(String url, data) async {
-    print('uuuu ${url}');
+    print('uuuu $url');
     String jsondata = json.encode(data);
 
     final response = await http.post(Uri.parse(url),
@@ -70,6 +70,7 @@ class NetworkHelper {
   }
 
   mediaFormUpload(String url, data, file, type) async {
+    print(url);
     var postUri = Uri.parse(url);
     var request = http.MultipartRequest("POST", postUri);
     request.fields['user'] = 'blah';
@@ -97,7 +98,7 @@ class NetworkHelper {
     request.files.add(multipartFile);
     var response = await request.send();
     final res = await http.Response.fromStream(response);
-
+    print(res.body);
     if (res.statusCode == 200 || res.statusCode == 500) {
       var resData = json.decode(res.body.toString());
       return resData;

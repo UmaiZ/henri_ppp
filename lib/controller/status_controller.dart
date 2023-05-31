@@ -6,9 +6,9 @@ import 'package:henri_ppp/services/story_service.dart';
 class statusController extends ChangeNotifier {
   List<StatusModel> _status = [];
   List<StatusModel> get statusdata => _status;
-  // statusController() {
-  //   getStatus();
-  // }
+  statusController() {
+    getStatus();
+  }
   Future<bool> createStory(data, file) async {
     bool result = false;
     try {
@@ -28,6 +28,7 @@ class statusController extends ChangeNotifier {
   }
 
   Future<bool> getStatus() async {
+    print('status call');
     bool result = false;
     try {
       List<StatusModel> status =

@@ -142,7 +142,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     width: size.width * 0.0125,
                   ),
                   Text(
-                    '(Review ${usercontroller.useraveragedata.averageRating.toString()})',
+                    '(Review ${usercontroller.useraveragedata.averageRating ?? "0.0"})',
                     style: Theme.of(context)
                         .textTheme
                         .headlineSmall!
@@ -331,7 +331,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       builder: (context, uprovider, child) {
                         if (uprovider.useraveragedata.ratings!.isEmpty) {
                           // postProvider.getFeed();
-                          return const Center(child: Text('No Fans Available'));
+                          return const Center(
+                              child: Text('No Ranking Available'));
                         } else {
                           return SizedBox(
                             width: size.width * 0.925,

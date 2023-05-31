@@ -2,10 +2,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:henri_ppp/controller/feed_controller.dart';
 import 'package:henri_ppp/controller/status_controller.dart';
+import 'package:henri_ppp/views/homeview/view/storydetails.dart';
 import 'package:henri_ppp/views/homeview/widget/post.dart';
 import 'package:henri_ppp/views/live/view/golive.dart';
 import 'package:henri_ppp/views/post/view/createstory.dart';
 import 'package:henri_ppp/views/root/view/drawer.dart';
+import 'package:henri_ppp/widgets/circlecacheimage.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -235,32 +237,21 @@ class HomeScreen extends StatelessWidget {
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 10),
-                            child: SizedBox(
-                              height: size.height * 0.095,
-                              width: size.height * 0.095,
-                              child: statusController.statusdata[index]
-                                          .createdBy.userImage ==
-                                      ""
-                                  ? Image.asset(
-                                      'assets/images/imageplaceholder.png')
-                                  : ClipRRect(
-                                      borderRadius:
-                                          BorderRadius.circular(100.0),
-                                      child: CachedNetworkImage(
-                                        imageUrl: statusController
-                                            .statusdata[index]
-                                            .createdBy
-                                            .userImage
-                                            .toString(),
-                                        placeholder: (context, url) =>
-                                            Container(),
-                                        errorWidget: (context, url, error) =>
-                                            const Icon(Icons.error),
-                                        fit: BoxFit.fill,
-                                      ),
-                                    ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => const StoryScreen()));
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 10),
+                              child: SizedBox(
+                                height: size.height * 0.095,
+                                width: size.height * 0.095,
+                                child: CircleCacheImage(
+                                  url: statusController
+                                      .statusdata[index].createdBy.userImage,
+                                ),
+                              ),
                             ),
                           )
                         ],

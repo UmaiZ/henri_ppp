@@ -62,8 +62,10 @@ class _ViewVideoStoryState extends State<ViewVideoStory> {
               showLoader(context);
 
               if (await statuscontroller.createStory(
-                  {"title": _textcontroller.text.toString()}, widget.file)) {
+                  {"text": _textcontroller.text.toString()}, widget.file)) {
                 Navigator.pop(context);
+
+                statuscontroller.getStatus();
                 Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) => const MainRoot()));
               } else {

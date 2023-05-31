@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:henri_ppp/controller/feed_controller.dart';
 import 'package:henri_ppp/helpers/loader/loader.dart';
 import 'package:henri_ppp/helpers/logger/logger.dart';
@@ -9,6 +10,7 @@ import 'package:henri_ppp/helpers/network/network.dart';
 import 'package:henri_ppp/services/feed_service.dart';
 import 'package:henri_ppp/views/homeview/widget/commentbox.dart';
 import 'package:henri_ppp/views/profile/view/otherprofile.dart';
+import 'package:henri_ppp/widgets/circlecacheimage.dart';
 import 'package:provider/provider.dart';
 
 class PostWidget extends StatefulWidget {
@@ -46,22 +48,11 @@ class _PostWidgetState extends State<PostWidget> {
               child: ListTile(
                 contentPadding: const EdgeInsets.all(0),
                 leading: SizedBox(
-                  height: size.height * 0.07,
-                  width: size.height * 0.07,
-                  child: widget.data.createdBy.userImage == ""
-                      ? Image.asset('assets/images/imageplaceholder.png')
-                      : ClipRRect(
-                          borderRadius: BorderRadius.circular(100.0),
-                          child: CachedNetworkImage(
-                            imageUrl:
-                                widget.data.createdBy.userImage.toString(),
-                            placeholder: (context, url) => Container(),
-                            errorWidget: (context, url, error) =>
-                                const Icon(Icons.error),
-                            fit: BoxFit.fill,
-                          ),
-                        ),
-                )
+                    height: size.height * 0.07,
+                    width: size.height * 0.07,
+                    child: CircleCacheImage(
+                      url: widget.data.createdBy.userImage,
+                    ))
                 // ? CachedNetworkImage(
                 //     imageUrl: widget.data.createdBy.userImage,
                 //     placeholder: (context, url) =>
@@ -125,7 +116,10 @@ class _PostWidgetState extends State<PostWidget> {
                         ? CachedNetworkImage(
                             imageUrl: widget.data.images[index],
                             placeholder: (context, url) =>
-                                const CircularProgressIndicator(),
+                                const SpinKitChasingDots(
+                              color: Colors.white,
+                              size: 50.0,
+                            ),
                             errorWidget: (context, url, error) =>
                                 const Icon(Icons.error),
                           )
