@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:henri_ppp/controller/status_controller.dart';
+import 'package:henri_ppp/views/homeview/widget/videoplayer.dart';
 import 'package:henri_ppp/widgets/circlecacheimage.dart';
 import 'package:provider/provider.dart';
+import 'package:video_player/video_player.dart';
 
 class StoryScreen extends StatefulWidget {
   const StoryScreen({super.key});
@@ -157,6 +159,7 @@ class _StoryScreenState extends State<StoryScreen> {
                           children: [
                             SizedBox(
                               width: 50,
+                              height: 50,
                               child: CircleCacheImage(
                                 url: statuscontroller
                                     .statusdata[i].createdBy.userImage,
@@ -173,12 +176,21 @@ class _StoryScreenState extends State<StoryScreen> {
                           ],
                         ),
                         SizedBox(
+                          height: 20,
+                        ),
+                        SizedBox(
                           height: size.height * 0.75,
                           width: double.infinity,
-                          child: Image.network(
-                            statuscontroller.statusdata[i].statusImage,
-                            fit: BoxFit.fitWidth,
-                          ),
+                          child: statuscontroller.statusdata[i].statusImage ==
+                                  ""
+                              ? VideoPlayWidget(
+                                  videoUrl: statuscontroller
+                                      .statusdata[i].statusVideo,
+                                )
+                              : Image.network(
+                                  statuscontroller.statusdata[i].statusImage,
+                                  fit: BoxFit.fitWidth,
+                                ),
                         ),
                         const SizedBox(
                           height: 20,
