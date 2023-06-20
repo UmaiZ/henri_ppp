@@ -7,6 +7,7 @@ import 'package:henri_ppp/controller/feed_controller.dart';
 import 'package:henri_ppp/controller/status_controller.dart';
 import 'package:henri_ppp/controller/tabs_controller.dart';
 import 'package:henri_ppp/controller/user_controller.dart';
+import 'package:henri_ppp/views/live/view/teststream.dart';
 import 'package:henri_ppp/views/onboarding/view/login.dart';
 import 'package:henri_ppp/helpers/theme.dart';
 import 'package:provider/provider.dart';
@@ -28,7 +29,8 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Henri PPP',
         theme: themedata,
-        home: const Splash(),
+        home: const LiveStreamTest(),
+        // home: const Splash(),
       ),
     );
   }
