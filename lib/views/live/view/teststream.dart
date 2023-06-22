@@ -4,8 +4,8 @@ import 'package:permission_handler/permission_handler.dart';
 
 const appId = "02c388c395a1446dbdb4cf8f2ffc5b8d";
 const token =
-    "eyJhbGciOiJIUzI1NiJ9.MDA2ZjU0ODM1MjI0NDk3NDI1MDkyMDQ5ODE3MmFiMjJhNGNJQUM0SXhQdVQwbnRHV3BERVlrMzdvdVVPZ3hhZG9yajBlYmVmR0UvQUpydjVveWpldXlpUVBmRkVBQklvcTZ6VUZLU1pBRUFBUUFRRGdBQQ.GQferNMcgL5EbTs3IDhWV_pi_lVvJ3F7XJQC2gfmADI";
-const channel = "random2";
+    "007eJxTYFg+pyAs3oDJ5pjp3aia6VrbKmNi5xmHyvHk8JaeeD83z0GBwcAo2djCItnY0jTR0MTELCUpJckkOc0izSgtLdk0ySJlqcCklIZARoYKt1esjAwQCOKzMxQl5qXk5+YyMAAAAgoe+g==";
+const channel = "randomm";
 
 class LiveStreamTest extends StatefulWidget {
   const LiveStreamTest({Key? key}) : super(key: key);

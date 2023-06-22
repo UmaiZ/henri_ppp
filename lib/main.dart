@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:henri_ppp/controller/chat_controller.dart';
 import 'package:henri_ppp/controller/create_post_controller.dart';
 import 'package:henri_ppp/controller/feed_controller.dart';
+import 'package:henri_ppp/controller/live_controller.dart';
 import 'package:henri_ppp/controller/status_controller.dart';
 import 'package:henri_ppp/controller/tabs_controller.dart';
 import 'package:henri_ppp/controller/user_controller.dart';
@@ -29,8 +30,8 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Henri PPP',
         theme: themedata,
-        home: const LiveStreamTest(),
-        // home: const Splash(),
+        // home: const LiveStreamTest(),
+        home: const Splash(),
       ),
     );
   }
@@ -84,6 +85,7 @@ class _SplashState extends State<Splash> {
 }
 
 List<SingleChildWidget> providers = [
+  ChangeNotifierProvider<liveController>(create: (_) => liveController()),
   ChangeNotifierProvider<chatController>(create: (_) => chatController()),
   ChangeNotifierProvider<statusController>(create: (_) => statusController()),
   ChangeNotifierProvider<userController>(create: (_) => userController()),

@@ -1,4 +1,38 @@
 PODS:
+  - agora_rtc_engine (6.2.0):
+    - AgoraIrisRTC_iOS (= 4.2.0-build.3)
+    - AgoraRtcEngine_iOS (= 4.2.0)
+    - Flutter
+  - AgoraIrisRTC_iOS (4.2.0-build.3)
+  - AgoraRtcEngine_iOS (4.2.0):
+    - AgoraRtcEngine_iOS/AIAEC (= 4.2.0)
+    - AgoraRtcEngine_iOS/AINS (= 4.2.0)
+    - AgoraRtcEngine_iOS/AudioBeauty (= 4.2.0)
+    - AgoraRtcEngine_iOS/ClearVision (= 4.2.0)
+    - AgoraRtcEngine_iOS/ContentInspect (= 4.2.0)
+    - AgoraRtcEngine_iOS/DRM (= 4.2.0)
+    - AgoraRtcEngine_iOS/FaceDetection (= 4.2.0)
+    - AgoraRtcEngine_iOS/ReplayKit (= 4.2.0)
+    - AgoraRtcEngine_iOS/RtcBasic (= 4.2.0)
+    - AgoraRtcEngine_iOS/SpatialAudio (= 4.2.0)
+    - AgoraRtcEngine_iOS/VideoCodecDec (= 4.2.0)
+    - AgoraRtcEngine_iOS/VideoCodecEnc (= 4.2.0)
+    - AgoraRtcEngine_iOS/VirtualBackground (= 4.2.0)
+    - AgoraRtcEngine_iOS/VQA (= 4.2.0)
+  - AgoraRtcEngine_iOS/AIAEC (4.2.0)
+  - AgoraRtcEngine_iOS/AINS (4.2.0)
+  - AgoraRtcEngine_iOS/AudioBeauty (4.2.0)
+  - AgoraRtcEngine_iOS/ClearVision (4.2.0)
+  - AgoraRtcEngine_iOS/ContentInspect (4.2.0)
+  - AgoraRtcEngine_iOS/DRM (4.2.0)
+  - AgoraRtcEngine_iOS/FaceDetection (4.2.0)
+  - AgoraRtcEngine_iOS/ReplayKit (4.2.0)
+  - AgoraRtcEngine_iOS/RtcBasic (4.2.0)
+  - AgoraRtcEngine_iOS/SpatialAudio (4.2.0)
+  - AgoraRtcEngine_iOS/VideoCodecDec (4.2.0)
+  - AgoraRtcEngine_iOS/VideoCodecEnc (4.2.0)
+  - AgoraRtcEngine_iOS/VirtualBackground (4.2.0)
+  - AgoraRtcEngine_iOS/VQA (4.2.0)
   - camera_avfoundation (0.0.1):
     - Flutter
   - Flutter (1.0.0)
@@ -10,10 +44,14 @@ PODS:
   - FMDB/standard (2.7.5)
   - image_picker_ios (0.0.1):
     - Flutter
+  - iris_method_channel (0.0.1):
+    - Flutter
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
-  - sqflite (0.0.3):
+  - permission_handler_apple (9.1.0):
+    - Flutter
+  - sqflite (0.0.2):
     - Flutter
     - FMDB (>= 2.7.5)
   - Toast (4.0.0)
@@ -21,20 +59,27 @@ PODS:
     - Flutter
 
 DEPENDENCIES:
+  - agora_rtc_engine (from `.symlinks/plugins/agora_rtc_engine/ios`)
   - camera_avfoundation (from `.symlinks/plugins/camera_avfoundation/ios`)
   - Flutter (from `Flutter`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
+  - iris_method_channel (from `.symlinks/plugins/iris_method_channel/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
+  - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
   - video_player_avfoundation (from `.symlinks/plugins/video_player_avfoundation/ios`)
 
 SPEC REPOS:
   trunk:
+    - AgoraIrisRTC_iOS
+    - AgoraRtcEngine_iOS
     - FMDB
     - Toast
 
 EXTERNAL SOURCES:
+  agora_rtc_engine:
+    :path: ".symlinks/plugins/agora_rtc_engine/ios"
   camera_avfoundation:
     :path: ".symlinks/plugins/camera_avfoundation/ios"
   Flutter:
@@ -43,21 +88,30 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/fluttertoast/ios"
   image_picker_ios:
     :path: ".symlinks/plugins/image_picker_ios/ios"
+  iris_method_channel:
+    :path: ".symlinks/plugins/iris_method_channel/ios"
   path_provider_foundation:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
+  permission_handler_apple:
+    :path: ".symlinks/plugins/permission_handler_apple/ios"
   sqflite:
     :path: ".symlinks/plugins/sqflite/ios"
   video_player_avfoundation:
     :path: ".symlinks/plugins/video_player_avfoundation/ios"
 
 SPEC CHECKSUMS:
+  agora_rtc_engine: 615886d3897e0f62da2b7f31e2d49a630260b376
+  AgoraIrisRTC_iOS: 401703d4d44b0d0e4f060993272397d1ba4ce7ca
+  AgoraRtcEngine_iOS: ab13aeb715fc00abc91c4f5c0baab9f05ad79aae
   camera_avfoundation: 3125e8cd1a4387f6f31c6c63abb8a55892a9eeeb
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   fluttertoast: eb263d302cc92e04176c053d2385237e9f43fad0
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   image_picker_ios: 4a8aadfbb6dc30ad5141a2ce3832af9214a705b5
+  iris_method_channel: 0617c689164d8154c020c50f63ca79f92b8a7b9d
   path_provider_foundation: eaf5b3e458fc0e5fbb9940fb09980e853fe058b8
-  sqflite: 31f7eba61e3074736dff8807a9b41581e4f7f15a
+  permission_handler_apple: 8f116445eff3c0e7c65ad60f5fef5490aa94b4e4
+  sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
   video_player_avfoundation: 81e49bb3d9fb63dccf9fa0f6d877dc3ddbeac126
 

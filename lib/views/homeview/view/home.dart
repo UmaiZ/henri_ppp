@@ -1,7 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:henri_ppp/controller/feed_controller.dart';
+import 'package:henri_ppp/controller/live_controller.dart';
 import 'package:henri_ppp/controller/status_controller.dart';
+import 'package:henri_ppp/controller/user_controller.dart';
+import 'package:henri_ppp/helpers/loader/loader.dart';
 import 'package:henri_ppp/views/homeview/view/storydetails.dart';
 import 'package:henri_ppp/views/homeview/widget/post.dart';
 import 'package:henri_ppp/views/live/view/golive.dart';
@@ -45,9 +48,22 @@ class HomeScreen extends StatelessWidget {
         centerTitle: true,
         actions: [
           GestureDetector(
-              onTap: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => goLiveScreen()));
+              onTap: () async {
+                final livecontroller =
+                    Provider.of<liveController>(context, listen: false);
+                final usercontroller =
+                    Provider.of<userController>(context, listen: false);
+
+                showLoader(context);
+                await livecontroller
+                    .createRoom(usercontroller.userdata.sId)
+                    .then((value) {
+                  Navigator.pop(context);
+                  print(value);
+                });
+
+                // Navigator.of(context).push(
+                //     MaterialPageRoute(builder: (context) => goLiveScreen()));
               },
               child: Image.asset(
                 'assets/images/live.png',
