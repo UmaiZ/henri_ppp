@@ -1,8 +1,8 @@
 import 'package:henri_ppp/helpers/logger/logger.dart';
 import 'package:henri_ppp/helpers/network/network.dart';
 import 'package:henri_ppp/helpers/toast/toast.dart';
-import 'package:henri_ppp/models/averagerating.dart';
-import 'package:henri_ppp/models/user.dart';
+import 'package:henri_ppp/Feature/profile/models/averagerating.dart';
+import 'package:henri_ppp/Feature/profile/models/user.dart';
 
 class UserService {
   Future<List<UserModel>> getUserFansandTeammates(url) async {

@@ -1,7 +1,7 @@
 import 'package:http_parser/http_parser.dart';
 import 'dart:convert';
 
-import 'package:henri_ppp/controller/user_controller.dart';
+import 'package:henri_ppp/Feature/profile/controller/user_controller.dart';
 import 'package:http/http.dart' as http;
 
 class NetworkHelper {

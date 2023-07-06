@@ -1,9 +1,9 @@
 import 'package:henri_ppp/helpers/logger/logger.dart';
 import 'package:henri_ppp/helpers/network/network.dart';
 import 'package:henri_ppp/helpers/toast/toast.dart';
-import 'package:henri_ppp/models/chatlist.dart';
-import 'package:henri_ppp/models/comments.dart';
-import 'package:henri_ppp/models/feed.dart';
+import 'package:henri_ppp/Feature/messages/models/chatlist.dart';
+import 'package:henri_ppp/Feature/homeview/models/comments.dart';
+import 'package:henri_ppp/Feature/homeview/models/feed.dart';
 
 class chatService {
   Future<String> openMessage(url, data) async {

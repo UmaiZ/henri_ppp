@@ -1,7 +1,7 @@
 import 'package:henri_ppp/helpers/logger/logger.dart';
 import 'package:henri_ppp/helpers/network/network.dart';
 import 'package:henri_ppp/helpers/toast/toast.dart';
-import 'package:henri_ppp/models/user.dart';
+import 'package:henri_ppp/Feature/profile/models/user.dart';
 
 class AuthService {
   Future<UserModel> login(url, data) async {

@@ -1,15 +1,15 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:henri_ppp/controller/chat_controller.dart';
-import 'package:henri_ppp/controller/create_post_controller.dart';
-import 'package:henri_ppp/controller/feed_controller.dart';
-import 'package:henri_ppp/controller/live_controller.dart';
-import 'package:henri_ppp/controller/status_controller.dart';
-import 'package:henri_ppp/controller/tabs_controller.dart';
-import 'package:henri_ppp/controller/user_controller.dart';
-import 'package:henri_ppp/views/live/view/teststream.dart';
-import 'package:henri_ppp/views/onboarding/view/login.dart';
+import 'package:henri_ppp/Feature/messages/view/controller/chat_controller.dart';
+import 'package:henri_ppp/Feature/post/controller/create_post_controller.dart';
+import 'package:henri_ppp/Feature/homeview/controller/feed_controller.dart';
+import 'package:henri_ppp/Feature/live/controller/live_controller.dart';
+import 'package:henri_ppp/Feature/homeview/controller/status_controller.dart';
+import 'package:henri_ppp/Feature/root/controller/tabs_controller.dart';
+import 'package:henri_ppp/Feature/profile/controller/user_controller.dart';
+import 'package:henri_ppp/Feature/live/view/teststream.dart';
+import 'package:henri_ppp/Feature/onboarding/view/login.dart';
 import 'package:henri_ppp/helpers/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';

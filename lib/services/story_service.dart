@@ -1,7 +1,7 @@
 import 'package:henri_ppp/helpers/logger/logger.dart';
 import 'package:henri_ppp/helpers/network/network.dart';
 import 'package:henri_ppp/helpers/toast/toast.dart';
-import 'package:henri_ppp/models/status.dart';
+import 'package:henri_ppp/Feature/homeview/models/status.dart';
 
 class storyService {
   createStory(url, data, file, type) async {
