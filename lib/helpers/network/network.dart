@@ -7,7 +7,6 @@ import 'package:http/http.dart' as http;
 class NetworkHelper {
   getApi(String url) async {
     // final query = params?.entries.map((e) => '${e.key}=${e.value}').join('&');
-
     final response = await http.get(
       // Uri.parse('$url?$query'),
       Uri.parse(url),
@@ -107,8 +106,8 @@ class NetworkHelper {
 }
 
 class ApiUrls {
-  // static const String baseUrl = "http://3.111.58.237:3000";
-  static const String baseUrl = "http://localhost:3000";
+  static const String baseUrl = "http://3.111.58.237:3000";
+  // static const String baseUrl = "http://localhost:3000";
 
   String SocketUrl = "http://localhost:3000";
 

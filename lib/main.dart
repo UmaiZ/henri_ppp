@@ -8,7 +8,6 @@ import 'package:henri_ppp/Feature/live/controller/live_controller.dart';
 import 'package:henri_ppp/Feature/homeview/controller/status_controller.dart';
 import 'package:henri_ppp/Feature/root/controller/tabs_controller.dart';
 import 'package:henri_ppp/Feature/profile/controller/user_controller.dart';
-import 'package:henri_ppp/Feature/live/view/teststream.dart';
 import 'package:henri_ppp/Feature/onboarding/view/login.dart';
 import 'package:henri_ppp/helpers/theme.dart';
 import 'package:provider/provider.dart';
