@@ -108,9 +108,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     translation: const Offset(0.0, 0.6),
                     child: GestureDetector(
                       onTap: () async {
+                        var image = await ImagePickerHelper().galleryImage();
                         showLoader(context);
 
-                        var image = await ImagePickerHelper().galleryImage();
                         if (await usercontroller
                             .updateMedia({}, image, 'image')) {
                           Navigator.pop(context);

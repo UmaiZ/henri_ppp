@@ -3,12 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 const appId = "02c388c395a1446dbdb4cf8f2ffc5b8d";
-const token =
-    "007eJxTYFg+pyAs3oDJ5pjp3aia6VrbKmNi5xmHyvHk8JaeeD83z0GBwcAo2djCItnY0jTR0MTELCUpJckkOc0izSgtLdk0ySJlqcCklIZARoYKt1esjAwQCOKzMxQl5qXk5+YyMAAAAgoe+g==";
-const channel = "randomm";
+// const token =
+//     "007eJxTYFg+pyAs3oDJ5pjp3aia6VrbKmNi5xmHyvHk8JaeeD83z0GBwcAo2djCItnY0jTR0MTELCUpJckkOc0izSgtLdk0ySJlqcCklIZARoYKt1esjAwQCOKzMxQl5qXk5+YyMAAAAgoe+g==";
+// const channel = "randomm";
 
 class LiveStreamTest extends StatefulWidget {
-  const LiveStreamTest({Key? key}) : super(key: key);
+  final token;
+  final channelname;
+  final isAdmin;
+  const LiveStreamTest(
+      {Key? key,
+      required this.token,
+      required this.channelname,
+      required this.isAdmin})
+      : super(key: key);
 
   @override
   State<LiveStreamTest> createState() => _LiveStreamTestState();
@@ -69,8 +77,8 @@ class _LiveStreamTestState extends State<LiveStreamTest> {
     await _engine.startPreview();
 
     await _engine.joinChannel(
-      token: token,
-      channelId: channel,
+      token: widget.token,
+      channelId: widget.channelname,
       uid: 0,
       options: const ChannelMediaOptions(),
     );
@@ -80,14 +88,19 @@ class _LiveStreamTestState extends State<LiveStreamTest> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.primary,
       appBar: AppBar(
-        title: const Text('Agora Video Call'),
+        title: Text(
+          'LIVE STREAM',
+          style: Theme.of(context).textTheme.headlineMedium,
+        ),
+        centerTitle: true,
       ),
       body: Stack(
         children: [
-          Center(
-            child: _remoteVideo(),
-          ),
+          // Center(
+          //   child: _remoteVideo(),
+          // ),
           Align(
             alignment: Alignment.topLeft,
             child: SizedBox(
@@ -117,7 +130,7 @@ class _LiveStreamTestState extends State<LiveStreamTest> {
         controller: VideoViewController.remote(
           rtcEngine: _engine,
           canvas: VideoCanvas(uid: _remoteUid),
-          connection: const RtcConnection(channelId: channel),
+          connection: RtcConnection(channelId: widget.channelname),
         ),
       );
     } else {

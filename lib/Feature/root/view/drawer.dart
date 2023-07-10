@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:henri_ppp/Feature/live/controller/live_controller.dart';
+import 'package:henri_ppp/Feature/live/view/livelist.dart';
 import 'package:henri_ppp/Feature/messages/view/controller/chat_controller.dart';
 import 'package:henri_ppp/Feature/profile/controller/user_controller.dart';
 import 'package:henri_ppp/Feature/extra/view/privacy.dart';
 import 'package:henri_ppp/Feature/extra/view/setting.dart';
 import 'package:henri_ppp/Feature/extra/view/terms.dart';
-import 'package:henri_ppp/Feature/live/view/livelist.dart';
 import 'package:henri_ppp/Feature/messages/view/messagelist.dart';
 import 'package:henri_ppp/Feature/profile/view/friendlist.dart';
 import 'package:henri_ppp/Feature/profile/view/teamlist.dart';
@@ -32,6 +33,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
   @override
   Widget build(BuildContext context) {
     final usercontroller = Provider.of<userController>(context);
+    final livecontroller = Provider.of<liveController>(context);
+
     final chatcontroller = Provider.of<chatController>(context);
 
     double resWidth = MediaQuery.of(context).size.width;
@@ -257,7 +260,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
                       height: 5,
                     ),
                     GestureDetector(
-                      onTap: () {
+                      onTap: () async {
+                        await livecontroller.getRooms();
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => const LiveList()));
                       },

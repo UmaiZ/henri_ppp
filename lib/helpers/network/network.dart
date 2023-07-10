@@ -138,4 +138,5 @@ class ApiUrls {
 
   //for liv
   String createlivechannel = "$baseUrl/generate-token";
+  String getchannelroom = "$baseUrl/getchannelroom";
 }

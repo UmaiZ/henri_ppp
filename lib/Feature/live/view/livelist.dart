@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:henri_ppp/Feature/live/view/livedetails.dart';
+import 'package:henri_ppp/Feature/live/controller/live_controller.dart';
+import 'package:henri_ppp/Feature/live/view/teststream.dart';
+import 'package:henri_ppp/Feature/profile/controller/user_controller.dart';
+import 'package:henri_ppp/widgets/circlecacheimage.dart';
+import 'package:provider/provider.dart';
 
 class LiveList extends StatefulWidget {
   const LiveList({super.key});
@@ -16,7 +18,7 @@ class _LiveListState extends State<LiveList> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-
+    final usercontroller = Provider.of<userController>(context);
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.primary,
       appBar: AppBar(
@@ -33,109 +35,127 @@ class _LiveListState extends State<LiveList> {
             SizedBox(
               height: size.height * 0.02,
             ),
+            // SizedBox(
+            //   width: size.width * 0.95,
+            //   child: SingleChildScrollView(
+            //     scrollDirection: Axis.horizontal,
+            //     child: Row(
+            //       children: [
+            //         GestureDetector(
+            //             onTap: () {
+            //               setState(() {
+            //                 tabindex = 0;
+            //               });
+            //             },
+            //             child: TabButtons('ALL', 0)),
+            //         SizedBox(
+            //           width: size.width * 0.0175,
+            //         ),
+            //         GestureDetector(
+            //             onTap: () {
+            //               setState(() {
+            //                 tabindex = 1;
+            //               });
+            //             },
+            //             child: TabButtons('FRIENDS', 1)),
+            //       ],
+            //     ),
+            //   ),
+            // ),
+            // SizedBox(
+            //   height: size.height * 0.02,
+            // ),
+            // SizedBox(
+            //   width: size.width * 0.925,
+            //   child: TextField(
+            //     style: Theme.of(context).textTheme.bodyMedium,
+            //     decoration: InputDecoration(
+            //         hintText: "Search Friends",
+            //         hintStyle: Theme.of(context).textTheme.bodySmall,
+            //         filled: true,
+            //         fillColor: Theme.of(context).colorScheme.secondary,
+            //         suffixIcon: const Icon(
+            //           Icons.search,
+            //           color: Colors.grey,
+            //         )),
+            //   ),
+            // ),
+
             SizedBox(
-              width: size.width * 0.95,
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            tabindex = 0;
-                          });
-                        },
-                        child: TabButtons('ALL', 0)),
-                    SizedBox(
-                      width: size.width * 0.0175,
+              height: size.height * 0.02,
+            ),
+            Consumer<liveController>(
+              builder: (context, uprovider, child) {
+                if (uprovider.rooms.isEmpty) {
+                  // postProvider.getFeed();
+                  return const Center(child: Text('No Live Available'));
+                } else {
+                  return Expanded(
+                    child: SizedBox(
+                      width: size.width * 0.925,
+                      child: ListView.builder(
+                          itemCount: uprovider.rooms.length,
+                          itemBuilder: (context, i) {
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => LiveStreamTest(
+                                          token: uprovider.rooms[i].token,
+                                          channelname:
+                                              uprovider.rooms[i].channelName,
+                                          isAdmin: usercontroller.userdata.sId
+                                                  .toString() ==
+                                              uprovider.rooms[i].channelName
+                                                  .toString(),
+                                        )));
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.only(bottom: 7),
+                                child: ListTile(
+                                  contentPadding: const EdgeInsets.all(5),
+                                  tileColor:
+                                      Theme.of(context).colorScheme.secondary,
+                                  leading: SizedBox(
+                                    height: size.height * 0.095,
+                                    width: size.height * 0.095,
+                                    child: CircleCacheImage(
+                                      url: uprovider.rooms[i].uid!.userImage
+                                          .toString(),
+                                    ),
+                                  ),
+                                  title: Text(
+                                    uprovider.rooms[i].uid!.userName.toString(),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge!
+                                        .merge(const TextStyle(
+                                            color: Colors.white)),
+                                  ),
+                                  // subtitle: Text(
+                                  //   '17 mutual friends',
+                                  //   style: Theme.of(context)
+                                  //       .textTheme
+                                  //       .bodySmall!
+                                  //       .merge(
+                                  //           const TextStyle(color: Colors.grey)),
+                                  // ),
+                                  // trailing: const Padding(
+                                  //   padding: EdgeInsets.only(right: 5),
+                                  //   child: Icon(
+                                  //     Icons.more_vert_outlined,
+                                  //     color: Colors.white,
+                                  //     size: 30,
+                                  //   ),
+                                  // ),
+                                ),
+                              ),
+                            );
+                          }),
                     ),
-                    GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            tabindex = 1;
-                          });
-                        },
-                        child: TabButtons('FRIENDS', 1)),
-                  ],
-                ),
-              ),
+                  );
+                }
+              },
             ),
-            SizedBox(
-              height: size.height * 0.02,
-            ),
-            SizedBox(
-              width: size.width * 0.925,
-              child: TextField(
-                style: Theme.of(context).textTheme.bodyMedium,
-                decoration: InputDecoration(
-                    hintText: "Search Friends",
-                    hintStyle: Theme.of(context).textTheme.bodySmall,
-                    filled: true,
-                    fillColor: Theme.of(context).colorScheme.secondary,
-                    suffixIcon: const Icon(
-                      Icons.search,
-                      color: Colors.grey,
-                    )),
-              ),
-            ),
-            SizedBox(
-              height: size.height * 0.02,
-            ),
-            Expanded(
-              child: SizedBox(
-                width: size.width * 0.925,
-                child: ListView.builder(
-                    itemCount: 4,
-                    itemBuilder: (context, i) {
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const LiveScreen()));
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.only(bottom: 7),
-                          child: ListTile(
-                            contentPadding: const EdgeInsets.all(5),
-                            tileColor: Theme.of(context).colorScheme.secondary,
-                            leading: SizedBox(
-                              width: size.width * 0.2,
-                              height: size.width * 0.2,
-                              child: CircleAvatar(
-                                radius: 100,
-                                backgroundColor:
-                                    Theme.of(context).colorScheme.secondary,
-                                child: Image.asset(
-                                    'assets/images/imageplaceholder.png'),
-                              ),
-                            ),
-                            title: Text(
-                              'Julia Anderson',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge!
-                                  .merge(const TextStyle(color: Colors.white)),
-                            ),
-                            subtitle: Text(
-                              '17 mutual friends',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodySmall!
-                                  .merge(const TextStyle(color: Colors.grey)),
-                            ),
-                            trailing: const Padding(
-                              padding: EdgeInsets.only(right: 5),
-                              child: Icon(
-                                Icons.more_vert_outlined,
-                                color: Colors.white,
-                                size: 30,
-                              ),
-                            ),
-                          ),
-                        ),
-                      );
-                    }),
-              ),
-            )
           ],
         ),
       ),
