@@ -98,6 +98,17 @@ class _LiveListState extends State<LiveList> {
                           itemBuilder: (context, i) {
                             return GestureDetector(
                               onTap: () {
+                                // Navigator.of(context).push(MaterialPageRoute(
+                                //     builder: (context) => LiveStreamTest(
+                                //           token:
+                                //               "007eJxTYPhz49hL//IXDbqq7bwHTkldP/Ug+CGTfabph/qGkO/M+y8oMBgYJRtbWCQbW5omGpqYmKUkpSSZJKdZpBmlpSWbJlmkfDJZk9IQyMhw8lQOIyMDBIL4LAzZ+dmJDAwAI5Aiuw==",
+                                //           channelname: "koka",
+                                //           isAdmin: usercontroller.userdata.sId
+                                //                   .toString() ==
+                                //               uprovider.rooms[i].channelName
+                                //                   .toString(),
+                                //         )));
+
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) => LiveStreamTest(
                                           token: uprovider.rooms[i].token,

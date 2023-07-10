@@ -136,48 +136,49 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(
                     height: size.height * 0.045,
                   ),
-                  Text(
-                    "Login With",
-                    style: Theme.of(context).textTheme.headlineMedium,
-                  ),
-                  SizedBox(
-                    height: size.height * 0.03,
-                  ),
-                  SizedBox(
-                    width: size.width * 0.9,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Container(
-                            width: size.width * 0.125,
-                            decoration: const BoxDecoration(
-                              color: Colors.white,
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Image.asset('assets/images/facebook.png'),
-                            )),
-                        Container(
-                            width: size.width * 0.125,
-                            decoration: const BoxDecoration(
-                              color: Colors.white,
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Image.asset('assets/images/google.png'),
-                            )),
-                        Container(
-                            width: size.width * 0.125,
-                            decoration: const BoxDecoration(
-                              color: Colors.white,
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Image.asset('assets/images/apple.png'),
-                            ))
-                      ],
-                    ),
-                  ),
+                  // Text(
+                  //   "Login With",
+                  //   style: Theme.of(context).textTheme.headlineMedium,
+                  // ),
+                  // SizedBox(
+                  //   height: size.height * 0.03,
+                  // ),
+                  // SizedBox(
+                  //   width: size.width * 0.9,
+                  //   child: Row(
+                  //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  //     children: [
+                  //       Container(
+                  //           width: size.width * 0.125,
+                  //           decoration: const BoxDecoration(
+                  //             color: Colors.white,
+                  //           ),
+                  //           child: Padding(
+                  //             padding: const EdgeInsets.all(8.0),
+                  //             child: Image.asset('assets/images/facebook.png'),
+                  //           )),
+                  //       Container(
+                  //           width: size.width * 0.125,
+                  //           decoration: const BoxDecoration(
+                  //             color: Colors.white,
+                  //           ),
+                  //           child: Padding(
+                  //             padding: const EdgeInsets.all(8.0),
+                  //             child: Image.asset('assets/images/google.png'),
+                  //           )),
+                  //       Container(
+                  //           width: size.width * 0.125,
+                  //           decoration: const BoxDecoration(
+                  //             color: Colors.white,
+                  //           ),
+                  //           child: Padding(
+                  //             padding: const EdgeInsets.all(8.0),
+                  //             child: Image.asset('assets/images/apple.png'),
+                  //           ))
+                  //     ],
+                  //   ),
+                  // ),
+
                   const Spacer(),
                   SizedBox(
                       width: size.width * 0.925,

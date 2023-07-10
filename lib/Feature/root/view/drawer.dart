@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:henri_ppp/Feature/live/controller/live_controller.dart';
 import 'package:henri_ppp/Feature/live/view/livelist.dart';
 import 'package:henri_ppp/Feature/messages/view/controller/chat_controller.dart';
+import 'package:henri_ppp/Feature/onboarding/view/login.dart';
 import 'package:henri_ppp/Feature/profile/controller/user_controller.dart';
 import 'package:henri_ppp/Feature/extra/view/privacy.dart';
 import 'package:henri_ppp/Feature/extra/view/setting.dart';
@@ -423,7 +424,10 @@ class _DrawerScreenState extends State<DrawerScreen> {
                       height: 20,
                     ),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const LoginPage()));
+                      },
                       child: Container(
                           width: resWidth * 0.7,
                           height: resHeight * 0.065,

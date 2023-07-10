@@ -5,7 +5,8 @@ import 'package:permission_handler/permission_handler.dart';
 const appId = "02c388c395a1446dbdb4cf8f2ffc5b8d";
 // const token =
 //     "007eJxTYFg+pyAs3oDJ5pjp3aia6VrbKmNi5xmHyvHk8JaeeD83z0GBwcAo2djCItnY0jTR0MTELCUpJckkOc0izSgtLdk0ySJlqcCklIZARoYKt1esjAwQCOKzMxQl5qXk5+YyMAAAAgoe+g==";
-// const channel = "randomm";
+
+// const channel = "koka";
 
 class LiveStreamTest extends StatefulWidget {
   final token;
@@ -84,6 +85,13 @@ class _LiveStreamTestState extends State<LiveStreamTest> {
     );
   }
 
+  @override
+  void dispose() {
+    // Dispose of the resource
+    _engine.leaveChannel();
+    super.dispose();
+  }
+
   // Create UI with local view and remote view
   @override
   Widget build(BuildContext context) {
@@ -98,9 +106,9 @@ class _LiveStreamTestState extends State<LiveStreamTest> {
       ),
       body: Stack(
         children: [
-          // Center(
-          //   child: _remoteVideo(),
-          // ),
+          Center(
+            child: _remoteVideo(),
+          ),
           Align(
             alignment: Alignment.topLeft,
             child: SizedBox(

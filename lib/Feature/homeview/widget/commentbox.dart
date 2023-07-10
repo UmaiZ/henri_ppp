@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:henri_ppp/Feature/profile/controller/user_controller.dart';
 import 'package:henri_ppp/Feature/homeview/models/comments.dart';
 import 'package:henri_ppp/Feature/profile/models/user.dart';
+import 'package:henri_ppp/helpers/network/network.dart';
 import 'package:henri_ppp/services/feed_service.dart';
 import 'package:provider/provider.dart';
 
@@ -117,7 +118,8 @@ class _commentBoxState extends State<commentBox> {
                     suffixIcon: GestureDetector(
                         onTap: () {
                           if (chatcontroller.text.toString() != "") {
-                            feedService().addComment('commentNewsFeed', {
+                            feedService().addComment(
+                                ApiUrls().commentNewsFeed, {
                               'newsFeedId': widget.newsId,
                               'commentDetail': chatcontroller.text.toString()
                             }).then((val) {

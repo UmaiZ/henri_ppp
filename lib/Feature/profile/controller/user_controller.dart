@@ -21,8 +21,7 @@ class userController extends ChangeNotifier {
 
   UserModel? get userselecteditem => _selecteduser;
 
-  late AverageRating _useraverage;
-  AverageRating get useraveragedata => _useraverage;
+  late AverageRating useraverage;
 
   Future<bool> LoginHit(data) async {
     bool result = false;
@@ -81,7 +80,7 @@ class userController extends ChangeNotifier {
     try {
       AverageRating user =
           await UserService().getAverage(ApiUrls().getAverageRating);
-      _useraverage = user;
+      useraverage = user;
       notifyListeners();
     } catch (e) {
       notifyListeners();

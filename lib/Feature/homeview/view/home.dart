@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:henri_ppp/Feature/homeview/controller/feed_controller.dart';
 import 'package:henri_ppp/Feature/live/controller/live_controller.dart';
 import 'package:henri_ppp/Feature/homeview/controller/status_controller.dart';
+import 'package:henri_ppp/Feature/live/view/teststream.dart';
 import 'package:henri_ppp/Feature/profile/controller/user_controller.dart';
 import 'package:henri_ppp/helpers/loader/loader.dart';
 import 'package:henri_ppp/Feature/homeview/view/storydetails.dart';
@@ -18,6 +19,9 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final usercontroller = Provider.of<userController>(context);
+    // final controller = Provider.of<userController>(context);
+    // controller.getAverage();
     final Size size = MediaQuery.of(context).size;
     final GlobalKey<ScaffoldState> key = GlobalKey();
     // final feedController = Provider.of<feedController>(context);
@@ -59,7 +63,11 @@ class HomeScreen extends StatelessWidget {
                     .createRoom(usercontroller.userdata.sId)
                     .then((value) {
                   Navigator.pop(context);
-                  print(value);
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => LiveStreamTest(
+                          token: value['token'],
+                          channelname: value['646fb1f3676f515b24a72f7d'],
+                          isAdmin: true)));
                 });
 
                 // Navigator.of(context).push(
@@ -92,92 +100,93 @@ class HomeScreen extends StatelessWidget {
       ),
       body: SizedBox(
         width: double.infinity,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              storelist(context),
-              Container(
-                width: size.width * 0.95,
-                decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.secondary),
-                child: Padding(
-                  padding: const EdgeInsets.all(13.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: size.width * 0.1,
-                            height: size.width * 0.1,
-                            child: CircleAvatar(
-                              radius: 100,
-                              backgroundColor:
-                                  Theme.of(context).colorScheme.secondary,
-                              child: Image.asset(
-                                  'assets/images/imageplaceholder.png'),
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            "Show how you are training",
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodySmall!
-                                .merge(const TextStyle(color: Colors.grey)),
-                          )
-                        ],
-                      ),
-                      Image.asset(
-                        'assets/images/imageicon.png',
-                        color: Colors.grey,
-                        width: 30,
-                      )
-                    ],
-                  ),
+        child: Column(
+          children: [
+            storelist(context),
+            Container(
+              width: size.width * 0.95,
+              decoration:
+                  BoxDecoration(color: Theme.of(context).colorScheme.secondary),
+              child: Padding(
+                padding: const EdgeInsets.all(13.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: size.width * 0.1,
+                          height: size.width * 0.1,
+                          child: CircleCacheImage(
+                              url:
+                                  usercontroller.userdata.userImage.toString()),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          "Show how you are training",
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall!
+                              .merge(const TextStyle(color: Colors.grey)),
+                        )
+                      ],
+                    ),
+                    Image.asset(
+                      'assets/images/imageicon.png',
+                      color: Colors.grey,
+                      width: 30,
+                    )
+                  ],
                 ),
               ),
-              SizedBox(
-                height: size.height * 0.01,
-              ),
-              Consumer<feedController>(
-                builder: (context, postProvider, child) {
-                  if (postProvider.feeddata.isEmpty) {
-                    // postProvider.getFeed();
-                    return const Center(child: Text('No Post Available'));
-                  } else {
-                    return ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: postProvider.feeddata.length,
-                      itemBuilder: (context, index) {
-                        return PostWidget(data: postProvider.feeddata[index]);
+            ),
+            SizedBox(
+              height: size.height * 0.01,
+            ),
+            Consumer<feedController>(
+              builder: (context, postProvider, child) {
+                if (postProvider.feeddata.isEmpty) {
+                  // postProvider.getFeed();
+                  return const Center(child: Text('No Post Available'));
+                } else {
+                  return Expanded(
+                    child: RefreshIndicator(
+                      onRefresh: () {
+                        return postProvider.getFeed();
                       },
-                    );
-                  }
-                },
-              ),
+                      child: ListView.builder(
+                        // physics: const NeverScrollableScrollPhysics(),
+                        // shrinkWrap: true,
+                        itemCount: postProvider.feeddata.length,
+                        itemBuilder: (context, index) {
+                          return PostWidget(data: postProvider.feeddata[index]);
+                        },
+                      ),
+                    ),
+                  );
+                }
+              },
+            ),
 
-              // feedController.feeddata.isNotEmpty
-              //     ? SizedBox(
-              //         child: ListView.builder(
-              //             physics: const NeverScrollableScrollPhysics(),
-              //             shrinkWrap: true,
-              //             itemCount: feedController.feeddata.length,
-              //             itemBuilder: (context, index) {
-              //               return PostWidget(
-              //                   data: feedController.feeddata[index]);
-              //             }),
-              //       )
-              //     : const SizedBox(),
-              SizedBox(
-                height: size.height * 0.01,
-              ),
-              // postbox(context),
-            ],
-          ),
+            // feedController.feeddata.isNotEmpty
+            //     ? SizedBox(
+            //         child: ListView.builder(
+            //             physics: const NeverScrollableScrollPhysics(),
+            //             shrinkWrap: true,
+            //             itemCount: feedController.feeddata.length,
+            //             itemBuilder: (context, index) {
+            //               return PostWidget(
+            //                   data: feedController.feeddata[index]);
+            //             }),
+            //       )
+            //     : const SizedBox(),
+            SizedBox(
+              height: size.height * 0.01,
+            ),
+            // postbox(context),
+          ],
         ),
       ),
     );

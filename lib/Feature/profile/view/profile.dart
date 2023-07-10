@@ -25,8 +25,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     super.initState();
     Future.delayed(Duration.zero, () {
-      final controller = Provider.of<userController>(context, listen: false);
-      controller.getAverage();
+      final ucontroller = Provider.of<userController>(context, listen: false);
+      ucontroller.getAverage();
     });
   }
 
@@ -142,7 +142,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     width: size.width * 0.0125,
                   ),
                   Text(
-                    '(Review ${usercontroller.useraveragedata.averageRating ?? "0.0"})',
+                    '(Review ${usercontroller.useraverage.averageRating ?? "0.0"})',
                     style: Theme.of(context)
                         .textTheme
                         .headlineSmall!
@@ -329,7 +329,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               tabcontroller.tabindex == 2
                   ? Consumer<userController>(
                       builder: (context, uprovider, child) {
-                        if (uprovider.useraveragedata.ratings!.isEmpty) {
+                        if (uprovider.useraverage.ratings!.isEmpty) {
                           // postProvider.getFeed();
                           return const Center(
                               child: Text('No Ranking Available'));
@@ -339,7 +339,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             child: ListView.builder(
                                 shrinkWrap: true,
                                 itemCount:
-                                    uprovider.useraveragedata.ratings!.length,
+                                    uprovider.useraverage.ratings!.length,
                                 itemBuilder: (context, i) {
                                   return Container(
                                     padding: const EdgeInsets.only(bottom: 7),
@@ -348,8 +348,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           .colorScheme
                                           .secondary,
                                       title: Text(
-                                        uprovider.useraveragedata.ratings![i]
-                                            .description
+                                        uprovider
+                                            .useraverage.ratings![i].description
                                             .toString(),
                                         overflow: TextOverflow.ellipsis,
                                         style: Theme.of(context)
@@ -363,9 +363,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           RatingBar(
                                             itemSize: 20.0,
                                             initialRating: uprovider
-                                                .useraveragedata
-                                                .ratings![i]
-                                                .count!
+                                                .useraverage.ratings![i].count!
                                                 .toDouble(),
                                             direction: Axis.horizontal,
                                             allowHalfRating: true,

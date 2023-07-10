@@ -67,6 +67,8 @@ class feedService {
   }
 
   Future<bool> addComment(url, data) async {
+    logger.d(url);
+
     logger.d(data);
 
     try {
