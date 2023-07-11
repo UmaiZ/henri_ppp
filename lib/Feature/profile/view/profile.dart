@@ -209,14 +209,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       SizedBox(
                         width: size.width * 0.0175,
                       ),
-                      GestureDetector(
-                          onTap: () {
-                            tabcontroller.changeIndex(1);
-                          },
-                          child: TabButtons('Highlights', 1)),
-                      SizedBox(
-                        width: size.width * 0.0175,
-                      ),
+                      // GestureDetector(
+                      //     onTap: () {
+                      //       tabcontroller.changeIndex(1);
+                      //     },
+                      //     child: TabButtons('Highlights', 1)),
+                      // SizedBox(
+                      //   width: size.width * 0.0175,
+                      // ),
                       GestureDetector(
                           onTap: () {
                             tabcontroller.changeIndex(2);

@@ -37,12 +37,12 @@ class feedController extends ChangeNotifier {
             element.rating![indexToUpdate].rating = res['data']['rating'];
           } else {
             element.rating!.add(Rating(
-                sId: res['_id'],
-                newsFeedId: res['newsFeedId'],
-                ratingBy: res['ratingBy'],
-                rating: res['rating'],
-                createdAt: res['createdAt'],
-                updatedAt: res['updatedAt']));
+                sId: res['data']['_id'],
+                newsFeedId: res['data']['newsFeedId'],
+                ratingBy: res['data']['ratingBy'],
+                rating: res['data']['rating'],
+                createdAt: res['data']['createdAt'],
+                updatedAt: res['data']['updatedAt']));
           }
           notifyListeners();
         }
