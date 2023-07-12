@@ -5,6 +5,7 @@ import 'package:henri_ppp/Feature/profile/controller/user_controller.dart';
 import 'package:henri_ppp/helpers/imagepicker/imagepicker.dart';
 import 'package:henri_ppp/Feature/post/controller/create_post_controller.dart';
 import 'package:henri_ppp/Feature/root/view/drawer.dart';
+import 'package:henri_ppp/helpers/loader/loader.dart';
 import 'package:henri_ppp/widgets/circlecacheimage.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
@@ -27,10 +28,11 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
     super.dispose();
   }
 
+  TextEditingController descriptioncontroller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final postcontroller = Provider.of<createPostController>(context);
-    TextEditingController descriptioncontroller = TextEditingController();
     final usercontroller = Provider.of<userController>(context);
 
     final Size size = MediaQuery.of(context).size;
@@ -56,10 +58,12 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
         actions: [
           GestureDetector(
             onTap: () async {
+              showLoader(context);
               var data = {"description": descriptioncontroller.text.toString()};
 
               if (await postcontroller.createPost(
                   data, postcontroller.images)) {
+                Navigator.pop(context);
                 postcontroller.clearImages();
                 descriptioncontroller.clear();
               }
@@ -199,14 +203,14 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                   child: Align(
                     alignment: Alignment.centerRight,
                     child: SizedBox(
-                      width: size.width * 0.5,
+                      width: size.width * 0.15,
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Icon(
-                            Icons.emoji_emotions_outlined,
-                            color: Colors.white,
-                          ),
+                          // const Icon(
+                          //   Icons.emoji_emotions_outlined,
+                          //   color: Colors.white,
+                          // ),
                           GestureDetector(
                             onTap: () async {
                               var images = await ImagePickerHelper()
@@ -232,6 +236,10 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                               color: Colors.white,
                             ),
                           ),
+
+                          const SizedBox(
+                            width: 10,
+                          ),
                           GestureDetector(
                             onTap: () async {
                               var images = await ImagePickerHelper()
@@ -243,14 +251,14 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                               color: Colors.white,
                             ),
                           ),
-                          const Icon(
-                            Icons.file_copy_outlined,
-                            color: Colors.white,
-                          ),
-                          const Icon(
-                            Icons.link_outlined,
-                            color: Colors.white,
-                          ),
+                          // const Icon(
+                          //   Icons.file_copy_outlined,
+                          //   color: Colors.white,
+                          // ),
+                          // const Icon(
+                          //   Icons.link_outlined,
+                          //   color: Colors.white,
+                          // ),
                         ],
                       ),
                     ),

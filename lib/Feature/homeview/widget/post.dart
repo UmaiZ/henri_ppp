@@ -103,17 +103,24 @@ class _PostWidgetState extends State<PostWidget> {
                   scrollDirection: Axis.horizontal,
                   itemCount: widget.data.images.length,
                   itemBuilder: (context, index) {
+                    print(
+                        "aaa ${widget.data.images[index].toString().split('.').last}");
                     return widget.data.images[index]
                                     .toString()
                                     .split('.')
-                                    .last !=
+                                    .last ==
                                 "mp4" ||
                             widget.data.images[index]
                                     .toString()
                                     .split('.')
-                                    .last !=
+                                    .last ==
                                 "MOV"
-                        ? CachedNetworkImage(
+                        ? Container(
+                            width: 20,
+                            height: 20,
+                            color: Colors.red,
+                          )
+                        : CachedNetworkImage(
                             imageUrl: widget.data.images[index],
                             placeholder: (context, url) =>
                                 const SpinKitChasingDots(
@@ -122,11 +129,6 @@ class _PostWidgetState extends State<PostWidget> {
                             ),
                             errorWidget: (context, url, error) =>
                                 const Icon(Icons.error),
-                          )
-                        : Container(
-                            width: 20,
-                            height: 20,
-                            color: Colors.red,
                           );
                   }),
             ),
