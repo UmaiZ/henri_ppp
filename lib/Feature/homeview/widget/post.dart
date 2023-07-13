@@ -98,39 +98,37 @@ class _PostWidgetState extends State<PostWidget> {
             SizedBox(
               height: size.height * 0.02,
             ),
-            SizedBox(
-              height: widget.data.images.length > 0 ? size.height * 0.35 : 0,
-              child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: widget.data.images.length,
-                  itemBuilder: (context, index) {
-                
-                    return widget.data.images[index]
-                                    .toString()
-                                    .split('.')
-                                    .last ==
-                                "mp4" ||
-                            widget.data.images[index]
-                                    .toString()
-                                    .split('.')
-                                    .last ==
-                                "MOV"
-                        ? VideoPlayerWidget(
-                                    videoUrl: widget.data.images[index]
-                                    .toString(),
-                                  )
-                        : CachedNetworkImage(
-                            imageUrl: widget.data.images[index],
-                            placeholder: (context, url) =>
-                                const SpinKitChasingDots(
-                              color: Colors.white,
-                              size: 50.0,
+
+            widget.data.images.isNotEmpty &&
+                    (widget.data.images[0].toString().split('.').last ==
+                            "mp4" ||
+                        widget.data.images[0].toString().split('.').last ==
+                            "MOV")
+                ? VideoPlayerWidget(
+                    videoUrl: widget.data.images[0].toString(),
+                  )
+                : SizedBox(
+                    height:
+                        widget.data.images.length > 0 ? size.height * 0.35 : 0,
+                    child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: widget.data.images.length,
+                        itemBuilder: (context, index) {
+                          return Align(
+                            alignment: Alignment.center,
+                            child: CachedNetworkImage(
+                              imageUrl: widget.data.images[index],
+                              placeholder: (context, url) =>
+                                  const SpinKitChasingDots(
+                                color: Colors.white,
+                                size: 50.0,
+                              ),
+                              errorWidget: (context, url, error) =>
+                                  const Icon(Icons.error),
                             ),
-                            errorWidget: (context, url, error) =>
-                                const Icon(Icons.error),
                           );
-                  }),
-            ),
+                        }),
+                  ),
             // Image.asset(
             //   'assets/images/postimage1.jpg',
             //   width: size.width * 0.9,
