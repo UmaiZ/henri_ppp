@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:henri_ppp/Feature/homeview/controller/feed_controller.dart';
+import 'package:henri_ppp/Feature/homeview/view/videoplayerwidget.dart';
 import 'package:henri_ppp/helpers/loader/loader.dart';
 import 'package:henri_ppp/helpers/logger/logger.dart';
 import 'package:henri_ppp/Feature/profile/controller/user_controller.dart';
@@ -98,13 +99,12 @@ class _PostWidgetState extends State<PostWidget> {
               height: size.height * 0.02,
             ),
             SizedBox(
-              height: widget.data.images.length > 0 ? size.height * 0.225 : 0,
+              height: widget.data.images.length > 0 ? size.height * 0.35 : 0,
               child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: widget.data.images.length,
                   itemBuilder: (context, index) {
-                    print(
-                        "aaa ${widget.data.images[index].toString().split('.').last}");
+                
                     return widget.data.images[index]
                                     .toString()
                                     .split('.')
@@ -115,11 +115,10 @@ class _PostWidgetState extends State<PostWidget> {
                                     .split('.')
                                     .last ==
                                 "MOV"
-                        ? Container(
-                            width: 20,
-                            height: 20,
-                            color: Colors.red,
-                          )
+                        ? VideoPlayerWidget(
+                                    videoUrl: widget.data.images[index]
+                                    .toString(),
+                                  )
                         : CachedNetworkImage(
                             imageUrl: widget.data.images[index],
                             placeholder: (context, url) =>
