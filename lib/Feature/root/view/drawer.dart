@@ -260,38 +260,38 @@ class _DrawerScreenState extends State<DrawerScreen> {
                     const SizedBox(
                       height: 5,
                     ),
-                    GestureDetector(
-                      onTap: () async {
-                        await livecontroller.getRooms();
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const LiveList()));
-                      },
-                      child: Container(
-                          width: resWidth * 0.7,
-                          height: resHeight * 0.065,
-                          decoration: BoxDecoration(
-                              color: Theme.of(context).colorScheme.primary,
-                              borderRadius: const BorderRadius.only(
-                                  topRight: Radius.circular(10),
-                                  bottomRight: Radius.circular(10))),
-                          child: SizedBox(
-                              width: resWidth * 0.4,
-                              child: const Padding(
-                                padding: EdgeInsets.only(left: 20),
-                                child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    "Live Streams",
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(
-                                        fontSize: 19, color: Colors.white),
-                                  ),
-                                ),
-                              ))),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
+                    // GestureDetector(
+                    //   onTap: () async {
+                    //     await livecontroller.getRooms();
+                    //     Navigator.of(context).push(MaterialPageRoute(
+                    //         builder: (context) => const LiveList()));
+                    //   },
+                    //   child: Container(
+                    //       width: resWidth * 0.7,
+                    //       height: resHeight * 0.065,
+                    //       decoration: BoxDecoration(
+                    //           color: Theme.of(context).colorScheme.primary,
+                    //           borderRadius: const BorderRadius.only(
+                    //               topRight: Radius.circular(10),
+                    //               bottomRight: Radius.circular(10))),
+                    //       child: SizedBox(
+                    //           width: resWidth * 0.4,
+                    //           child: const Padding(
+                    //             padding: EdgeInsets.only(left: 20),
+                    //             child: Align(
+                    //               alignment: Alignment.centerLeft,
+                    //               child: Text(
+                    //                 "Live Streams",
+                    //                 textAlign: TextAlign.left,
+                    //                 style: TextStyle(
+                    //                     fontSize: 19, color: Colors.white),
+                    //               ),
+                    //             ),
+                    //           ))),
+                    // ),
+                    // const SizedBox(
+                    //   height: 5,
+                    // ),
 
                     GestureDetector(
                       onTap: () {

@@ -50,98 +50,98 @@ class HomeScreen extends StatelessWidget {
         //   style: Theme.of(context).textTheme.headlineMedium,
         // ),
         centerTitle: true,
-        actions: [
-          GestureDetector(
-              onTap: () async {
-                final livecontroller =
-                    Provider.of<liveController>(context, listen: false);
-                final usercontroller =
-                    Provider.of<userController>(context, listen: false);
+        // actions: [
+        //   GestureDetector(
+        //       onTap: () async {
+        //         final livecontroller =
+        //             Provider.of<liveController>(context, listen: false);
+        //         final usercontroller =
+        //             Provider.of<userController>(context, listen: false);
 
-                showLoader(context);
-                await livecontroller
-                    .createRoom(usercontroller.userdata.sId)
-                    .then((value) {
-                  Navigator.pop(context);
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => LiveStreamTest(
-                          token: value['token'],
-                          channelname: value['646fb1f3676f515b24a72f7d'],
-                          isAdmin: true)));
-                });
+        //         showLoader(context);
+        //         await livecontroller
+        //             .createRoom(usercontroller.userdata.sId)
+        //             .then((value) {
+        //           Navigator.pop(context);
+        //           Navigator.of(context).push(MaterialPageRoute(
+        //               builder: (context) => LiveStreamTest(
+        //                   token: value['token'],
+        //                   channelname: value['646fb1f3676f515b24a72f7d'],
+        //                   isAdmin: true)));
+        //         });
 
-                // Navigator.of(context).push(
-                //     MaterialPageRoute(builder: (context) => goLiveScreen()));
-              },
-              child: Image.asset(
-                'assets/images/live.png',
-                color: Colors.white,
-                width: 20,
-                height: 20,
-              )),
-          const SizedBox(
-            width: 10,
-          ),
-          GestureDetector(
-              onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const CameraAppTest()));
-              },
-              child: Image.asset(
-                'assets/images/story.png',
-                color: Colors.white,
-                width: 20,
-                height: 20,
-              )),
-          const SizedBox(
-            width: 10,
-          ),
-        ],
+        //         // Navigator.of(context).push(
+        //         //     MaterialPageRoute(builder: (context) => goLiveScreen()));
+        //       },
+        //       child: Image.asset(
+        //         'assets/images/live.png',
+        //         color: Colors.white,
+        //         width: 20,
+        //         height: 20,
+        //       )),
+        //   const SizedBox(
+        //     width: 10,
+        //   ),
+        //   GestureDetector(
+        //       onTap: () {
+        //         Navigator.of(context).push(MaterialPageRoute(
+        //             builder: (context) => const CameraAppTest()));
+        //       },
+        //       child: Image.asset(
+        //         'assets/images/story.png',
+        //         color: Colors.white,
+        //         width: 20,
+        //         height: 20,
+        //       )),
+        //   const SizedBox(
+        //     width: 10,
+        //   ),
+        // ],
       ),
       body: SizedBox(
         width: double.infinity,
         child: Column(
           children: [
             storelist(context),
-            Container(
-              width: size.width * 0.95,
-              decoration:
-                  BoxDecoration(color: Theme.of(context).colorScheme.secondary),
-              child: Padding(
-                padding: const EdgeInsets.all(13.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        SizedBox(
-                          width: size.width * 0.1,
-                          height: size.width * 0.1,
-                          child: CircleCacheImage(
-                              url:
-                                  usercontroller.userdata.userImage.toString()),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          "Show how you are training",
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall!
-                              .merge(const TextStyle(color: Colors.grey)),
-                        )
-                      ],
-                    ),
-                    Image.asset(
-                      'assets/images/imageicon.png',
-                      color: Colors.grey,
-                      width: 30,
-                    )
-                  ],
-                ),
-              ),
-            ),
+            // Container(
+            //   width: size.width * 0.95,
+            //   decoration:
+            //       BoxDecoration(color: Theme.of(context).colorScheme.secondary),
+            //   child: Padding(
+            //     padding: const EdgeInsets.all(13.0),
+            //     child: Row(
+            //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //       children: [
+            //         Row(
+            //           children: [
+            //             SizedBox(
+            //               width: size.width * 0.1,
+            //               height: size.width * 0.1,
+            //               child: CircleCacheImage(
+            //                   url:
+            //                       usercontroller.userdata.userImage.toString()),
+            //             ),
+            //             const SizedBox(
+            //               width: 10,
+            //             ),
+            //             Text(
+            //               "Show how you are training",
+            //               style: Theme.of(context)
+            //                   .textTheme
+            //                   .bodySmall!
+            //                   .merge(const TextStyle(color: Colors.grey)),
+            //             )
+            //           ],
+            //         ),
+            //         Image.asset(
+            //           'assets/images/imageicon.png',
+            //           color: Colors.grey,
+            //           width: 30,
+            //         )
+            //       ],
+            //     ),
+            //   ),
+            // ),
             SizedBox(
               height: size.height * 0.01,
             ),
