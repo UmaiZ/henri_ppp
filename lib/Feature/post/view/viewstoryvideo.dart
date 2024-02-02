@@ -51,6 +51,7 @@ class _ViewVideoStoryState extends State<ViewVideoStory> {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.primary,
       appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.secondary,
         title: Text(
           'UPLOAD',
           style: Theme.of(context).textTheme.headlineMedium,

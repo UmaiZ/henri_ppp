@@ -98,6 +98,7 @@ class _LiveStreamTestState extends State<LiveStreamTest> {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.primary,
       appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.secondary,
         title: Text(
           'LIVE STREAM',
           style: Theme.of(context).textTheme.headlineMedium,

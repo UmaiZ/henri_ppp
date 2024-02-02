@@ -8,14 +8,15 @@ class txtfieldGlobal extends StatelessWidget {
   final suffixicon;
   final validator;
   final textController;
-  const txtfieldGlobal({
-    super.key,
-    this.width,
-    this.hinttext,
-    this.suffixicon,
-    this.validator,
-    this.textController,
-  });
+  final isPassword;
+  const txtfieldGlobal(
+      {super.key,
+      this.width,
+      this.hinttext,
+      this.suffixicon,
+      this.validator,
+      this.textController,
+      this.isPassword});
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +29,7 @@ class txtfieldGlobal extends StatelessWidget {
         enableSuggestions: false,
         controller: textController,
         validator: validator,
+        obscureText: isPassword ?? false,
         style: Theme.of(context).textTheme.bodyMedium,
         decoration: InputDecoration(
           focusedBorder: const OutlineInputBorder(

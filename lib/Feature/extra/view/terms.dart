@@ -12,6 +12,7 @@ class TermsScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.primary,
       appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.secondary,
         title: Text(
           'Terms & Condition',
           style: Theme.of(context).textTheme.headlineMedium,

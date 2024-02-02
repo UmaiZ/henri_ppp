@@ -23,6 +23,7 @@ class _SettingScreensState extends State<SettingScreens> {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.primary,
       appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.secondary,
         title: Text(
           'SETTING',
           style: Theme.of(context).textTheme.headlineMedium,

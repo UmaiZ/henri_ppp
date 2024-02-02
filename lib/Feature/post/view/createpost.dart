@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:henri_ppp/Feature/homeview/controller/feed_controller.dart';
 import 'package:henri_ppp/Feature/profile/controller/user_controller.dart';
 import 'package:henri_ppp/helpers/imagepicker/imagepicker.dart';
 import 'package:henri_ppp/Feature/post/controller/create_post_controller.dart';
@@ -34,6 +35,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
   Widget build(BuildContext context) {
     final postcontroller = Provider.of<createPostController>(context);
     final usercontroller = Provider.of<userController>(context);
+    final postprovider = Provider.of<feedController>(context);
 
     final Size size = MediaQuery.of(context).size;
     final GlobalKey<ScaffoldState> key = GlobalKey();
@@ -42,6 +44,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
       drawer: const DrawerScreen(),
       backgroundColor: Theme.of(context).colorScheme.primary,
       appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.secondary,
         leading: GestureDetector(
           onTap: () {
             key.currentState!.openDrawer();
@@ -64,6 +67,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
               if (await postcontroller.createPost(
                   data, postcontroller.images)) {
                 Navigator.pop(context);
+                postprovider.getFeed();
                 postcontroller.clearImages();
                 descriptioncontroller.clear();
               }

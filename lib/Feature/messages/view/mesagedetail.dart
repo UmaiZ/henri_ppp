@@ -108,7 +108,7 @@ class _ChatDetailsState extends State<ChatDetails> {
       backgroundColor: Theme.of(context).colorScheme.primary,
       bottomSheet: getBottom(),
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Theme.of(context).colorScheme.secondary,
         // leading: BackWidget(),
         elevation: 0,
         title: Row(

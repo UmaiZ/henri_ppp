@@ -41,6 +41,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       drawer: const DrawerScreen(),
       backgroundColor: Theme.of(context).colorScheme.primary,
       appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.secondary,
         leading: GestureDetector(
           onTap: () {
             key.currentState!.openDrawer();

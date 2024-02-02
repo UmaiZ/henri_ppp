@@ -22,6 +22,7 @@ class _LiveListState extends State<LiveList> {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.primary,
       appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.secondary,
         title: Text(
           'LIVE LIST',
           style: Theme.of(context).textTheme.headlineMedium,

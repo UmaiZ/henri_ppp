@@ -32,6 +32,7 @@ class HomeScreen extends StatelessWidget {
       drawer: const DrawerScreen(),
       backgroundColor: Theme.of(context).colorScheme.primary,
       appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.secondary,
         leading: GestureDetector(
           onTap: () {
             key.currentState!.openDrawer();
@@ -50,53 +51,53 @@ class HomeScreen extends StatelessWidget {
         //   style: Theme.of(context).textTheme.headlineMedium,
         // ),
         centerTitle: true,
-        // actions: [
-        //   GestureDetector(
-        //       onTap: () async {
-        //         final livecontroller =
-        //             Provider.of<liveController>(context, listen: false);
-        //         final usercontroller =
-        //             Provider.of<userController>(context, listen: false);
+        actions: [
+          GestureDetector(
+              onTap: () async {
+                final livecontroller =
+                    Provider.of<liveController>(context, listen: false);
+                final usercontroller =
+                    Provider.of<userController>(context, listen: false);
 
-        //         showLoader(context);
-        //         await livecontroller
-        //             .createRoom(usercontroller.userdata.sId)
-        //             .then((value) {
-        //           Navigator.pop(context);
-        //           Navigator.of(context).push(MaterialPageRoute(
-        //               builder: (context) => LiveStreamTest(
-        //                   token: value['token'],
-        //                   channelname: value['646fb1f3676f515b24a72f7d'],
-        //                   isAdmin: true)));
-        //         });
+                showLoader(context);
+                await livecontroller
+                    .createRoom(usercontroller.userdata.sId)
+                    .then((value) {
+                  Navigator.pop(context);
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => LiveStreamTest(
+                          token: value['token'],
+                          channelname: value['646fb1f3676f515b24a72f7d'],
+                          isAdmin: true)));
+                });
 
-        //         // Navigator.of(context).push(
-        //         //     MaterialPageRoute(builder: (context) => goLiveScreen()));
-        //       },
-        //       child: Image.asset(
-        //         'assets/images/live.png',
-        //         color: Colors.white,
-        //         width: 20,
-        //         height: 20,
-        //       )),
-        //   const SizedBox(
-        //     width: 10,
-        //   ),
-        //   GestureDetector(
-        //       onTap: () {
-        //         Navigator.of(context).push(MaterialPageRoute(
-        //             builder: (context) => const CameraAppTest()));
-        //       },
-        //       child: Image.asset(
-        //         'assets/images/story.png',
-        //         color: Colors.white,
-        //         width: 20,
-        //         height: 20,
-        //       )),
-        //   const SizedBox(
-        //     width: 10,
-        //   ),
-        // ],
+                // Navigator.of(context).push(
+                //     MaterialPageRoute(builder: (context) => goLiveScreen()));
+              },
+              child: Image.asset(
+                'assets/images/live.png',
+                color: Colors.white,
+                width: 20,
+                height: 20,
+              )),
+          const SizedBox(
+            width: 10,
+          ),
+          GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const CameraAppTest()));
+              },
+              child: Image.asset(
+                'assets/images/story.png',
+                color: Colors.white,
+                width: 20,
+                height: 20,
+              )),
+          const SizedBox(
+            width: 10,
+          ),
+        ],
       ),
       body: SizedBox(
         width: double.infinity,

@@ -41,6 +41,7 @@ class _EditProfileState extends State<EditProfile> {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.primary,
       appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.secondary,
         title: Text(
           'EDIT PROFILE',
           style: Theme.of(context).textTheme.headlineMedium,

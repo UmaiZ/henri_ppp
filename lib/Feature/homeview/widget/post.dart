@@ -306,27 +306,28 @@ class _PostWidgetState extends State<PostWidget> {
                     ],
                   ),
                 ),
-                Row(
-                  children: [
-                    const Icon(
-                      Icons.share_outlined,
-                      color: Colors.grey,
-                    ),
-                    // Image.asset(
-                    //   'assets/images/flame.png',
-                    //   width: size.width * 0.06,
-                    // ),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    Text(
-                      'Share',
-                      style: Theme.of(context).textTheme.bodyLarge!.merge(
-                          const TextStyle(
-                              color: Colors.grey, fontWeight: FontWeight.w500)),
-                    ),
-                  ],
-                )
+                // Row(
+                //   children: [
+                //     const Icon(
+                //       Icons.share_outlined,
+                //       color: Colors.grey,
+                //     ),
+
+                //     // Image.asset(
+                //     //   'assets/images/flame.png',
+                //     //   width: size.width * 0.06,
+                //     // ),
+                //     const SizedBox(
+                //       width: 5,
+                //     ),
+                //     Text(
+                //       'Share',
+                //       style: Theme.of(context).textTheme.bodyLarge!.merge(
+                //           const TextStyle(
+                //               color: Colors.grey, fontWeight: FontWeight.w500)),
+                //     ),
+                //   ],
+                // )
               ],
             )
           ],

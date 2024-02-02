@@ -18,6 +18,7 @@ class MessageList extends StatelessWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.primary,
       appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.secondary,
         title: Text(
           'MESSAGES',
           style: Theme.of(context).textTheme.headlineMedium,

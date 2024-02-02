@@ -18,6 +18,8 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmpasswordController = TextEditingController();
   TextEditingController nameController = TextEditingController();
+  TextEditingController firstnameController = TextEditingController();
+  TextEditingController lastnameController = TextEditingController();
 
   var formKey = GlobalKey<FormState>();
 
@@ -43,7 +45,7 @@ class _RegisterPageState extends State<RegisterPage> {
             child: Column(
               children: [
                 SizedBox(
-                  height: size.height * 0.2,
+                  height: size.height * 0.125,
                 ),
                 SizedBox(
                     child: Image.asset(
@@ -56,7 +58,41 @@ class _RegisterPageState extends State<RegisterPage> {
                 txtfieldGlobal(
                   textController: nameController,
                   width: 0.9,
-                  hinttext: "Name",
+                  hinttext: "Username",
+                  validator: (value) {
+                    if (value.length < 5) {
+                      return 'Required Field';
+                    }
+                  },
+                  suffixicon: const Icon(
+                    Icons.person_outline,
+                    color: Colors.white,
+                  ),
+                ),
+                SizedBox(
+                  height: size.height * 0.015,
+                ),
+                txtfieldGlobal(
+                  textController: firstnameController,
+                  width: 0.9,
+                  hinttext: "Firstname",
+                  validator: (value) {
+                    if (value.length < 5) {
+                      return 'Required Field';
+                    }
+                  },
+                  suffixicon: const Icon(
+                    Icons.person_outline,
+                    color: Colors.white,
+                  ),
+                ),
+                SizedBox(
+                  height: size.height * 0.015,
+                ),
+                txtfieldGlobal(
+                  textController: lastnameController,
+                  width: 0.9,
+                  hinttext: "Lastname",
                   validator: (value) {
                     if (value.length < 5) {
                       return 'Required Field';
@@ -92,6 +128,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 txtfieldGlobal(
                   width: 0.9,
                   textController: passwordController,
+                  isPassword: true,
                   hinttext: "Password",
                   validator: (value) {
                     if (value.length < 5) {
@@ -108,6 +145,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 txtfieldGlobal(
                   width: 0.9,
+                  isPassword: true,
                   textController: confirmpasswordController,
                   hinttext: "Confirm Password",
                   validator: (value) {

@@ -20,6 +20,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
       drawer: const DrawerScreen(),
       backgroundColor: Theme.of(context).colorScheme.primary,
       appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.secondary,
         leading: GestureDetector(
           onTap: () {
             key.currentState!.openDrawer();

@@ -74,6 +74,7 @@ class _LoginPageState extends State<LoginPage> {
                     height: size.height * 0.015,
                   ),
                   txtfieldGlobal(
+                    isPassword: true,
                     validator: (value) {
                       if (value == null || value.isEmpty || value.length < 5) {
                         return 'Required field';
