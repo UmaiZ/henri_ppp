@@ -267,20 +267,25 @@ class _PostWidgetState extends State<PostWidget> {
                             '${ApiUrls().newsFeedComment}/${widget.data.sId}')
                         .then((value) {
                       logger.d(value);
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => commentBox(
+                                comments: value,
+                                newsId: widget.data.sId,
+                              )));
 
-                      showModalBottomSheet(
-                          clipBehavior: Clip.hardEdge,
-                          isScrollControlled: true,
-                          shape: const RoundedRectangleBorder(),
-                          context: context,
-                          builder: (
-                            context,
-                          ) {
-                            return commentBox(
-                              comments: value,
-                              newsId: widget.data.sId,
-                            );
-                          });
+                      // showModalBottomSheet(
+                      //     clipBehavior: Clip.hardEdge,
+                      //     isScrollControlled: true,
+                      //     shape: const RoundedRectangleBorder(),
+                      //     context: context,
+                      //     builder: (
+                      //       context,
+                      //     ) {
+                      //       return commentBox(
+                      // comments: value,
+                      // newsId: widget.data.sId,
+                      //       );
+                      //     });
                     });
                   },
                   child: Row(

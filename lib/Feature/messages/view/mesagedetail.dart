@@ -66,6 +66,7 @@ class _ChatDetailsState extends State<ChatDetails> {
         socket.on('getRoom', (data) {
           setState(() {
             messageList = data['data']['messages'];
+            print(messageList);
             messageList = Set.of(messageList).toList();
           });
           Future.delayed(const Duration(seconds: 1), () {

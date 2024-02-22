@@ -7,10 +7,11 @@ import 'package:henri_ppp/Feature/homeview/models/feed.dart';
 
 class chatService {
   Future<String> openMessage(url, data) async {
+    logger.d(url);
     logger.d(data);
     try {
       final response = await NetworkHelper().postApi(url, data);
-      logger.d(response);
+      print(response['data']);
 
       if (!response['success']) {
         showtoast(response['message']);

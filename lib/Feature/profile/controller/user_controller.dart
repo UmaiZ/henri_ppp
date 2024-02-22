@@ -54,7 +54,8 @@ class userController extends ChangeNotifier {
   Future<bool> UpdateUser(data) async {
     bool result = false;
     try {
-      UserModel user = await AuthService().update(ApiUrls().updateUser, data);
+      UserModel user =
+          await AuthService().update(ApiUrls().updateUserProfile, data);
       _user = user;
 
       result = true;

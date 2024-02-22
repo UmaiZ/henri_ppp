@@ -9,6 +9,7 @@ class chatController extends ChangeNotifier {
 
   Future openMessage(data) async {
     bool result = false;
+    print("line12");
     try {
       return await chatService().openMessage(ApiUrls().createChatRoom, data);
     } catch (e) {

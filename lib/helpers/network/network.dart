@@ -1,3 +1,4 @@
+import 'package:henri_ppp/helpers/logger/logger.dart';
 import 'package:http_parser/http_parser.dart';
 import 'dart:convert';
 
@@ -24,7 +25,7 @@ class NetworkHelper {
   }
 
   postApi(String url, data) async {
-    print('uuuu $url');
+    print('this url hits $url');
     String jsondata = json.encode(data);
 
     final response = await http.post(Uri.parse(url),
@@ -34,11 +35,11 @@ class NetworkHelper {
           'Content-Type': 'application/json',
         },
         body: jsondata);
-    print('uuuu ${response.body}');
 
     if (response.statusCode == 200) {
       final body = response.body;
       final jsonBody = json.decode(body);
+      logger.d(jsonBody);
       return jsonBody as Map<String, dynamic>;
     }
   }
@@ -106,16 +107,19 @@ class NetworkHelper {
 }
 
 class ApiUrls {
-  static const String baseUrl = "http://18.117.248.97";
-  // static const String baseUrl = "http://localhost:3000";
-
-  String SocketUrl = "http://13.126.228.122";
+  // static const String baseUrl = "http://18.117.248.97";
+  static const String baseUrl = "http://10.0.2.2:3000";
+//
+  String SocketUrl = "http://10.0.2.2:3000";
+  // String SocketUrl = "http://18.117.248.97";
 
   //For Users
   String login = "$baseUrl/login";
   String register = "$baseUrl/register";
 
   String updateUser = "$baseUrl/updateUser";
+  String updateUserProfile = "$baseUrl/updateUserProfile";
+
   String getUserByUserID = "$baseUrl/getUserByUserID";
   String followOrUnfollow = "$baseUrl/followOrUnfollow";
   String getUsersFans = "$baseUrl/getUsersFans";

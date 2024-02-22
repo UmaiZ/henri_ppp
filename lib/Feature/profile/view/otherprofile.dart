@@ -6,6 +6,7 @@ import 'package:henri_ppp/helpers/loader/loader.dart';
 import 'package:henri_ppp/Feature/profile/controller/user_controller.dart';
 import 'package:henri_ppp/Feature/profile/models/user.dart';
 import 'package:henri_ppp/Feature/messages/view/mesagedetail.dart';
+import 'package:henri_ppp/helpers/logger/logger.dart';
 import 'package:henri_ppp/widgets/button.dart';
 import 'package:henri_ppp/widgets/circlecacheimage.dart';
 
@@ -217,6 +218,7 @@ class OtherProfileScreen extends StatelessWidget {
                         'users': [userdata.sId]
                       }).then((value) {
                         Navigator.pop(context);
+
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => ChatDetails(
                                   username: userdata.userName,

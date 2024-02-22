@@ -26,15 +26,25 @@ class _EditProfileState extends State<EditProfile> {
   TextEditingController countrycontroller = TextEditingController();
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Future.delayed(Duration.zero, () {
+      final usercontroller =
+          Provider.of<userController>(context, listen: false);
+      namecontroller.text = usercontroller.userdata.userName.toString();
+      biocontroller.text = usercontroller.userdata.userBio.toString();
+      teamcontroller.text = usercontroller.userdata.userTeam.toString();
+      coachcontroller.text = usercontroller.userdata.userCoaches.toString();
+      schoolcontroller.text = usercontroller.userdata.userSchool.toString();
+      citycontroller.text = usercontroller.userdata.userCity.toString();
+      countrycontroller.text = usercontroller.userdata.userCountry.toString();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     final usercontroller = Provider.of<userController>(context);
-    namecontroller.text = usercontroller.userdata.userName.toString();
-    biocontroller.text = usercontroller.userdata.userBio.toString();
-    teamcontroller.text = usercontroller.userdata.userTeam.toString();
-    coachcontroller.text = usercontroller.userdata.userCoaches.toString();
-    schoolcontroller.text = usercontroller.userdata.userSchool.toString();
-    citycontroller.text = usercontroller.userdata.userCity.toString();
-    countrycontroller.text = usercontroller.userdata.userCountry.toString();
 
     final Size size = MediaQuery.of(context).size;
 
