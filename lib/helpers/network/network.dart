@@ -107,10 +107,10 @@ class NetworkHelper {
 }
 
 class ApiUrls {
-  // static const String baseUrl = "http://18.117.248.97";
+  // static const String baseUrl = "http://api.triplepsports.mobi";
   static const String baseUrl = "http://10.0.2.2:3000";
 //
-  String SocketUrl = "http://10.0.2.2:3000";
+  String SocketUrl = "http://api.triplepsports.mobi";
   // String SocketUrl = "http://18.117.248.97";
 
   //For Users

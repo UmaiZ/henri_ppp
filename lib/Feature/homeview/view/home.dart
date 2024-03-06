@@ -240,6 +240,10 @@ class HomeScreen extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               itemCount: statusController.statusdata.length,
               itemBuilder: (context, index) {
+                bool showStatus = index == 0 ||
+                    statusController.statusdata[index - 1].createdBy.sId !=
+                        statusController.statusdata[index].createdBy.sId;
+
                 return index == 0
                     ? Row(
                         children: [
@@ -263,48 +267,65 @@ class HomeScreen extends StatelessWidget {
                               ),
                             ),
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => const StoryScreen()));
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 10),
-                              child: SizedBox(
-                                height: size.height * 0.095,
-                                width: size.height * 0.095,
-                                child: CircleCacheImage(
-                                  url: statusController
-                                      .statusdata[index].createdBy.userImage,
+                          if (showStatus)
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => const StoryScreen()));
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 10),
+                                child: SizedBox(
+                                  height: size.height * 0.095,
+                                  width: size.height * 0.095,
+                                  child: CircleCacheImage(
+                                    url: statusController
+                                        .statusdata[index].createdBy.userImage,
+                                  ),
+                                ),
+                              ),
+                            )
+                        ],
+                      )
+                    : Row(
+                        children: [
+                          if (showStatus)
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => const StoryScreen()));
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 10),
+                                child: SizedBox(
+                                  height: size.height * 0.095,
+                                  width: size.height * 0.095,
+                                  child: statusController.statusdata[index]
+                                              .createdBy.userImage ==
+                                          ""
+                                      ? Image.asset(
+                                          'assets/images/imageplaceholder.png')
+                                      : ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(100.0),
+                                          child: CachedNetworkImage(
+                                            imageUrl: statusController
+                                                .statusdata[index]
+                                                .createdBy
+                                                .userImage
+                                                .toString(),
+                                            placeholder: (context, url) =>
+                                                Container(),
+                                            errorWidget:
+                                                (context, url, error) =>
+                                                    const Icon(Icons.error),
+                                            fit: BoxFit.fill,
+                                          ),
+                                        ),
                                 ),
                               ),
                             ),
-                          )
                         ],
-                      )
-                    : Padding(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: SizedBox(
-                          height: size.height * 0.095,
-                          width: size.height * 0.095,
-                          child: statusController
-                                      .statusdata[index].createdBy.userImage ==
-                                  ""
-                              ? Image.asset(
-                                  'assets/images/imageplaceholder.png')
-                              : ClipRRect(
-                                  borderRadius: BorderRadius.circular(100.0),
-                                  child: CachedNetworkImage(
-                                    imageUrl: statusController
-                                        .statusdata[index].createdBy.userImage
-                                        .toString(),
-                                    placeholder: (context, url) => Container(),
-                                    errorWidget: (context, url, error) =>
-                                        const Icon(Icons.error),
-                                    fit: BoxFit.fill,
-                                  ),
-                                ),
-                        ),
                       );
               },
             ),
