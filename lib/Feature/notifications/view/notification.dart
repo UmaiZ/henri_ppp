@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:henri_ppp/Feature/notifications/controller/notification.dart';
 import 'package:henri_ppp/Feature/root/view/drawer.dart';
+import 'package:provider/provider.dart';
 
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({super.key});
@@ -12,7 +14,21 @@ class NotificationScreen extends StatefulWidget {
 
 class _NotificationScreenState extends State<NotificationScreen> {
   @override
+  void initState() {
+    super.initState();
+    // Use a Future.delayed to ensure that the context is available
+    // before calling Provider.of
+    Future.delayed(Duration.zero, () {
+      final notificationControllerr =
+          Provider.of<notificationController>(context, listen: false);
+      notificationControllerr.getNotification();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final notificationcontroller = Provider.of<notificationController>(context);
+
     final Size size = MediaQuery.of(context).size;
     final GlobalKey<ScaffoldState> key = GlobalKey();
     return Scaffold(
@@ -47,39 +63,14 @@ class _NotificationScreenState extends State<NotificationScreen> {
               child: SizedBox(
                 width: size.width * 0.925,
                 child: ListView.builder(
-                    itemCount: 4,
+                    itemCount: notificationcontroller.notificationdata.length,
                     itemBuilder: (context, i) {
                       return Container(
                         padding: const EdgeInsets.only(bottom: 7),
                         child: ListTile(
                           contentPadding: const EdgeInsets.all(5),
                           tileColor: Theme.of(context).colorScheme.secondary,
-                          leading: SizedBox(
-                            width: size.width * 0.2,
-                            height: size.width * 0.2,
-                            child: CircleAvatar(
-                              radius: 100,
-                              backgroundColor:
-                                  Theme.of(context).colorScheme.secondary,
-                              child: Image.asset(
-                                  'assets/images/imageplaceholder.png'),
-                            ),
-                          ),
-                          title: Text(
-                            'Julia Anderson',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyLarge!
-                                .merge(const TextStyle(color: Colors.white)),
-                          ),
-                          subtitle: Text(
-                            'Rate your post',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodySmall!
-                                .merge(const TextStyle(color: Colors.grey)),
-                          ),
-                          trailing: const Padding(
+                          leading: Padding(
                             padding: EdgeInsets.only(right: 5),
                             child: Icon(
                               Icons.notifications_outlined,
@@ -87,6 +78,31 @@ class _NotificationScreenState extends State<NotificationScreen> {
                               size: 30,
                             ),
                           ),
+                          title: Text(
+                            notificationcontroller
+                                .notificationdata[i].notificationTitle
+                                .toString(),
+                            style: Theme.of(context).textTheme.bodyLarge!.merge(
+                                const TextStyle(
+                                    color: Colors.grey, fontSize: 15)),
+                          ),
+                          // subtitle: Text(
+                          //   notificationcontroller
+                          //       .notificationdata[i].notificationSubtitle
+                          //       .toString(),
+                          //   style: Theme.of(context)
+                          //       .textTheme
+                          //       .bodySmall!
+                          //       .merge(const TextStyle(color: Colors.grey)),
+                          // ),
+                          // trailing: const Padding(
+                          //   padding: EdgeInsets.only(right: 5),
+                          //   child: Icon(
+                          //     Icons.notifications_outlined,
+                          //     color: Colors.white,
+                          //     size: 30,
+                          //   ),
+                          // ),
                         ),
                       );
                     }),

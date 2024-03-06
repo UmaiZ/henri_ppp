@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:henri_ppp/Feature/messages/view/controller/chat_controller.dart';
+import 'package:henri_ppp/Feature/notifications/controller/notification.dart';
 import 'package:henri_ppp/Feature/post/controller/create_post_controller.dart';
 import 'package:henri_ppp/Feature/homeview/controller/feed_controller.dart';
 import 'package:henri_ppp/Feature/live/controller/live_controller.dart';
@@ -90,6 +91,8 @@ List<SingleChildWidget> providers = [
   ChangeNotifierProvider<userController>(create: (_) => userController()),
   ChangeNotifierProvider<feedController>(create: (_) => feedController()),
   ChangeNotifierProvider<TabsController>(create: (_) => TabsController()),
+  ChangeNotifierProvider<notificationController>(
+      create: (_) => notificationController()),
   ChangeNotifierProvider<createPostController>(
       create: (_) => createPostController()),
 ];

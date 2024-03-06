@@ -107,10 +107,10 @@ class NetworkHelper {
 }
 
 class ApiUrls {
-  // static const String baseUrl = "http://api.triplepsports.mobi";
-  static const String baseUrl = "http://10.0.2.2:3000";
+  static const String baseUrl = "https://api.triplepsports.mobi";
+  // static const String baseUrl = "http://10.0.2.2:3000";
 //
-  String SocketUrl = "http://api.triplepsports.mobi";
+  String SocketUrl = "https://api.triplepsports.mobi";
   // String SocketUrl = "http://18.117.248.97";
 
   //For Users
@@ -144,4 +144,6 @@ class ApiUrls {
   //for liv
   String createlivechannel = "$baseUrl/generate-token";
   String getchannelroom = "$baseUrl/getchannelroom";
+
+  String getNotification = "$baseUrl/getNotification";
 }
