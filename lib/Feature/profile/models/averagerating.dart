@@ -1,5 +1,5 @@
 class AverageRating {
-  double? averageRating;
+  num? averageRating;
   num? postCount;
   List<Ratings>? ratings;
 

@@ -21,7 +21,12 @@ class userController extends ChangeNotifier {
 
   UserModel? get userselecteditem => _selecteduser;
 
-  late AverageRating useraverage;
+  AverageRating useraverage =
+      AverageRating(averageRating: 0.0, postCount: 0, ratings: []);
+
+  double? averageRating;
+  num? postCount;
+  List<Ratings>? ratings;
 
   Future<bool> LoginHit(data) async {
     bool result = false;

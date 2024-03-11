@@ -13,6 +13,7 @@ import 'package:henri_ppp/Feature/homeview/widget/commentbox.dart';
 import 'package:henri_ppp/Feature/profile/view/otherprofile.dart';
 import 'package:henri_ppp/widgets/circlecacheimage.dart';
 import 'package:provider/provider.dart';
+import 'package:widget_zoom/widget_zoom.dart';
 
 class PostWidget extends StatefulWidget {
   final data;
@@ -116,15 +117,18 @@ class _PostWidgetState extends State<PostWidget> {
                         itemBuilder: (context, index) {
                           return Align(
                             alignment: Alignment.center,
-                            child: CachedNetworkImage(
-                              imageUrl: widget.data.images[index],
-                              placeholder: (context, url) =>
-                                  const SpinKitChasingDots(
-                                color: Colors.white,
-                                size: 50.0,
+                            child: WidgetZoom(
+                              heroAnimationTag: 'tag',
+                              zoomWidget: CachedNetworkImage(
+                                imageUrl: widget.data.images[index],
+                                placeholder: (context, url) =>
+                                    const SpinKitChasingDots(
+                                  color: Colors.white,
+                                  size: 50.0,
+                                ),
+                                errorWidget: (context, url, error) =>
+                                    const Icon(Icons.error),
                               ),
-                              errorWidget: (context, url, error) =>
-                                  const Icon(Icons.error),
                             ),
                           );
                         }),
